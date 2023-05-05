@@ -16,7 +16,7 @@ import unittest
 
 from qgis.PyQt.QtGui import QDockWidget
 
-from style_tool_dockwidget import AdjustStyleDockWidget
+from qgis_adjust_style.adjust_style_dockwidget import AdjustStyleDockWidget
 
 from utilities import get_qgis_app
 

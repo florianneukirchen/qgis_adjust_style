@@ -32,5 +32,5 @@ def classFactory(iface):  # pylint: disable=invalid-name
     :type iface: QgsInterface
     """
     #
-    from .style_tool import AdjustStyle
+    from .adjust_style import AdjustStyle
     return AdjustStyle(iface)
