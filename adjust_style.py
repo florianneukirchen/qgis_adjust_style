@@ -219,11 +219,25 @@ class AdjustStyle:
 
     def hueBtn(self):
         self.degree = self.dockwidget.spinBox.value()
+        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
+        print(self.layerchoice)
         print(self.degree)
-        layer = self.iface.activeLayer()
 
-        self.layer_change_color(layer)
+        if self.layerchoice == 'Active Layer':
+            layer = self.iface.activeLayer()
+            self.layer_change_color(layer)
 
+        if self.layerchoice == 'Selected Layers':
+            for layer in self.iface.layerTreeView().selectedLayers():
+                self.layer_change_color(layer)
+
+        if self.layerchoice == 'Visible Layers':
+            for layer in self.iface.mapCanvas().layers():
+                self.layer_change_color(layer)
+
+        if self.layerchoice == 'All Layers':
+            for layer in QgsProject.instance().mapLayers().values():
+                self.layer_change_color(layer)
 
     def layer_change_color(self, layer):
         renderer = layer.renderer()
