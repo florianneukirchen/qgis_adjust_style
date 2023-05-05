@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/plugins/style_tool" >
+    <qresource prefix="/plugins/adjust_style" >
         <file>icon.png</file>
     </qresource>
 </RCC>
