@@ -222,46 +222,42 @@ class AdjustStyle:
     def hueBtn(self):
         self.value = self.dockwidget.spinBox.value()
         self.change_color = self.rotate_hue
-        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_color)
 
     def saturationPlusBtn(self):
         self.value = 5
         self.change_color = self.change_saturation
-        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_color)       
 
     def saturationMinusBtn(self):
         self.value = -5
         self.change_color = self.change_saturation
-        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_color)  
 
     def hsvValuePlusBtn(self):
         self.value = 5
         self.change_color = self.change_hsv_value
-        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_color)  
 
     def hsvValueMinusBtn(self):
         self.value = -5
         self.change_color = self.change_hsv_value
-        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_color)  
 
     def strokeWidthPlusBtn(self):
         self.value = 0.2
-        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_stroke)  
 
     def strokeWidthMinusBtn(self):
         self.value = -0.2
-        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_stroke)  
+
+
 
     # Use the choice of layers and map the corresponding function to them
 
     def mapToLayers(self, func):
+        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         if self.layerchoice == 'Active Layer':
             layer = self.iface.activeLayer()
             func(layer)
