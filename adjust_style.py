@@ -65,9 +65,6 @@ class AdjustStyle:
         # Declare instance attributes
         self.actions = []
         self.menu = self.tr(u'&Adjust Syle ')
-        # TODO: We are going to let the user set this up in a future iteration
-        self.toolbar = self.iface.addToolBar(u'AdjustStyle')
-        self.toolbar.setObjectName(u'AdjustStyle')
 
         #print "** INITIALIZING AdjustStyle"
 
@@ -153,7 +150,7 @@ class AdjustStyle:
             action.setWhatsThis(whats_this)
 
         if add_to_toolbar:
-            self.toolbar.addAction(action)
+            self.iface.addToolBarIcon(action)
 
         if add_to_menu:
             self.iface.addPluginToMenu(
@@ -205,7 +202,7 @@ class AdjustStyle:
                 action)
             self.iface.removeToolBarIcon(action)
         # remove the toolbar
-        del self.toolbar
+        # del self.toolbar
 
     #--------------------------------------------------------------------------
 
@@ -281,10 +278,12 @@ class AdjustStyle:
 
     def rotate_hue(self, qcolor, degree):
         h, s, v, a = qcolor.getHsv()
-        h = h + degree
-        if h >= 360:
-            h = h - 360
-        qcolor.setHsv(h, s, v, a)
+        # QColor uses h = -1 for achromatic colors
+        if h > -1:
+            h = h + degree
+            if h >= 360:
+                h = h - 360
+            qcolor.setHsv(h, s, v, a)
         return qcolor
 
 
