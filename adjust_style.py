@@ -477,6 +477,7 @@ class AdjustStyle:
         settings.setFormat(format)
         return settings
 
+
     #--------------------------------------------------------------------------
 
     def run(self):
@@ -512,6 +513,7 @@ class AdjustStyle:
             self.dockwidget.plusFontSizeButton.clicked.connect(self.fontSizePlusBtn)
             self.dockwidget.minusFontSizeButton.clicked.connect(self.fontSizeMinusBtn)
 
+            
             # show the dockwidget
             self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)
             self.dockwidget.show()

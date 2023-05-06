@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>316</width>
-    <height>360</height>
+    <width>290</width>
+    <height>362</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -325,6 +325,17 @@
           </property>
          </spacer>
         </item>
+        <item>
+         <widget class="QPushButton" name="replaceFontButton">
+          <property name="text">
+           <string>Replace Font</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
          <widget class="QPushButton" name="tryButton">
           <property name="text">
