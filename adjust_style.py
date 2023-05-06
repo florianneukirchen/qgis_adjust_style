@@ -30,6 +30,7 @@ from .resources import *
 
 # Import the code for the DockWidget
 from .adjust_style_dockwidget import AdjustStyleDockWidget
+from .adjust_style_font_dialog import ReplaceFontDialog
 import os.path
 
 
@@ -268,17 +269,19 @@ class AdjustStyle:
             layer = self.iface.activeLayer()
             func(layer)
 
-        if self.layerchoice == 'Selected Layers':
+        elif self.layerchoice == 'Selected Layers':
             for layer in self.iface.layerTreeView().selectedLayers():
                 func(layer)
 
-        if self.layerchoice == 'Visible Layers':
+        elif self.layerchoice == 'Visible Layers':
             for layer in self.iface.mapCanvas().layers():
                 func(layer)
 
-        if self.layerchoice == 'All Layers':
+        elif self.layerchoice == 'All Layers':
             for layer in QgsProject.instance().mapLayers().values():
                 func(layer)
+        
+        return
 
     # Functions to change colors
 
@@ -350,7 +353,6 @@ class AdjustStyle:
                     rule.setSettings(settings)
 
         layer.triggerRepaint()
-
 
 
     def change_symbol_color(self, symbol):
@@ -477,6 +479,69 @@ class AdjustStyle:
         settings.setFormat(format)
         return settings
 
+    # Replace Font
+
+    def replace_font_dlg(self):
+        self.dlg = ReplaceFontDialog()
+
+        # Get a set of all fonts in the project
+        self.fontset = set()
+        self.mapToLayers(self.collect_fonts)
+        
+        # Populate combo box
+        self.dlg.currentFontsComboBox.clear()
+        self.fontset = list(sorted(self.fontset))
+        self.dlg.currentFontsComboBox.addItems(self.fontset)
+        
+        # Show dialog, run dialog event loop
+        self.dlg.show()
+        result = self.dlg.exec_()
+
+        # See if OK was pressed
+        if result:
+            i = self.dlg.currentFontsComboBox.currentIndex()
+            self.oldfont = self.fontset[i] # string
+            self.newfont = self.dlg.fontComboBox.currentFont() # QFont
+            self.mapToLayers(self.replace_font)
+
+ 
+    def collect_fonts(self, layer):
+        if isinstance(layer, QgsVectorLayer) and layer.labelsEnabled():
+            labeling = layer.labeling() # Returns QgsVectorLayerSimpleLabeling or QgsRuleBasedLabeling
+
+            if isinstance(labeling, QgsVectorLayerSimpleLabeling):
+                format = labeling.settings().format() # Returns QgsTextFormat
+                self.fontset.add(format.font().family())
+
+            if isinstance(labeling, QgsRuleBasedLabeling):
+                for rule in labeling.rootRule().children():
+                    format = rule.settings().format()
+                    self.fontset.add(format.font().family())
+
+    def replace_font(self, layer):
+        if isinstance(layer, QgsVectorLayer) and layer.labelsEnabled():
+            labeling = layer.labeling() # Returns QgsVectorLayerSimpleLabeling or QgsRuleBasedLabeling
+
+            if isinstance(labeling, QgsVectorLayerSimpleLabeling):
+                settings = labeling.settings()
+                format = settings.format() # Returns QgsTextFormat
+                if format.font().family() == self.oldfont:
+                    format.setFont(self.newfont)
+                    settings.setFormat(format)
+                    labeling.setSettings(settings)
+
+
+            if isinstance(labeling, QgsRuleBasedLabeling):
+                for rule in labeling.rootRule().children():
+                    settings = rule.settings()
+                    format = settings.format()
+                    if format.font().family() == self.oldfont:
+                        format.setFont(self.newfont)
+                        settings.setFormat(format)
+                        rule.setSettings(settings)
+
+            layer.triggerRepaint()           
+
 
     #--------------------------------------------------------------------------
 
@@ -512,7 +577,7 @@ class AdjustStyle:
             self.dockwidget.minusStrokeWidthButton.clicked.connect(self.strokeWidthMinusBtn)
             self.dockwidget.plusFontSizeButton.clicked.connect(self.fontSizePlusBtn)
             self.dockwidget.minusFontSizeButton.clicked.connect(self.fontSizeMinusBtn)
-
+            self.dockwidget.replaceFontButton.clicked.connect(self.replace_font_dlg)
             
             # show the dockwidget
             self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)
