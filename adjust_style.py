@@ -249,6 +249,16 @@ class AdjustStyle:
         self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_color)  
 
+    def strokeWidthPlusBtn(self):
+        self.value = 0.2
+        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
+        self.mapToLayers(self.layer_change_stroke)  
+
+    def strokeWidthMinusBtn(self):
+        self.value = -0.2
+        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
+        self.mapToLayers(self.layer_change_stroke)  
+
     # Use the choice of layers and map the corresponding function to them
 
     def mapToLayers(self, func):
@@ -268,7 +278,7 @@ class AdjustStyle:
             for layer in QgsProject.instance().mapLayers().values():
                 func(layer)
 
-    # Functions to do small parts of the job
+    # Functions to change colors
 
     def rotate_hue(self, qcolor, degree):
         h, s, v, a = qcolor.getHsv()
@@ -389,6 +399,50 @@ class AdjustStyle:
 
         return settings
     
+    # Change stroke width
+
+    def layer_change_stroke(self, layer):
+
+        if not isinstance(layer, QgsVectorLayer):
+            return
+        
+        renderer = layer.renderer()
+        
+        if isinstance(renderer, QgsSingleSymbolRenderer):
+            symbol = renderer.symbol()
+            self.change_symbol_stroke(symbol)
+        
+        # Funkt nicht
+        elif isinstance(renderer, QgsCategorizedSymbolRenderer):
+            for cat in renderer.categories():
+                symbol = cat.symbol()
+                print(symbol)
+                self.change_symbol_stroke(symbol)
+                
+
+        elif isinstance(renderer, QgsRuleBasedRenderer):
+            for rule in renderer.rootRule().children():
+                symbol = rule.symbol()
+                self.change_symbol_stroke(symbol)
+
+        layer.triggerRepaint()
+        return
+
+
+    def change_symbol_stroke(self, symbol):
+        for symlayer in symbol.symbolLayers():
+            # Line symbols
+            if isinstance(symbol, QgsLineSymbol):
+                width = symlayer.width()
+                width = width + self.value
+                symlayer.setWidth(width)
+            # Other symbols
+            else:
+                width = symlayer.strokeWidth()
+                width = width + self.value
+                symlayer.setStrokeWidth(width)
+            
+        return
 
     #--------------------------------------------------------------------------
 
@@ -420,6 +474,10 @@ class AdjustStyle:
             self.dockwidget.minusSatButton.clicked.connect(self.saturationMinusBtn)
             self.dockwidget.plusValueButton.clicked.connect(self.hsvValuePlusBtn)
             self.dockwidget.minusValueButton.clicked.connect(self.hsvValueMinusBtn)
+            self.dockwidget.plusStrokeWidthButton.clicked.connect(self.strokeWidthPlusBtn)
+            self.dockwidget.minusStrokeWidthButton.clicked.connect(self.strokeWidthMinusBtn)
+
+
 
             # show the dockwidget
             # TODO: fix to allow choice of dock location
