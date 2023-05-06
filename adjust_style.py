@@ -282,13 +282,11 @@ class AdjustStyle:
 
     def change_hsv_value(self, qcolor, increment):
         h, s, v, a = qcolor.getHsv()
-        print(v)
         v = v + increment
         if v > 255:
             v = 255
         elif v < 0:
             v = 0
-        print(v)
         qcolor.setHsv(h, s, v, a)
         return qcolor        
 
