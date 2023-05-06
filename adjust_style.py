@@ -33,6 +33,8 @@ from .adjust_style_dockwidget import AdjustStyleDockWidget
 import os.path
 
 
+
+
 class AdjustStyle:
     """QGIS Plugin Implementation."""
 
@@ -215,7 +217,8 @@ class AdjustStyle:
     #--------------------------------------------------------------------------
 
     def hueBtn(self):
-        self.degree = self.dockwidget.spinBox.value()
+        self.value = self.dockwidget.spinBox.value()
+        self.change_color = self.rotate_hue
         self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_color)
 
@@ -235,6 +238,18 @@ class AdjustStyle:
         if self.layerchoice == 'All Layers':
             for layer in QgsProject.instance().mapLayers().values():
                 func(layer)
+
+    def rotate_hue(self, qcolor, degree):
+        h, s, v, a = qcolor.getHsv()
+        # QColor uses h = -1 for achromatic colors
+        if h > -1:
+            h = h + degree
+            if h >= 360:
+                h = h - 360
+            qcolor.setHsv(h, s, v, a)
+        return qcolor
+
+
 
     def layer_change_color(self, layer):
         renderer = layer.renderer()
@@ -265,7 +280,6 @@ class AdjustStyle:
                 settings = labeling.settings() # Returns QgsPalLayerSettings
                 settings = self.change_font_color(settings)
                 labeling.setSettings(settings)
-                #layer.setLabeling(QgsVectorLayerSimpleLabeling(settings))
 
             if isinstance(labeling, QgsRuleBasedLabeling):
                 for rule in labeling.rootRule().children():
@@ -276,36 +290,23 @@ class AdjustStyle:
         layer.triggerRepaint()
 
 
-    def rotate_hue(self, qcolor, degree):
-        h, s, v, a = qcolor.getHsv()
-        # QColor uses h = -1 for achromatic colors
-        if h > -1:
-            h = h + degree
-            if h >= 360:
-                h = h - 360
-            qcolor.setHsv(h, s, v, a)
-        return qcolor
-
 
     def change_symbol_color(self, symbol):
         for symlayer in symbol.symbolLayers():
-            print(type(symlayer))
             # Fill color
             color = symlayer.color() 
-            # print('RGB1', color.getRgb())
-            color = self.rotate_hue(color, self.degree)
-            # print('RGB2', color.getRgb())
+            color = self.change_color(color, self.value)
             symlayer.setColor(color)
             
             # Stroke color
             color = symlayer.strokeColor() 
-            color = self.rotate_hue(color, self.degree)
+            color = self.change_color(color, self.value)
             symlayer.setStrokeColor(color)
 
             # Gradient layer
             if isinstance(symlayer, QgsGradientFillSymbolLayer) or isinstance(symlayer, QgsShapeburstFillSymbolLayer):
                 color = symlayer.color2()
-                color = self.rotate_hue(color, self.degree)
+                color = self.change_color(color, self.value)
                 symlayer.setColor2(color)
             
         return
@@ -317,14 +318,14 @@ class AdjustStyle:
 
         # Font
         color = format.color()
-        color = self.rotate_hue(color, self.degree)
+        color = self.change_color(color, self.value)
         format.setColor(color)
 
         # Buffer
         bf = format.buffer() # Returns QgsTextBufferSettings
         if bf.enabled():
             color = bf.color()
-            color = self.rotate_hue(color, self.degree)
+            color = self.change_color(color, self.value)
             bf.setColor(color)
 
 
