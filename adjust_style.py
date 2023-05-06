@@ -252,7 +252,13 @@ class AdjustStyle:
         self.value = -0.2
         self.mapToLayers(self.layer_change_stroke)  
 
+    def fontSizePlusBtn(self):
+        self.value = 0.5
+        self.mapToLayers(self.layer_font_size)
 
+    def fontSizeMinusBtn(self):
+        self.value = -0.5
+        self.mapToLayers(self.layer_font_size)
 
     # Use the choice of layers and map the corresponding function to them
 
@@ -439,6 +445,37 @@ class AdjustStyle:
                 symlayer.setStrokeWidth(width)
             
         return
+    
+    # Change font size
+
+    def layer_font_size(self, layer):
+        if isinstance(layer, QgsVectorLayer) and layer.labelsEnabled():
+            labeling = layer.labeling() # Returns QgsVectorLayerSimpleLabeling or QgsRuleBasedLabeling
+
+            if isinstance(labeling, QgsVectorLayerSimpleLabeling):
+                settings = labeling.settings() # Returns QgsPalLayerSettings
+                settings = self.change_font_size(settings)
+                labeling.setSettings(settings)
+
+            if isinstance(labeling, QgsRuleBasedLabeling):
+                for rule in labeling.rootRule().children():
+                    settings = rule.settings()
+                    settings = self.change_font_size(settings)
+                    rule.setSettings(settings)
+
+            layer.triggerRepaint()
+        
+        return
+
+    def change_font_size(self, settings):
+        format = settings.format() # Returns QgsTextFormat
+        size = format.size()
+        size = size + self.value
+        if size < 0:
+            size = 0
+        format.setSize(size)
+        settings.setFormat(format)
+        return settings
 
     #--------------------------------------------------------------------------
 
@@ -472,10 +509,9 @@ class AdjustStyle:
             self.dockwidget.minusValueButton.clicked.connect(self.hsvValueMinusBtn)
             self.dockwidget.plusStrokeWidthButton.clicked.connect(self.strokeWidthPlusBtn)
             self.dockwidget.minusStrokeWidthButton.clicked.connect(self.strokeWidthMinusBtn)
-
-
+            self.dockwidget.plusFontSizeButton.clicked.connect(self.fontSizePlusBtn)
+            self.dockwidget.minusFontSizeButton.clicked.connect(self.fontSizeMinusBtn)
 
             # show the dockwidget
-            # TODO: fix to allow choice of dock location
             self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)
             self.dockwidget.show()
