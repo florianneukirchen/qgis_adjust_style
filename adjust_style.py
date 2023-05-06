@@ -208,6 +208,7 @@ class AdjustStyle:
 
     #--------------------------------------------------------------------------
 
+    # Connect slider and spinbox
     def spinboxChangeValue(self):
         self.dockwidget.horizontalSlider.setValue(self.dockwidget.spinBox.value())
 
@@ -216,12 +217,16 @@ class AdjustStyle:
 
     #--------------------------------------------------------------------------
 
+    # Functions connected to buttons
+
     def hueBtn(self):
         self.value = self.dockwidget.spinBox.value()
         self.change_color = self.rotate_hue
         self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_color)
 
+    # Use the choice of layers and map the corresponding function
+    
     def mapToLayers(self, func):
         if self.layerchoice == 'Active Layer':
             layer = self.iface.activeLayer()
@@ -239,6 +244,8 @@ class AdjustStyle:
             for layer in QgsProject.instance().mapLayers().values():
                 func(layer)
 
+    # Functions to do small parts of the job
+
     def rotate_hue(self, qcolor, degree):
         h, s, v, a = qcolor.getHsv()
         # QColor uses h = -1 for achromatic colors
@@ -248,7 +255,6 @@ class AdjustStyle:
                 h = h - 360
             qcolor.setHsv(h, s, v, a)
         return qcolor
-
 
 
     def layer_change_color(self, layer):
