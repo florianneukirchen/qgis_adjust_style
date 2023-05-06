@@ -225,8 +225,32 @@ class AdjustStyle:
         self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         self.mapToLayers(self.layer_change_color)
 
-    # Use the choice of layers and map the corresponding function
-    
+    def saturationPlusBtn(self):
+        self.value = 5
+        self.change_color = self.change_saturation
+        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
+        self.mapToLayers(self.layer_change_color)       
+
+    def saturationMinusBtn(self):
+        self.value = -5
+        self.change_color = self.change_saturation
+        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
+        self.mapToLayers(self.layer_change_color)  
+
+    def hsvValuePlusBtn(self):
+        self.value = 5
+        self.change_color = self.change_hsv_value
+        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
+        self.mapToLayers(self.layer_change_color)  
+
+    def hsvValueMinusBtn(self):
+        self.value = -5
+        self.change_color = self.change_hsv_value
+        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
+        self.mapToLayers(self.layer_change_color)  
+
+    # Use the choice of layers and map the corresponding function to them
+
     def mapToLayers(self, func):
         if self.layerchoice == 'Active Layer':
             layer = self.iface.activeLayer()
@@ -256,6 +280,28 @@ class AdjustStyle:
             qcolor.setHsv(h, s, v, a)
         return qcolor
 
+    def change_hsv_value(self, qcolor, increment):
+        h, s, v, a = qcolor.getHsv()
+        print(v)
+        v = v + increment
+        if v > 255:
+            v = 255
+        elif v < 0:
+            v = 0
+        print(v)
+        qcolor.setHsv(h, s, v, a)
+        return qcolor        
+
+    def change_saturation(self, qcolor, increment):
+        h, s, v, a = qcolor.getHsv()
+        if s > 0:
+            s = s + increment
+            if s > 255:
+                s = 255
+            elif s < 0:
+                s = 0
+            qcolor.setHsv(h, s, v, a)
+        return qcolor 
 
     def layer_change_color(self, layer):
         renderer = layer.renderer()
@@ -372,7 +418,10 @@ class AdjustStyle:
 
             # Connect buttons
             self.dockwidget.hueButton.clicked.connect(self.hueBtn)
-
+            self.dockwidget.plusSatButton.clicked.connect(self.saturationPlusBtn)
+            self.dockwidget.minusSatButton.clicked.connect(self.saturationMinusBtn)
+            self.dockwidget.plusValueButton.clicked.connect(self.hsvValuePlusBtn)
+            self.dockwidget.minusValueButton.clicked.connect(self.hsvValueMinusBtn)
 
             # show the dockwidget
             # TODO: fix to allow choice of dock location
