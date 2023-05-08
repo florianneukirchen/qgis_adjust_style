@@ -23,7 +23,7 @@ hasProcessingProvider=no
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=labeling, layers, point, line, polygon, style, vector, python, font
+tags=labeling, layers, point, line, polygon, style, vector, python, font, color
 
 homepage=http://homepage
 category=Plugins
