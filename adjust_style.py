@@ -369,7 +369,12 @@ class AdjustStyle:
         if isinstance(renderer, QgsSingleSymbolRenderer):
             symbol = renderer.symbol()
             self.change_symbol_color(symbol)
-        
+
+        elif isinstance(renderer, QgsRuleBasedRenderer):
+            for rule in renderer.rootRule().children():
+                symbol = rule.symbol()
+                self.change_symbol_color(symbol)
+
         elif isinstance(renderer, QgsCategorizedSymbolRenderer) or isinstance(renderer, QgsGraduatedSymbolRenderer):
             ramp = renderer.sourceColorRamp()
             if isinstance(ramp, QgsGradientColorRamp):
@@ -381,13 +386,20 @@ class AdjustStyle:
             self.change_ramp_colors(ramp)
             renderer.updateColorRamp(ramp)
 
-               
-
-        elif isinstance(renderer, QgsRuleBasedRenderer):
-            for rule in renderer.rootRule().children():
-                symbol = rule.symbol()
-                self.change_symbol_color(symbol)
-
+        """
+        # Raster Layer is not working, it crashes QGIS
+        elif isinstance(renderer, QgsSingleBandPseudoColorRenderer):
+            func = renderer.shader().rasterShaderFunction()
+            ramp = func.sourceColorRamp()
+            if isinstance(ramp, QgsGradientColorRamp):
+                ramp = ramp.clone()
+            elif isinstance(ramp, QgsCptCityColorRamp):
+                ramp = ramp.cloneGradientRamp()
+            else:
+                return
+            self.change_ramp_colors(ramp)
+            func.setSourceColorRamp(ramp)
+        """
 
         # Labels
      
