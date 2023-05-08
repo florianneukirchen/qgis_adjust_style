@@ -24,7 +24,7 @@
 from qgis.core import *
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtWidgets import QAction, QFileDialog
 # Initialize Qt resources from file resources.py
 from .resources import *
 
@@ -262,15 +262,52 @@ class AdjustStyle:
         self.mapToLayers(self.layer_font_size)
 
     def saveStylesBtn(self):
-        url = QgsProject.instance().readPath("./")
-        print(url)
+        self.url = QgsProject.instance().readPath("./")
+        self.url = QFileDialog.getExistingDirectory(
+            self.dockwidget, 'Select a directory', self.url
+        )
+        if not os.access(self.url, os.W_OK):
+            self.iface.messageBar().pushWarning('Save Styles', "Can't write to directory " + self.url)
+            return
+        print('Save styles to:', self.url)
+
+        self.mapToLayers(self.save_layer_style)
+
+        if self.counter > 0:
+            self.iface.messageBar().pushInfo('Save styles', f'Succesfully saved styles of {self.counter} layers.')
+
     
     def loadStylesBtn(self):
-        pass
+        self.counter = 0
+        self.counter_fail = 0
+        self.url = QgsProject.instance().readPath("./")
+        self.url = QFileDialog.getExistingDirectory(
+            self.dockwidget, 'Select a directory', self.url
+        )
+
+        if not os.access(self.url, os.R_OK):
+            self.iface.messageBar().pushWarning('Load Styles', "Can't read directory " + self.url)
+            return
+        
+        print('Load styles from:', self.url)
+
+        self.mapToLayers(self.load_layer_style)
+
+        if self.counter == 0:
+            self.iface.messageBar().pushWarnig('Load styles', f'Could not load any style for any layer.')
+        elif self.counter > 0 and self.counter_fail == 0:
+            self.iface.messageBar().pushInfo('Load styles', f'Succesfully loaded styles of all {self.counter} layers.')
+        else:
+            self.iface.messageBar().pushInfo(
+                'Load styles', 
+                f'Succesfully loaded styles of {self.counter} layers but failed on {self.counter_fail} layers.'
+                )
+
 
     # Use the choice of layers and map the corresponding function to them
 
     def mapToLayers(self, func):
+        self.counter = 0
         self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
         if self.layerchoice == 'Active Layer':
             layer = self.iface.activeLayer()
@@ -549,6 +586,33 @@ class AdjustStyle:
 
             layer.triggerRepaint()           
 
+
+    # Load and save styles
+
+    def save_layer_style(self, layer):
+        url = os.path.join(self.url, layer.name() + '.qml')
+        status = layer.saveNamedStyle(url)
+        # status is a tuple (str, bool)
+        if not status[1]:
+            self.iface.messageBar().pushWarning('Save Style ' + layer.name() + 'failed:', status[0])
+        else:
+            self.counter += 1
+
+        
+
+        
+
+    def load_layer_style(self, layer):
+        url = os.path.join(self.url, layer.name() + '.qml')
+        status = layer.loadNamedStyle(url, True) 
+        
+        if status[1]:
+            self.counter += 1
+        else:
+            self.counter_fail += 1
+            print(status)
+            
+        layer.triggerRepaint()
 
     #--------------------------------------------------------------------------
 
