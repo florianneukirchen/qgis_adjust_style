@@ -401,6 +401,10 @@ class AdjustStyle:
 
         layer.triggerRepaint()
 
+        # Also show the changes in "Layer Styling" panel and TOC
+        layer.emitStyleChanged()
+        self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+
 
     def change_symbol_color(self, symbol):
         for symlayer in symbol.symbolLayers():
@@ -477,6 +481,7 @@ class AdjustStyle:
                 self.change_symbol_stroke(symbol)
 
         layer.triggerRepaint()
+        layer.emitStyleChanged()
         return
 
 
@@ -513,6 +518,7 @@ class AdjustStyle:
                     rule.setSettings(settings)
 
             layer.triggerRepaint()
+            layer.emitStyleChanged()
         
         return
 
@@ -587,7 +593,8 @@ class AdjustStyle:
                         settings.setFormat(format)
                         rule.setSettings(settings)
 
-            layer.triggerRepaint()           
+            layer.triggerRepaint() 
+            layer.emitStyleChanged()          
 
 
     # Load and save styles
@@ -661,6 +668,7 @@ class AdjustStyle:
             print(status)
 
         layer.triggerRepaint()
+        layer.emitStyleChanged()
 
     #--------------------------------------------------------------------------
 
