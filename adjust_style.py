@@ -21,6 +21,7 @@
  *                                                                         *
  ***************************************************************************/
 """
+import re
 from qgis.core import *
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
@@ -591,11 +592,22 @@ class AdjustStyle:
     # Load and save styles
 
     def save_layer_style(self, layer):
-        url = os.path.join(self.url, layer.name() + '.qml')
+        # Remove bad characters from layer name
+        clean_name = re.sub(r'[^\w_.-]', '_', layer.name()) 
+
+        # Check if there are more layers of the same name
+        listoflayers = QgsProject.instance().mapLayersByName(layer.name())
+        if len(listoflayers) == 1:
+            filename = clean_name + '.qml'
+        else:
+            i = listoflayers.index(layer)
+            filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
+
+        url = os.path.join(self.url, filename)
 
         # Check if file exits
         if os.path.exists(url) and not self.overwrite:
-            filename = layer.name() + '.qml'
+            
             choice = QMessageBox.question(
                 self.dockwidget,
                 'File exists',
@@ -609,15 +621,6 @@ class AdjustStyle:
             else:
                 return
 
-
-            """
-            dlg = FileExistsDialog()
-            if dlg.exec():
-                print("Success!")
-            else:
-                print("Cancel")
-                """
-
         # Save Style    
         status = layer.saveNamedStyle(url)
 
@@ -629,7 +632,25 @@ class AdjustStyle:
 
 
     def load_layer_style(self, layer):
-        url = os.path.join(self.url, layer.name() + '.qml')
+        # Remove bad characters from layer name
+        clean_name = re.sub(r'[^\w_.-]', '_', layer.name()) 
+
+        url = os.path.join(self.url, clean_name + '.qml')
+
+        # Handle the dublicate layer name problem
+        if not os.path.exists(url):
+            url2 = os.path.join(self.url, clean_name + '__(00).qml')
+            if os.path.exists(url2):
+                listoflayers = QgsProject.instance().mapLayersByName(layer.name())
+                i = listoflayers.index(layer)
+                filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
+                url3 = os.path.join(self.url, filename)
+                if os.path.exists(url3):
+                    url = url3
+                else:
+                    url = url2
+
+        # Load the style
         status = layer.loadNamedStyle(url, True) 
         
         if status[1]:
