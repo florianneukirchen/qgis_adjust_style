@@ -384,7 +384,8 @@ class AdjustStyle:
 
 
         # Labels
-        if layer.labelsEnabled():
+     
+        if isinstance(layer, QgsVectorLayer) and layer.labelsEnabled():
             labeling = layer.labeling() # Returns QgsVectorLayerSimpleLabeling or QgsRuleBasedLabeling
 
             if isinstance(labeling, QgsVectorLayerSimpleLabeling):
