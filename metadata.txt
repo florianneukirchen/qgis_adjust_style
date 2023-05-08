@@ -5,7 +5,16 @@
 [general]
 name=Adjust Syle 
 qgisMinimumVersion=3.16
-description=Adjust color, line thickness, font size etc. of all symbols/labels.
+description=Adjust the style of a map with a few clicks instead of altering every single symbol or label rule. 
+    The tool offers a quick way to alter the style of all layers (or selected layers) in a consistant way, 
+    to try different styles / colors / fonts for a single project, 
+    or to apply styles of one project to another one.
+    It allows to adjust color of all symbols and labels using the HSV color model (rotate hue, change saturation and value),
+    change line thickness (stroke width of all symbols / symbol borders),
+    change font size of all labels,
+    replace a font family used in labels with another font family,
+    save / load the styles of all layers.
+
 version=0.1
 author=Florian Neukirchen
 email=mail@riannek.de
