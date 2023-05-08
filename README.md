@@ -7,6 +7,8 @@ Experimental QGIS Plugin to adjust the style of a map with a few clicks instead 
 - replace a font family used in labels with another font family
 - save / load he styles of all layers.
 
+> :warning: **Status: Experimental**: Does not yet work with raster layers and some render types are broken!
+
 ## Usage
 Start the plugin form the Plugin menu or the plugin toolbar, a dockwidget opens on the right side of the main window.
 
