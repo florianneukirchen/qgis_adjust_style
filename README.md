@@ -1,5 +1,5 @@
 # QGIS Plugin Adjust Style
-QGIS Plugin to adjust color, line thickness, font size etc. of all symbols/labels and to save and load the styles of all layers. It offers a quick way to try different styles / colors / fonts for a single project, or to apply styles of one project to another one.
+Experimental QGIS Plugin to adjust color, line thickness, font size etc. of all symbols/labels and to save and load the styles of all layers. It offers a quick way to try different styles / colors / fonts for a single project, or to apply styles of one project to another one.
 
 ## Usage
 Start the plugin form the Plugin menu or the plugin toolbar, a dockwidget opens on the right side of the main window.
