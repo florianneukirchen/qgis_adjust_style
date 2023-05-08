@@ -370,12 +370,18 @@ class AdjustStyle:
             symbol = renderer.symbol()
             self.change_symbol_color(symbol)
         
-        # Funkt nicht
-        elif isinstance(renderer, QgsCategorizedSymbolRenderer):
-            for cat in renderer.categories():
-                symbol = cat.symbol()
-                self.change_symbol_color(symbol)
-                
+        elif isinstance(renderer, QgsCategorizedSymbolRenderer) or isinstance(renderer, QgsGraduatedSymbolRenderer):
+            ramp = renderer.sourceColorRamp()
+            if isinstance(ramp, QgsGradientColorRamp):
+                ramp = ramp.clone()
+            elif isinstance(ramp, QgsCptCityColorRamp):
+                ramp = ramp.cloneGradientRamp()
+            else:
+                return
+            self.change_ramp_colors(ramp)
+            renderer.updateColorRamp(ramp)
+
+               
 
         elif isinstance(renderer, QgsRuleBasedRenderer):
             for rule in renderer.rootRule().children():
@@ -425,7 +431,27 @@ class AdjustStyle:
                 symlayer.setColor2(color)
             
         return
+
+    def change_ramp_colors(self, ramp):
+        color = ramp.color1()
+        color = self.change_color(color, self.value)
+        ramp.setColor1(color)
+
+        color = ramp.color2()
+        color = self.change_color(color, self.value)
+        ramp.setColor2(color)
+
+        new_stops = []
+        for stop in ramp.stops():
+            offset = stop.offset
+            color = stop.color
+            color = self.change_color(color, self.value)
+            new_stops.append(QgsGradientStop(offset, color))
         
+        ramp.setStops(new_stops)
+
+
+
 
     def change_font_color(self, settings):
 
