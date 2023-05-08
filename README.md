@@ -23,7 +23,7 @@ First of all, select the layers you want to work on. Possible choices:
 - All Layers
 
 ### Change Color
-Adjusting colors works in the HSV color model. That means you can rotate the color wheel (the hue of the HSV colors) by setting the degree and hitting "OK".
+Adjusting colors works in the HSV color model. That means you can rotate the hue of the HSV colors as you would rotate a color wheel: set the degree of the rotation and hit "OK".
 
 To adjust saturation and value (= brightness), click on the respective plus and minus buttons. Be careful: You can't use the plus and minus button to undo the changes already made since the values of saturation and HSV stay in the interval ranging from 0 to 255 and any color arriving at these borders can't be moved back in an consistant way. It is good practice to save the layer styles before using these buttons!
 
