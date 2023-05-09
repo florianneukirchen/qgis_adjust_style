@@ -685,17 +685,22 @@ class AdjustStyle:
         url = os.path.join(self.url, clean_name + '.qml')
 
         # Handle the dublicate layer name problem
-        if not os.path.exists(url):
-            url2 = os.path.join(self.url, clean_name + '__(00).qml')
-            if os.path.exists(url2):
-                listoflayers = QgsProject.instance().mapLayersByName(layer.name())
-                i = listoflayers.index(layer)
-                filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
-                url3 = os.path.join(self.url, filename)
-                if os.path.exists(url3):
-                    url = url3
-                else:
-                    url = url2
+        listoflayers = QgsProject.instance().mapLayersByName(layer.name())
+        if len(listoflayers) > 1:
+            i = listoflayers.index(layer)
+            filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
+            url1 = os.path.join(self.url, filename) 
+            if os.path.exists(url1):
+                url = url1
+            else:
+                # Use a filename without number if it exists, else try (00)
+                if not os.path.exists(url):
+                    url = os.path.join(self.url, clean_name + '__(00).qml')
+        else:
+            # If filename without number does not exist, try (00)
+            if not os.path.exists(url):
+                    url = os.path.join(self.url, clean_name + '__(00).qml')
+
 
         # Load the style
         status = layer.loadNamedStyle(url, True) 
