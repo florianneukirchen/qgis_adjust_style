@@ -385,6 +385,18 @@ class AdjustStyle:
                 ramp = ramp.cloneGradientRamp()
                 self.change_ramp_colors(ramp)
                 renderer.updateColorRamp(ramp)
+            elif isinstance(ramp, QgsRandomColorRamp) and isinstance(renderer, QgsCategorizedSymbolRenderer):
+                for index, cat in enumerate(renderer.categories()):
+                    symbol = cat.symbol().clone()
+                    self.change_symbol_color(symbol)
+                    renderer.updateCategorySymbol(index, symbol)
+            elif isinstance(ramp, QgsRandomColorRamp) and isinstance(renderer, QgsGraduatedSymbolRenderer):
+                for index, range in enumerate(renderer.ranges()):
+                    symbol = range.symbol().clone()
+                    self.change_symbol_color(symbol)
+                    renderer.updateRangeSymbol(index, symbol)
+
+              
             else:
                 # Color Brewer Ramps and maybe other types
                 pass
@@ -509,14 +521,17 @@ class AdjustStyle:
             symbol = renderer.symbol()
             self.change_symbol_stroke(symbol)
         
-        # Funkt nicht
         elif isinstance(renderer, QgsCategorizedSymbolRenderer):
-            for cat in renderer.categories():
-                symbol = cat.symbol()
-                print(symbol)
+            for index, cat in enumerate(renderer.categories()):
+                symbol = cat.symbol().clone()
                 self.change_symbol_stroke(symbol)
-                cat.setSymbol(symbol)
+                renderer.updateCategorySymbol(index, symbol)
 
+        elif isinstance(renderer, QgsGraduatedSymbolRenderer):
+            for index, range in enumerate(renderer.ranges()):
+                symbol = range.symbol().clone()
+                self.change_symbol_stroke(symbol)
+                renderer.updateRangeSymbol(index, symbol)
 
         elif isinstance(renderer, QgsRuleBasedRenderer):
             for rule in renderer.rootRule().children():

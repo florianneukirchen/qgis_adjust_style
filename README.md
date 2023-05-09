@@ -11,8 +11,7 @@ It allows to:
 ## Known Bugs / Limitations
 - Raster layers are not changed
 - Annotations (annotation layers) are not changed
-- Changing line width (stroke) does not work on categorized / graduated symbol renderers
-- Color ramps: neither color brewer ramps nor random colors are modified; works only on graduaded and cpt-city color ramps. 
+- Color ramps: color brewer ramps are not modified 
 
 ## Install
 Copy (or git clone) the folder with the code into your QGIS plugin folder and enable the plugin in QGIS (menu: Plugins > Manage and Install Plugins).
