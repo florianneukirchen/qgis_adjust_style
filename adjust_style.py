@@ -511,7 +511,8 @@ class AdjustStyle:
                 symbol = cat.symbol()
                 print(symbol)
                 self.change_symbol_stroke(symbol)
-                
+                cat.setSymbol(symbol)
+
 
         elif isinstance(renderer, QgsRuleBasedRenderer):
             for rule in renderer.rootRule().children():

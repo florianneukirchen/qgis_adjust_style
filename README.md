@@ -1,16 +1,20 @@
 # QGIS Plugin Adjust Style
-Experimental QGIS Plugin to adjust the style of a map with a few clicks instead of altering every single symbol or label rule. It offers a quick way to adjust the style of all vector layers (or selected layers) in a consistant way, to try different styles / colors / fonts for a single project, or to apply styles of one project to another one. 
+Experimental QGIS Plugin to adjust the style of a map with a few clicks instead of altering every single symbol or label rule. It offers a quick way to adjust the style of all vector layers (or selected layers) in a consistant way, to check out different styles / colors / fonts for a single project, or to apply styles of one project to another one. 
 
 | :warning: **Experimental**: Does not work with raster layers and some render types are broken! |
 |----------------------------------------------------------------------------------------------------|
 
 It allows to: 
-- adjust color of all symbols and labels using the HSV color model (rotate hue, change saturation and value)
+- adjust color of all symbols (including color ramps) and labels using the HSV color model (rotate hue, change saturation and value)
 - change line thickness (stroke width of all symbols / symbol borders)
 - change font size of all labels
 - replace a font family used in labels with another font family
 - save / load the styles of all layers.
 
+## Known bugs / limitations
+- Raster layers are not changed
+- Changing line width (stroke) does not work on categorized / graduated symbol renderers
+- Color ramps: neither color brewer ramps nor random colors are modified; works only on graduaded and cpt-city color ramps. 
 
 ## Usage
 Start the plugin form the Plugin menu or the plugin toolbar, a dockwidget opens on the right side of the main window.
