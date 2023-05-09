@@ -379,12 +379,16 @@ class AdjustStyle:
             ramp = renderer.sourceColorRamp()
             if isinstance(ramp, QgsGradientColorRamp):
                 ramp = ramp.clone()
+                self.change_ramp_colors(ramp)
+                renderer.updateColorRamp(ramp)
             elif isinstance(ramp, QgsCptCityColorRamp):
                 ramp = ramp.cloneGradientRamp()
+                self.change_ramp_colors(ramp)
+                renderer.updateColorRamp(ramp)
             else:
-                return
-            self.change_ramp_colors(ramp)
-            renderer.updateColorRamp(ramp)
+                # Color Brewer Ramps and maybe other types
+                pass
+
 
         """
         # Raster Layer is not working, it crashes QGIS
