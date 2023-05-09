@@ -385,12 +385,12 @@ class AdjustStyle:
                 ramp = ramp.cloneGradientRamp()
                 self.change_ramp_colors(ramp)
                 renderer.updateColorRamp(ramp)
-            elif (not ramp or isinstance(ramp, QgsRandomColorRamp)) and isinstance(renderer, QgsCategorizedSymbolRenderer):
+            elif (not ramp or isinstance(ramp, QgsRandomColorRamp)) and isinstance(renderer, QgsCategorizedSymbolRenderer): # 
                 for index, cat in enumerate(renderer.categories()):
                     symbol = cat.symbol().clone()
                     self.change_symbol_color(symbol)
                     renderer.updateCategorySymbol(index, symbol)
-            elif (not ramp or isinstance(ramp, QgsRandomColorRamp)) and isinstance(renderer, QgsGraduatedSymbolRenderer):
+            elif (not ramp or isinstance(ramp, QgsRandomColorRamp)) and isinstance(renderer, QgsGraduatedSymbolRenderer): #
                 for index, range in enumerate(renderer.ranges()):
                     symbol = range.symbol().clone()
                     self.change_symbol_color(symbol)
