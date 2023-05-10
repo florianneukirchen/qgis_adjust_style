@@ -213,19 +213,17 @@ class AdjustStyle:
     # Update preview colors
 
     def update_preview_colors(self):
-        print('bef', self.wheel[0])
         for column, hue in enumerate(self.wheel):
             h = hue + self.dockwidget.spinBox.value()
             if h >= 360:
                 h = h - 360
-            print(h)
             color = QColor()
             color.setHsv(h, 250, 250, 250)
             widget = self.dockwidget.colorGrid.itemAtPosition(1, column).widget()
             palette = QPalette()
             palette.setColor(QPalette.Window, color)
             widget.setPalette(palette)
-        print('aft', self.wheel[0])
+
 
 
 
