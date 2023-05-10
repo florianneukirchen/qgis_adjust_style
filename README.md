@@ -46,3 +46,4 @@ These buttons provide a quick way to save the styles of all (or all selected) la
 - Raster layers are not changed
 - Annotations (annotation layers) are not changed
 - Color ramps: color brewer ramps are not modified 
+- Layer effects are not modified 
