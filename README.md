@@ -13,7 +13,7 @@ It allows to:
 Copy (or git clone) the folder with the code into your QGIS plugin folder and enable the plugin in QGIS (menu: Plugins > Manage and Install Plugins).
 
 ## Usage
-Start the plugin form the Plugin menu or the plugin toolbar, a dockwidget opens on the right side of the main window.
+Start the plugin from the Plugin menu or the plugin toolbar, a dockwidget opens on the right side of the main window.
 
 ### Select Layers
 First of all, select the layers you want to work on. Possible choices:
