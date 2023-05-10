@@ -213,15 +213,19 @@ class AdjustStyle:
     # Update preview colors
 
     def update_preview_colors(self):
-        print('bef', self.wheelcolors[0].getHsv())
-        for column, color in enumerate(self.wheelcolors):
-            color2 = QColor(color)
-            color2 = self.rotate_hue(color, self.value)
+        print('bef', self.wheel[0])
+        for column, hue in enumerate(self.wheel):
+            h = hue + self.dockwidget.spinBox.value()
+            if h >= 360:
+                h = h - 360
+            print(h)
+            color = QColor()
+            color.setHsv(h, 250, 250, 250)
             widget = self.dockwidget.colorGrid.itemAtPosition(1, column).widget()
             palette = QPalette()
-            palette.setColor(QPalette.Window, color2)
+            palette.setColor(QPalette.Window, color)
             widget.setPalette(palette)
-        print('aft', self.wheelcolors[0].getHsv())
+        print('aft', self.wheel[0])
 
 
 
@@ -779,27 +783,20 @@ class AdjustStyle:
             self.dockwidget.spinBox.valueChanged.connect(self.spinboxChangeValue)
 
             # Create color grid
-            self.wheelcolors = []
-            for h in range(0, 360, 30):
-                color = QColor()
-                color.setHsv(h, 250, 250, 250)
-                self.wheelcolors.append(color)
-            
-            for column, color in enumerate(self.wheelcolors):
-                for row in range(2):
+            self.wheel = range(0, 360, 30)
 
-                    if row == 0:
-                        color2 = color
-                    else:
-                        color2 = self.rotate_hue(color, self.value)
-                    
+            for column, hue in enumerate(self.wheel):
+                for row in range(2):
+                    color = QColor()
+                    color.setHsv(hue, 250, 250, 250)
                     widget = QLabel(' ')
                     widget.setAutoFillBackground(True) 
                     palette = QPalette()
-                    palette.setColor(QPalette.Window, color2)
+                    palette.setColor(QPalette.Window, color)
                     widget.setPalette(palette)
                     self.dockwidget.colorGrid.addWidget(widget, row, column)
 
+            self.update_preview_colors()
 
             # Connect buttons
             self.dockwidget.hueButton.clicked.connect(self.hueBtn)
