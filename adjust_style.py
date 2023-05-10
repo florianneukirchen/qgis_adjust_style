@@ -24,8 +24,8 @@
 import re
 from qgis.core import *
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
-from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QAction, QFileDialog, QMessageBox
+from qgis.PyQt.QtGui import QIcon, QColor, QPalette
+from qgis.PyQt.QtWidgets import QAction, QFileDialog, QMessageBox, QWidget, QLabel
 # Initialize Qt resources from file resources.py
 from .resources import *
 
@@ -210,12 +210,30 @@ class AdjustStyle:
 
     #--------------------------------------------------------------------------
 
+    # Update preview colors
+
+    def update_preview_colors(self):
+        print('bef', self.wheelcolors[0].getHsv())
+        for column, color in enumerate(self.wheelcolors):
+            color2 = QColor(color)
+            color2 = self.rotate_hue(color, self.value)
+            widget = self.dockwidget.colorGrid.itemAtPosition(1, column).widget()
+            palette = QPalette()
+            palette.setColor(QPalette.Window, color2)
+            widget.setPalette(palette)
+        print('aft', self.wheelcolors[0].getHsv())
+
+
+
     # Connect slider and spinbox
     def spinboxChangeValue(self):
         self.dockwidget.horizontalSlider.setValue(self.dockwidget.spinBox.value())
+        self.update_preview_colors()
 
     def sliderChangeValue(self):
         self.dockwidget.spinBox.setValue(self.dockwidget.horizontalSlider.value())
+        self.update_preview_colors()
+
 
     #--------------------------------------------------------------------------
 
@@ -753,9 +771,35 @@ class AdjustStyle:
             # connect to provide cleanup on closing of dockwidget
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
-            # Init widgets 
+            # Init slider and spinbox widgets
+            self.value = 30
+            self.dockwidget.horizontalSlider.setValue(self.value) 
+            self.dockwidget.spinBox.setValue(self.value) 
             self.dockwidget.horizontalSlider.valueChanged[int].connect(self.sliderChangeValue)
             self.dockwidget.spinBox.valueChanged.connect(self.spinboxChangeValue)
+
+            # Create color grid
+            self.wheelcolors = []
+            for h in range(0, 360, 30):
+                color = QColor()
+                color.setHsv(h, 250, 250, 250)
+                self.wheelcolors.append(color)
+            
+            for column, color in enumerate(self.wheelcolors):
+                for row in range(2):
+
+                    if row == 0:
+                        color2 = color
+                    else:
+                        color2 = self.rotate_hue(color, self.value)
+                    
+                    widget = QLabel(' ')
+                    widget.setAutoFillBackground(True) 
+                    palette = QPalette()
+                    palette.setColor(QPalette.Window, color2)
+                    widget.setPalette(palette)
+                    self.dockwidget.colorGrid.addWidget(widget, row, column)
+
 
             # Connect buttons
             self.dockwidget.hueButton.clicked.connect(self.hueBtn)
