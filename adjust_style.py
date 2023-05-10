@@ -383,7 +383,12 @@ class AdjustStyle:
         return qcolor 
 
     def layer_change_color(self, layer):
-        renderer = layer.renderer()
+        # Make function callable with layer AND QgsFeatureRenderer
+        # So we can call the function recursively
+        if isinstance(layer, QgsFeatureRenderer):
+            renderer = layer.embeddedRenderer()
+        else:
+            renderer = layer.renderer()
         
         # Symbols
         if isinstance(renderer, QgsSingleSymbolRenderer):
@@ -421,6 +426,9 @@ class AdjustStyle:
                 # Color Brewer Ramps and maybe other types
                 pass
 
+        elif isinstance(renderer, QgsFeatureRenderer):
+            self.layer_change_color(renderer)
+
 
         """
         # Raster Layer is not working, it crashes QGIS
@@ -453,11 +461,12 @@ class AdjustStyle:
                     settings = self.change_font_color(settings)
                     rule.setSettings(settings)
 
-        layer.triggerRepaint()
+        if not isinstance(layer, QgsFeatureRenderer):
+            layer.triggerRepaint()
 
-        # Also show the changes in "Layer Styling" panel and TOC
-        layer.emitStyleChanged()
-        self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+            # Also show the changes in "Layer Styling" panel and TOC
+            layer.emitStyleChanged()
+            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
 
 
     def change_symbol_color(self, symbol):

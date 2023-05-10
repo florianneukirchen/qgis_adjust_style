@@ -47,3 +47,4 @@ These buttons provide a quick way to save the styles of all (or all selected) la
 - Annotations (annotation layers) are not changed
 - Color ramps: color brewer ramps are not modified 
 - Layer effects are not modified 
+- Feature Renderers (i.e. "Merged Features", "Inverted Polygons"): color is changed, but stroke width is not 
