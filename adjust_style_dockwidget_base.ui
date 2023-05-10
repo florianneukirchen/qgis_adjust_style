@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>278</width>
-    <height>486</height>
+    <height>452</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -91,7 +91,11 @@
        </widget>
       </item>
       <item>
-       <layout class="QGridLayout" name="colorGrid"/>
+       <layout class="QGridLayout" name="colorGrid">
+        <property name="spacing">
+         <number>1</number>
+        </property>
+       </layout>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
