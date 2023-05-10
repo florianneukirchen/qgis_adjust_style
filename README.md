@@ -8,10 +8,6 @@ It allows to:
 - replace a font family used in labels with another font family
 - save / load the styles of all layers at once into/from a given folder.
 
-## Known Bugs / Limitations
-- Raster layers are not changed
-- Annotations (annotation layers) are not changed
-- Color ramps: color brewer ramps are not modified 
 
 ## Install
 Copy (or git clone) the folder with the code into your QGIS plugin folder and enable the plugin in QGIS (menu: Plugins > Manage and Install Plugins).
@@ -27,7 +23,7 @@ First of all, select the layers you want to work on. Possible choices:
 - All Layers
 
 ### Change Color
-Adjusting colors works in the HSV color model. That means you can rotate the hue of the HSV colors as you would rotate a color wheel: set the degree of the rotation and hit "OK".
+Adjusting colors works in the HSV color model. That means you can rotate the hue of the HSV colors as you would rotate a color wheel: set the degree of the rotation and hit "OK". The color grid above the slider works as a preview.
 
 To adjust saturation and value (= brightness), click on the respective plus and minus buttons. Be careful: You can't use the plus and minus button to undo the changes already made since the values of saturation and HSV stay in the interval ranging from 0 to 255 and any color arriving at these borders can't be moved back in an consistant way. It is good practice to save the layer styles before using these buttons!
 
@@ -45,3 +41,8 @@ Choose the font family to be replace and select a new font family.
 
 #### Save and Load Styles
 These buttons provide a quick way to save the styles of all (or all selected) layers. You only need to select a folder. The filename of the QML files corresponds to the layer name (with bad characters replaced by underscore). If there are several layers of the same name, you will get several files with an index value appended.
+
+## Known Bugs / Limitations
+- Raster layers are not changed
+- Annotations (annotation layers) are not changed
+- Color ramps: color brewer ramps are not modified 
