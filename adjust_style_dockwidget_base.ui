@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>278</width>
-    <height>331</height>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,6 +89,9 @@
          <string>Color (HSV): rotate hue by x°</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="colorGrid"/>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
