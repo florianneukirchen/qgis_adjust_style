@@ -92,8 +92,11 @@
       </item>
       <item>
        <layout class="QGridLayout" name="colorGrid">
-        <property name="spacing">
+        <property name="horizontalSpacing">
          <number>1</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>0</number>
         </property>
        </layout>
       </item>
