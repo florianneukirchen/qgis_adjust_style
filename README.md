@@ -1,5 +1,5 @@
 # QGIS Plugin Adjust Style
-Experimental QGIS Plugin to adjust the style of a map with a few clicks instead of altering every single symbol for many categories or a number of label rules. It offers a quick way to adjust the style of all vector layers (or selected layers) in a consistant way, to check out how different colors / stroke widths / fonts work for a project, or to apply styles of one project to another one. 
+Experimental QGIS Plugin to adjust the style of a map with a few clicks instead of altering every single symbol for many categories or a number of label rules. It offers a quick way to adjust the style of all vector layers (or selected layers) in a consistant way, to check out how different colors / stroke widths / fonts work for a project, or to apply styles to another project. 
 
 It allows to: 
 - adjust color of all symbols (including color ramps and any number of symbol layers) and labels using the HSV color model (rotate hue, change saturation and value)
@@ -40,7 +40,9 @@ Use the plus / minus buttons to change the font size of labels in increments of 
 Choose the font family to be replace and select a new font family.
 
 #### Save and Load Styles
-These buttons provide a quick way to save the styles of all (or all selected) layers. You only need to select a folder. The filename of the QML files corresponds to the layer name (with bad characters replaced by underscore). If there are several layers of the same name, you will get several files with an index value appended.
+These buttons provide a quick way to save the styles of all (or all selected) layers. You only need to select a folder. The filename of the QML files corresponds to the layer name (with bad characters replaced by underscore). If there are several layers of the same name, you will get several files with an index value appended. 
+
+Should even work to save the styles of one project and load them in another one if the layer names match. 
 
 ## Known Bugs / Limitations
 - Raster layers are not changed
