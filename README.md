@@ -8,6 +8,7 @@ It allows to:
 - replace a font family used in labels with another font family
 - save / load the styles of all layers at once into/from a given folder.
 
+![QGIS plugin adjust style](help/screenshot.png)
 
 ## Install
 Copy (or git clone) the folder with the code into your QGIS plugin folder and enable the plugin in QGIS (menu: Plugins > Manage and Install Plugins).
