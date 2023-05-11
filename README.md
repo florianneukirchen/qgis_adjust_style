@@ -44,6 +44,10 @@ These buttons provide a quick way to save the styles of all (or all selected) la
 
 Should even work to save the styles of one project and load them in another one if the layer names match. 
 
+## Change Log
+### 0.1 (2023-05)
+- Initial release
+
 ## Known Bugs / Limitations
 - Raster layers are not changed
 - Annotations (annotation layers) are not changed

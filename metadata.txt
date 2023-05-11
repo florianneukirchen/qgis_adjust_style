@@ -31,7 +31,7 @@ repository=https://github.com/florianneukirchen/qgis_adjust_style
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-# changelog=
+# changelog=0.1 Initial Release
 
 # Tags are comma separated with spaces allowed
 tags=labeling, layers, point, line, polygon, style, vector, python, font, color
