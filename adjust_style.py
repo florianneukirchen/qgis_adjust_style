@@ -383,6 +383,15 @@ class AdjustStyle:
         return qcolor 
 
     def layer_change_color(self, layer):
+        # QGIS 3.24 introduces QgsGroupLayer and it does not have a renderer
+        try:
+            if isinstance(layer, QgsGroupLayer):
+                print('QgsGroupLayer not supported')
+                return
+        except NameError:
+            pass
+
+
         # Make function callable with layer AND QgsFeatureRenderer
         # So we can call the function recursively
         if isinstance(layer, QgsFeatureRenderer):
