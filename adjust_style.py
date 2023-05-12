@@ -585,13 +585,14 @@ class AdjustStyle:
         for symlayer in symbol.symbolLayers():
             print(symlayer)
             # Line symbols
-            if isinstance(symlayer, QgsLineSymbol):
+            if isinstance(symlayer, QgsSimpleLineSymbolLayer):
+                print('ja QgsLineSymbol')
                 width = symlayer.width()
                 width = width + self.value
                 symlayer.setWidth(width)
             # Simple fill (Polygons)
             elif isinstance(symlayer, QgsSimpleFillSymbolLayer):
-                print('ja')
+                print('ja QgsSimpleFillSymbolLayer')
                 width = symlayer.strokeWidth()
                 width = width + self.value
                 symlayer.setStrokeWidth(width)
