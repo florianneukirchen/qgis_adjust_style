@@ -47,7 +47,7 @@ Should even work to save the styles of one project and load them in another one 
 
 ## Change Log
 
-### 0.2
+### 0.2 (2023-05)
 - Do not crash on a QgsGroupLayer (this is a new QGIS feature)
 - Fix crash of changing stroke width with renderers other than line and simple fill
 
