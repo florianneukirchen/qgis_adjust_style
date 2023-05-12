@@ -583,16 +583,13 @@ class AdjustStyle:
 
     def change_symbol_stroke(self, symbol):
         for symlayer in symbol.symbolLayers():
-            print(symlayer)
             # Line symbols
             if isinstance(symlayer, QgsSimpleLineSymbolLayer):
-                print('ja QgsLineSymbol')
                 width = symlayer.width()
                 width = width + self.value
                 symlayer.setWidth(width)
             # Simple fill (Polygons)
             elif isinstance(symlayer, QgsSimpleFillSymbolLayer):
-                print('ja QgsSimpleFillSymbolLayer')
                 width = symlayer.strokeWidth()
                 width = width + self.value
                 symlayer.setStrokeWidth(width)
