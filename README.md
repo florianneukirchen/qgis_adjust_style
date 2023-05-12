@@ -46,11 +46,17 @@ These buttons provide a quick way to save the styles of all (or all selected) la
 Should even work to save the styles of one project and load them in another one if the layer names match. 
 
 ## Change Log
+
+### 0.2
+- Do not crash on a QgsGroupLayer (this is a new QGIS feature)
+- Fix crash of changing stroke width with renderers other than line and simple fill
+
 ### 0.1 (2023-05)
 - Initial release
 
 ## Known Bugs / Limitations
 - Raster layers are not changed
+- Changing stroke does only work for simple lines and simple fill 
 - Annotations (annotation layers) are not changed
 - Color ramps: color brewer ramps are not modified 
 - Layer effects are not modified 
