@@ -17,7 +17,11 @@ description=Experimental QGIS Plugin to adjust the style of a map with a few cli
     replace a font family used in labels with another font family;
     save / load the styles of all layers at once into/from a given folder.
 
-version=0.1
+version=0.2
+    - Do not crash on a QgsGroupLayer (this is a new QGIS feature)
+    - Fix crash of changing stroke width with renderers other than line and simple fill
+    0.1
+    - First release
 author=Florian Neukirchen
 email=mail@riannek.de
 
