@@ -1,5 +1,5 @@
 # QGIS Plugin Adjust Style
-Experimental QGIS Plugin to adjust the style of a map with a few clicks instead of altering every single symbol for many categories or a number of label rules. It offers a quick way to adjust the style of all vector layers (or selected layers) in a consistant way, to check out how different colors / stroke widths / fonts work for a project, or to apply styles to another project. 
+Experimental [QGIS Plugin](https://plugins.qgis.org/plugins/qgis_adjust_style/) to adjust the style of a map with a few clicks instead of altering every single symbol for many categories or a number of label rules. It offers a quick way to adjust the style of all vector layers (or selected layers) in a consistant way, to check out how different colors / stroke widths / fonts work for a project, or to apply styles to another project. 
 
 It allows to: 
 - adjust color of all symbols (including color ramps and any number of symbol layers) and labels using the HSV color model (rotate hue, change saturation and value)
@@ -10,8 +10,11 @@ It allows to:
 
 ![QGIS plugin adjust style](help/screenshot.png)
 
+
 ## Install
-Copy (or git clone) the folder with the code into your QGIS plugin folder and enable the plugin in QGIS (menu: Plugins > Manage and Install Plugins).
+The plugin is in the [QGIS Plugins Repository](https://plugins.qgis.org/plugins/qgis_adjust_style/) and can be installed directly from QGIS (menu: Plugins > Manage and Install Plugins). In the settings of the plugin manager, the checkbox to also show experimental plugins must be checked.
+
+Alternatively copy (or git clone) the folder with the code into your QGIS plugin folder and enable the plugin in QGIS (menu: Plugins > Manage and Install Plugins).
 
 ## Usage
 Start the plugin from the Plugin menu or the plugin toolbar, a dockwidget opens on the right side of the main window.
