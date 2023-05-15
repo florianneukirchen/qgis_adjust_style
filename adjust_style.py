@@ -770,6 +770,7 @@ class AdjustStyle:
 
         layer.triggerRepaint()
         layer.emitStyleChanged()
+        self.iface.layerTreeView().refreshLayerSymbology(layer.id())
 
     #--------------------------------------------------------------------------
 
