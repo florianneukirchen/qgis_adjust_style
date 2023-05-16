@@ -613,6 +613,7 @@ class AdjustStyle:
                 width = symlayer.width()
                 width = width + width * self.value
                 symlayer.setWidth(width)
+
             # Marker symbols with subsymbol
             elif (isinstance(symlayer, QgsFilledMarkerSymbolLayer) 
                   or isinstance(symlayer, QgsCentroidFillSymbolLayer) 
@@ -631,7 +632,7 @@ class AdjustStyle:
                     width = width + width * self.value
                     symlayer.setStrokeWidth(width)
                 except AttributeError as e:
-                    print(e)
+                    print('Adjust style: ' + str(e))
 
             
         return
