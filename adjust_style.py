@@ -383,13 +383,16 @@ class AdjustStyle:
         return qcolor 
 
     def layer_change_color(self, layer):
+        # Do nothing on Null Symbol Renderer
+        if isinstance(layer, QgsNullSymbolRenderer):
+            return
+        
         # QGIS 3.24 introduces QgsGroupLayer and it does not have a renderer
         try:
             if isinstance(layer, QgsGroupLayer):
                 return
         except NameError:
             pass
-
 
         # Make function callable with layer AND renderers with embedded renderer
         # So we can call the function recursively
