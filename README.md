@@ -62,8 +62,12 @@ Should even work to save the styles of one project and load them in another one 
 
 ## Known Bugs / Limitations
 - Raster layers are not changed
-- Changing stroke does only work for simple lines and simple fill 
 - Annotations (annotation layers) are not changed
 - Color ramps: color brewer ramps are not modified 
 - Layer effects are not modified 
+- Changing stroke width does not work for symbol layers based on QgsAbstractBrushedLineSymbolLayer such as lineburst
+
+
+### Fixed in git main
+- Changing stroke does only work for simple lines and simple fill 
 - Feature Renderers (i.e. "Merged Features", "Inverted Polygons"): color is changed, but stroke width is not 
