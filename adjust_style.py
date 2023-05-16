@@ -588,6 +588,11 @@ class AdjustStyle:
                 width = symlayer.width()
                 width = width + self.value
                 symlayer.setWidth(width)
+            # QgsFilledMarkerSymbolLayer
+            if isinstance(symlayer, QgsFilledMarkerSymbolLayer):
+                subsymbol = symlayer.subSymbol()
+                self.change_symbol_stroke(subsymbol)
+
             # Most other symbols
             else:
                 try:
