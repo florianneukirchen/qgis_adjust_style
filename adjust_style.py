@@ -588,8 +588,14 @@ class AdjustStyle:
                 width = symlayer.width()
                 width = width + self.value
                 symlayer.setWidth(width)
-            # QgsFilledMarkerSymbolLayer
-            if isinstance(symlayer, QgsFilledMarkerSymbolLayer):
+            # Marker symbols with subsymbol
+            elif (isinstance(symlayer, QgsFilledMarkerSymbolLayer) 
+                  or isinstance(symlayer, QgsCentroidFillSymbolLayer) 
+                  or isinstance(symlayer, QgsPointPatternFillSymbolLayer) 
+                  or isinstance(symlayer, QgsLinePatternFillSymbolLayer) 
+                  or isinstance(symlayer, QgsHashedLineSymbolLayer)
+                  or isinstance(symlayer, QgsMarkerLineSymbolLayer)
+                  or isinstance(symlayer, QgsRandomMarkerFillSymbolLayer)):
                 subsymbol = symlayer.subSymbol()
                 self.change_symbol_stroke(subsymbol)
 
