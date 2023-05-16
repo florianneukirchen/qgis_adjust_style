@@ -474,10 +474,11 @@ class AdjustStyle:
                     rule.setSettings(settings)
 
         if not isinstance(layer, QgsFeatureRenderer):
+            # Set dirty flag, trigger repaint
+            QgsProject.instance().setDirty()
             layer.triggerRepaint()
 
-            # Also show the changes in "Layer Styling" panel and TOC, set dirty flag
-            QgsProject.instance().setDirty()
+            # Also show the changes in "Layer Styling" panel and TOC
             layer.emitStyleChanged()
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
 
@@ -601,6 +602,7 @@ class AdjustStyle:
         QgsProject.instance().setDirty()
         layer.triggerRepaint()
         layer.emitStyleChanged()
+        self.iface.layerTreeView().refreshLayerSymbology(layer.id())
         return
 
 
@@ -654,6 +656,7 @@ class AdjustStyle:
             QgsProject.instance().setDirty()
             layer.triggerRepaint()
             layer.emitStyleChanged()
+            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
         
         return
 
@@ -730,6 +733,7 @@ class AdjustStyle:
 
             QgsProject.instance().setDirty()
             layer.triggerRepaint() 
+            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
             layer.emitStyleChanged()          
 
 
