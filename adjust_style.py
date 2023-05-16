@@ -386,15 +386,14 @@ class AdjustStyle:
         # QGIS 3.24 introduces QgsGroupLayer and it does not have a renderer
         try:
             if isinstance(layer, QgsGroupLayer):
-                # print('QgsGroupLayer not supported')
                 return
         except NameError:
             pass
 
 
-        # Make function callable with layer AND QgsFeatureRenderer
+        # Make function callable with layer AND renderers with embedded renderer
         # So we can call the function recursively
-        if isinstance(layer, QgsFeatureRenderer):
+        if type(renderer) in (QgsFeatureRenderer, QgsInvertedPolygonRenderer):
             renderer = layer.embeddedRenderer()
         else:
             renderer = layer.renderer()
@@ -554,7 +553,13 @@ class AdjustStyle:
             return
         
         renderer = layer.renderer()
+
+
+        # Use embedded renderer for "inverted polygon" etc
+        if type(renderer) in (QgsFeatureRenderer, QgsInvertedPolygonRenderer):
+            renderer = renderer.embeddedRenderer()
         
+        # Normal renderer types       
         if isinstance(renderer, QgsSingleSymbolRenderer):
             symbol = renderer.symbol()
             self.change_symbol_stroke(symbol)

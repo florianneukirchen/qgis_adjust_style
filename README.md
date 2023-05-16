@@ -49,6 +49,8 @@ These buttons provide a quick way to save the styles of all (or all selected) la
 Should even work to save the styles of one project and load them in another one if the layer names match. 
 
 ## Change Log
+### Git
+- Changing stroke works for most renderer and symbol types now, including subsymbols (such as marker line)
 
 ### 0.2 (2023-05)
 - Do not crash on a QgsGroupLayer (this is a new QGIS feature)
