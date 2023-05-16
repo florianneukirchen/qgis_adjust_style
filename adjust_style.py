@@ -386,7 +386,7 @@ class AdjustStyle:
         # QGIS 3.24 introduces QgsGroupLayer and it does not have a renderer
         try:
             if isinstance(layer, QgsGroupLayer):
-                print('QgsGroupLayer not supported')
+                # print('QgsGroupLayer not supported')
                 return
         except NameError:
             pass
@@ -588,11 +588,15 @@ class AdjustStyle:
                 width = symlayer.width()
                 width = width + self.value
                 symlayer.setWidth(width)
-            # Simple fill (Polygons)
-            elif isinstance(symlayer, QgsSimpleFillSymbolLayer):
-                width = symlayer.strokeWidth()
-                width = width + self.value
-                symlayer.setStrokeWidth(width)
+            # Most other symbols
+            else:
+                try:
+                    width = symlayer.strokeWidth()
+                    width = width + self.value
+                    symlayer.setStrokeWidth(width)
+                except AttributeError as e:
+                    print(e)
+
             
         return
     
