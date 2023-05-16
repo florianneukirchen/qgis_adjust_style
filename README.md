@@ -14,13 +14,13 @@ It allows to:
 ## Install
 The plugin is in the [QGIS Plugins Repository](https://plugins.qgis.org/plugins/qgis_adjust_style/) and can be installed directly from QGIS (menu: Plugins > Manage and Install Plugins). In the settings of the plugin manager, the checkbox to also show experimental plugins must be checked.
 
-Alternatively copy (or git clone) the folder with the code into your QGIS plugin folder and enable the plugin in QGIS (menu: Plugins > Manage and Install Plugins).
+Alternatively, copy (or git clone) the folder with the code into your QGIS plugin folder and enable the plugin in QGIS (menu: Plugins > Manage and Install Plugins).
 
 ## Usage
 Start the plugin from the Plugin menu or the plugin toolbar, a dockwidget opens on the right side of the main window.
 
 ### Select Layers
-First of all, select the layers you want to work on. Possible choices:
+First, select the layers you want to work on. Possible choices:
 - Active Layer
 - Selected Layers
 - Visible Layers
@@ -29,7 +29,7 @@ First of all, select the layers you want to work on. Possible choices:
 ### Change Color
 Adjusting colors works in the HSV color model. That means you can rotate the hue of the HSV colors as you would rotate a color wheel: set the degree of the rotation and hit "OK". The color grid above the slider works as a preview.
 
-To adjust saturation and value (= brightness), click on the respective plus and minus buttons. Be careful: You can't use the plus and minus button to undo the changes already made since the values of saturation and HSV value stay in the interval ranging from 0 to 255 and any color arriving at these borders can't be moved back in an consistant way. It is good practice to save the layer styles before using these buttons!
+To adjust saturation and value (= brightness), click on the respective plus and minus buttons. Be careful: You can't use the plus and minus button to undo the changes already made since the values of saturation and HSV value stay in the interval ranging from 0 to 255 and any color arriving at these borders can't be moved back in an consistent way. It is good practice to save the layer styles before using these buttons!
 
 ### Stroke Width
 Change the stroke width of lines and the borders of symbols of polygons and points with clicks on the plus and minus buttons.
@@ -41,7 +41,7 @@ Note: Changing the color of layers also changes the color of labels (text, buffe
 Use the plus / minus buttons to change the font size of labels in increments of 0.5 pt.
 
 #### Replace Font
-Choose the font family to be replace and select a new font family.
+Choose the font family to be replaced and select a new font family.
 
 #### Save and Load Styles
 These buttons provide a quick way to save the styles of all (or all selected) layers. You only need to select a folder. The filename of the QML files corresponds to the layer name (with bad characters replaced by underscore). If there are several layers of the same name, you will get several files with an index value appended. 
