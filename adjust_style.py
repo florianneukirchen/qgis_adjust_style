@@ -491,7 +491,7 @@ class AdjustStyle:
             symlayer.setStrokeColor(color)
 
             # Gradient layer
-            if isinstance(symlayer, QgsGradientFillSymbolLayer) or isinstance(symlayer, QgsShapeburstFillSymbolLayer):
+            if isinstance(symlayer, QgsGradientFillSymbolLayer) or isinstance(symlayer, QgsShapeburstFillSymbolLayer) or isinstance(symlayer, QgsLineburstSymbolLayer):
                 color = symlayer.color2()
                 color = self.change_color(color, self.value)
                 symlayer.setColor2(color)
