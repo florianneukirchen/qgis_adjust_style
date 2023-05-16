@@ -267,19 +267,19 @@ class AdjustStyle:
         self.mapToLayers(self.layer_change_color)  
 
     def strokeWidthPlusBtn(self):
-        self.value = 0.2
+        self.value = 0.05
         self.mapToLayers(self.layer_change_stroke)  
 
     def strokeWidthMinusBtn(self):
-        self.value = -0.2
+        self.value = -0.05
         self.mapToLayers(self.layer_change_stroke)  
 
     def fontSizePlusBtn(self):
-        self.value = 0.5
+        self.value = 0.05
         self.mapToLayers(self.layer_font_size)
 
     def fontSizeMinusBtn(self):
-        self.value = -0.5
+        self.value = -0.05
         self.mapToLayers(self.layer_font_size)
 
     def saveStylesBtn(self):
@@ -609,7 +609,7 @@ class AdjustStyle:
             # Line symbols
             if isinstance(symlayer, QgsSimpleLineSymbolLayer):
                 width = symlayer.width()
-                width = width + self.value
+                width = width + width * self.value
                 symlayer.setWidth(width)
             # Marker symbols with subsymbol
             elif (isinstance(symlayer, QgsFilledMarkerSymbolLayer) 
@@ -626,7 +626,7 @@ class AdjustStyle:
             else:
                 try:
                     width = symlayer.strokeWidth()
-                    width = width + self.value
+                    width = width + width * self.value
                     symlayer.setStrokeWidth(width)
                 except AttributeError as e:
                     print(e)
@@ -660,7 +660,7 @@ class AdjustStyle:
     def change_font_size(self, settings):
         format = settings.format() # Returns QgsTextFormat
         size = format.size()
-        size = size + self.value
+        size = size + size * self.value
         if size < 0:
             size = 0
         format.setSize(size)

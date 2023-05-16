@@ -50,6 +50,7 @@ Should even work to save the styles of one project and load them in another one 
 
 ## Change Log
 ### Git
+- Change stroke width and font size by 5 % instead of a small absolute value, to make it work in map units
 - Changing stroke works for most renderer and symbol types now, including subsymbols (such as marker line)
 - Shapeburst and lineburst: change color ramp and color2
 - Flag project as modified ("dirty") after changing / loading the style
