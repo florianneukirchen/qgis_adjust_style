@@ -473,7 +473,8 @@ class AdjustStyle:
         if not isinstance(layer, QgsFeatureRenderer):
             layer.triggerRepaint()
 
-            # Also show the changes in "Layer Styling" panel and TOC
+            # Also show the changes in "Layer Styling" panel and TOC, set dirty flag
+            QgsProject.instance().setDirty()
             layer.emitStyleChanged()
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
 
@@ -594,6 +595,7 @@ class AdjustStyle:
                 symbol = rule.symbol()
                 self.change_symbol_stroke(symbol)
 
+        QgsProject.instance().setDirty()
         layer.triggerRepaint()
         layer.emitStyleChanged()
         return
@@ -646,6 +648,7 @@ class AdjustStyle:
                     settings = self.change_font_size(settings)
                     rule.setSettings(settings)
 
+            QgsProject.instance().setDirty()
             layer.triggerRepaint()
             layer.emitStyleChanged()
         
@@ -722,6 +725,7 @@ class AdjustStyle:
                         settings.setFormat(format)
                         rule.setSettings(settings)
 
+            QgsProject.instance().setDirty()
             layer.triggerRepaint() 
             layer.emitStyleChanged()          
 
@@ -801,6 +805,7 @@ class AdjustStyle:
             self.counter_fail += 1
             print(status)
 
+        QgsProject.instance().setDirty()
         layer.triggerRepaint()
         layer.emitStyleChanged()
         self.iface.layerTreeView().refreshLayerSymbology(layer.id())

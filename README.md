@@ -52,6 +52,7 @@ Should even work to save the styles of one project and load them in another one 
 ### Git
 - Changing stroke works for most renderer and symbol types now, including subsymbols (such as marker line)
 - Shapeburst and lineburst: change color ramp and color2
+- Flag project as modified ("dirty") after changing / loading the style
 
 ### 0.2 (2023-05)
 - Do not crash on a QgsGroupLayer (this is a new QGIS feature)
