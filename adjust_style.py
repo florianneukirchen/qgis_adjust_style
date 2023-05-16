@@ -393,7 +393,8 @@ class AdjustStyle:
 
         # Make function callable with layer AND renderers with embedded renderer
         # So we can call the function recursively
-        if type(renderer) in (QgsFeatureRenderer, QgsInvertedPolygonRenderer):
+        # "layer" might be a renderer in this case
+        if type(layer) in (QgsFeatureRenderer, QgsInvertedPolygonRenderer):
             renderer = layer.embeddedRenderer()
         else:
             renderer = layer.renderer()
