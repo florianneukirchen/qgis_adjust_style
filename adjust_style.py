@@ -289,6 +289,11 @@ class AdjustStyle:
         self.url = QFileDialog.getExistingDirectory(
             self.dockwidget, 'Select a directory', self.url
         )
+
+        if not self.url:
+            # Canceled
+            return
+
         if not os.access(self.url, os.W_OK):
             self.iface.messageBar().pushWarning(self.tr('Save Styles'), self.tr("Can't write to directory {}").format(self.url))
             return
@@ -309,6 +314,10 @@ class AdjustStyle:
         self.url = QFileDialog.getExistingDirectory(
             self.dockwidget, 'Select a directory', self.url
         )
+
+        if not self.url:
+            # Canceled
+            return
 
         if not os.access(self.url, os.R_OK):
             self.iface.messageBar().pushWarning(self.tr('Load Styles'), self.tr("Can't read directory {}").format(self.url))
