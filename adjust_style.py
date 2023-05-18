@@ -443,6 +443,20 @@ class AdjustStyle:
                 # Color Brewer Ramps and maybe other types
                 pass
 
+        elif isinstance(renderer, QgsHeatmapRenderer):
+            ramp = renderer.colorRamp()
+            if isinstance(ramp, QgsGradientColorRamp):
+                ramp = ramp.clone()
+                self.change_ramp_colors(ramp)
+                renderer.setColorRamp(ramp)
+            elif isinstance(ramp, QgsCptCityColorRamp):
+                ramp = ramp.cloneGradientRamp()
+                self.change_ramp_colors(ramp)
+                renderer.setColorRamp(ramp)
+
+
+        
+
         # inverted polygon or dissolved renderer
         elif type(renderer) in (QgsFeatureRenderer, QgsInvertedPolygonRenderer):
             self.layer_change_color(renderer)
