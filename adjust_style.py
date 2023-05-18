@@ -572,23 +572,26 @@ class AdjustStyle:
                 color = self.change_color(color, self.value)
                 symlayer.setStrokeColor(color)
 
-            # Gradient layers
-            if isinstance(symlayer, QgsGradientFillSymbolLayer) or isinstance(symlayer, QgsShapeburstFillSymbolLayer) or isinstance(symlayer, QgsLineburstSymbolLayer):
-                # Set color 2 for 2-colored gradients
-                color = symlayer.color2()
-                color = self.change_color(color, self.value)
-                symlayer.setColor2(color)
+            # Gradient layers (QgsLineburstSymbolLayer are new in QGIS 3.24)
+            try:
+                if isinstance(symlayer, QgsGradientFillSymbolLayer) or isinstance(symlayer, QgsShapeburstFillSymbolLayer) or isinstance(symlayer, QgsLineburstSymbolLayer):
+                    # Set color 2 for 2-colored gradients
+                    color = symlayer.color2()
+                    color = self.change_color(color, self.value)
+                    symlayer.setColor2(color)
 
-                # change ramp for ramp based gradient
-                ramp = symlayer.colorRamp()
-                if isinstance(ramp, QgsGradientColorRamp):
-                    ramp = ramp.clone()
-                    self.change_ramp_colors(ramp)
-                    symlayer.setColorRamp(ramp)
-                elif isinstance(ramp, QgsCptCityColorRamp):
-                    ramp = ramp.cloneGradientRamp()
-                    self.change_ramp_colors(ramp)
-                    symlayer.setColorRamp(ramp)
+                    # change ramp for ramp based gradient
+                    ramp = symlayer.colorRamp()
+                    if isinstance(ramp, QgsGradientColorRamp):
+                        ramp = ramp.clone()
+                        self.change_ramp_colors(ramp)
+                        symlayer.setColorRamp(ramp)
+                    elif isinstance(ramp, QgsCptCityColorRamp):
+                        ramp = ramp.cloneGradientRamp()
+                        self.change_ramp_colors(ramp)
+                        symlayer.setColorRamp(ramp)
+            except NameError:
+                pass
             
 
             # Effects
