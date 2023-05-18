@@ -404,7 +404,7 @@ class AdjustStyle:
         else:
             renderer = layer.renderer()
         
-        # Change symbols depending on renderer type
+        # Vector layers: Change symbols depending on renderer type
         if isinstance(renderer, QgsSingleSymbolRenderer):
             symbol = renderer.symbol()
             self.change_symbol_color(symbol)
@@ -439,6 +439,7 @@ class AdjustStyle:
                 # Color Brewer Ramps and maybe other types
                 pass
 
+        # inverted polygon or dissolved renderer
         elif isinstance(renderer, QgsFeatureRenderer):
             self.layer_change_color(renderer)
 
@@ -472,6 +473,19 @@ class AdjustStyle:
             symbol = renderer.contourIndexSymbol().clone()
             self.change_symbol_color(symbol)
             renderer.setContourIndexSymbol(symbol)
+
+        # Raster layers with "colorize" in the render pipeline
+        if isinstance(layer, QgsRasterLayer):
+            huesat = layer.pipe().hueSaturationFilter() # May be none
+            if huesat and huesat.colorizeOn():
+                huesat = huesat.clone()
+                color = huesat.colorizeColor()
+                color = self.change_color(color, self.value)
+                huesat.setColorizeColor(color)
+                layer.pipe().set(huesat)
+
+
+
 
         # Labels
      
