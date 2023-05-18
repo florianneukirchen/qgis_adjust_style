@@ -605,6 +605,8 @@ class AdjustStyle:
                 color = self.change_color(color, self.value)
                 effect.setColor(color)
 
+                # Color ramp of glow effects
+
                 # try:
                 #     ramp = effect.ramp()
                 #     if isinstance(ramp, QgsGradientColorRamp):
@@ -737,6 +739,7 @@ class AdjustStyle:
 
     def change_symbol_stroke(self, symbol):
         for symlayer in symbol.symbolLayers():
+            print(symlayer)
             # Line symbols
             if isinstance(symlayer, QgsSimpleLineSymbolLayer):
                 width = symlayer.width()
@@ -762,7 +765,8 @@ class AdjustStyle:
                     width = width + width * self.value
                     symlayer.setStrokeWidth(width)
                 except AttributeError as e:
-                    print('Adjust style: ' + str(e))
+                    # print('Adjust style: ' + str(e))
+                    pass
 
             
         return
