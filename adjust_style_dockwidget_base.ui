@@ -34,7 +34,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton">
+       <widget class="QRadioButton" name="radioSelectedLayers">
         <property name="text">
          <string>Selected Layers</string>
         </property>

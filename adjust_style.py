@@ -330,20 +330,20 @@ class AdjustStyle:
     # Use the choice of layers and map the corresponding function to them
 
     def mapToLayers(self, func):
-        self.layerchoice = self.dockwidget.buttonGroup.checkedButton().text()
-        if self.layerchoice == 'Active Layer':
+        layerchoice = self.dockwidget.buttonGroup.checkedId()
+        if layerchoice == 1:
             layer = self.iface.activeLayer()
             func(layer)
 
-        elif self.layerchoice == 'Selected Layers':
+        elif layerchoice == 2:
             for layer in self.iface.layerTreeView().selectedLayers():
                 func(layer)
 
-        elif self.layerchoice == 'Visible Layers':
+        elif layerchoice == 3:
             for layer in self.iface.mapCanvas().layers():
                 func(layer)
 
-        elif self.layerchoice == 'All Layers':
+        elif layerchoice == 4:
             for layer in QgsProject.instance().mapLayers().values():
                 func(layer)
         
@@ -874,6 +874,12 @@ class AdjustStyle:
             self.dockwidget.saveStylesButton.clicked.connect(self.saveStylesBtn)
             self.dockwidget.loadStylesButton.clicked.connect(self.loadStylesBtn)
             
+            # set IDs for radio buttons
+            self.dockwidget.buttonGroup.setId(self.dockwidget.radioActiveLayer, 1)
+            self.dockwidget.buttonGroup.setId(self.dockwidget.radioSelectedLayers, 2)
+            self.dockwidget.buttonGroup.setId(self.dockwidget.radioVisibleLayers, 3)
+            self.dockwidget.buttonGroup.setId(self.dockwidget.radioAllLayers, 4)
+
             # show the dockwidget
             self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)
             self.dockwidget.show()
