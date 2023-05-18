@@ -385,6 +385,10 @@ class AdjustStyle:
         return qcolor 
 
     def layer_change_color(self, layer):
+        # Layer groups have type None
+        if not layer:
+            return
+
         # Do nothing on Null Symbol Renderer
         if isinstance(layer, QgsNullSymbolRenderer):
             return
@@ -631,6 +635,9 @@ class AdjustStyle:
     # Change stroke width
 
     def layer_change_stroke(self, layer):
+        # Layer groups have type None
+        if not layer:
+            return
 
         # Do nothing on Null Symbol Renderer
         if isinstance(layer, QgsNullSymbolRenderer):
