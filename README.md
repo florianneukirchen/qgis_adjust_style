@@ -12,6 +12,9 @@ With one mouse click, it allows to (in all seleced layers):
 
 
 ## Install
+
+Note: Please try and test the GIT version (leading to 1.0) with tons of bug fixes.
+
 The plugin is in the [QGIS Plugins Repository](https://plugins.qgis.org/plugins/qgis_adjust_style/) and can be installed directly from QGIS (menu: Plugins > Manage and Install Plugins). In the settings of the plugin manager, the checkbox to also show experimental plugins must be checked.
 
 Alternatively, copy (or git clone) the folder with the code into your QGIS plugin folder and enable the plugin in QGIS (menu: Plugins > Manage and Install Plugins).
