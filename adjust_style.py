@@ -577,13 +577,14 @@ class AdjustStyle:
 
     def layer_change_stroke(self, layer):
 
-        if not isinstance(layer, QgsVectorLayer):
+        # Do nothing on Null Symbol Renderer
+        if isinstance(layer, QgsNullSymbolRenderer):
             return
         
         renderer = layer.renderer()
 
 
-        # Use embedded renderer for "inverted polygon" etc
+        # Use embedded renderer for "inverted polygon" and dissolved renderer 
         if type(renderer) in (QgsFeatureRenderer, QgsInvertedPolygonRenderer):
             renderer = renderer.embeddedRenderer()
         
@@ -608,6 +609,18 @@ class AdjustStyle:
             for rule in renderer.rootRule().children():
                 symbol = rule.symbol()
                 self.change_symbol_stroke(symbol)
+
+        elif isinstance(renderer, QgsRasterContourRenderer):
+            symbol = renderer.contourSymbol().clone()
+            self.change_symbol_stroke(symbol)
+            renderer.setContourSymbol(symbol)
+            symbol = renderer.contourIndexSymbol().clone()
+            self.change_symbol_stroke(symbol)
+            renderer.setContourIndexSymbol(symbol)
+
+        else:
+            # Do not trigger repaint
+            return
 
         QgsProject.instance().setDirty()
         layer.triggerRepaint()
