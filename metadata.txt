@@ -5,24 +5,24 @@
 [general]
 name=Adjust Syle 
 qgisMinimumVersion=3.16
-description=Experimental QGIS Plugin to adjust the style of a map with a few clicks 
-    instead of altering every single symbol for many categories or a number of label rules. 
-    It offers a quick way to adjust the style of all vector layers (or selected layers) in a 
-    consistant way, to check out how different colors / stroke widths / fonts work for a 
-    project, or to apply styles of one project to another one. 
-    It allows to: adjust color of all symbols (including color ramps and any number of symbol layers) 
+description=Adjust the style of a map with a few clicks 
+    instead of altering every single symbol (and symbol layer) for many layers, categories or a number of label rules. 
+    A quick way to adjust the symbology of all layers (or selected layers) consistantly, 
+    to check out how different colors / stroke widths / fonts work for a project, 
+    and to save and load styles of all layers – or even to apply styles to another project.
+    With one click, it allows to: adjust color of all symbols (including color ramps and any number of symbol layers) 
     and labels using the HSV color model (rotate hue, change saturation and value); 
     change line thickness (i.e. stroke width of all symbols / symbol borders);
     change font size of all labels;
     replace a font family used in labels with another font family;
     save / load the styles of all layers at once into/from a given folder.
 
-version=0.2
+version=1.0
 
 author=Florian Neukirchen
 email=mail@riannek.de
 
-about=Provide a brief description of the plugin and its purpose.
+about=Quickly adjust the symbology (colors, stroke, font) for all layers.
 
 tracker=https://github.com/florianneukirchen/qgis_adjust_style/issues
 repository=https://github.com/florianneukirchen/qgis_adjust_style
@@ -32,20 +32,34 @@ repository=https://github.com/florianneukirchen/qgis_adjust_style
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=0.2
+changelog=1.0
+    - Change stroke width and font size by 5 % instead of a small absolute value, to make it work in map units
+    - Changing stroke works for most renderer and symbol types now, including subsymbols (such as marker line)
+    - Shapeburst and lineburst: correctly change color ramp and color2
+    - Raster: Change color ramp of single band pseudo color renderer
+    - Raster layers with colorize in the render pipeline: change color
+    - Change colors in vector layer effects (glow, shadow)
+    - Mark strings for translation
+    - Add german translation
+    - Flag project as modified ("dirty") after changing / loading the style
+    - Do not crash on QgsNullSymbolRenderer
+    - Change color ramp of heatmap renderer
+    - Change color and stroke on raster contour renderer
+    - Fix message on loading styles with style files for only some layers
+    0.2
     - Do not crash on a QgsGroupLayer (this is a new QGIS feature)
     - Fix crash of changing stroke width with renderers other than line and simple fill
     0.1
     - First release
 
 # Tags are comma separated with spaces allowed
-tags=labeling, layers, point, line, polygon, style, vector, python, font, color
+tags=labeling, layers, point, line, polygon, style, vector, raster, python, font, color
 
 homepage=https://github.com/florianneukirchen/qgis_adjust_style
 category=Plugins
 icon=icon.png
 # experimental flag
-experimental=True
+experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False
