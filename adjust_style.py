@@ -290,14 +290,14 @@ class AdjustStyle:
             self.dockwidget, 'Select a directory', self.url
         )
         if not os.access(self.url, os.W_OK):
-            self.iface.messageBar().pushWarning('Save Styles', "Can't write to directory " + self.url)
+            self.iface.messageBar().pushWarning(self.tr('Save Styles'), self.tr("Can't write to directory {}").format(self.url))
             return
         print('Save styles to:', self.url)
 
         self.mapToLayers(self.save_layer_style)
 
         if self.counter > 0:
-            self.iface.messageBar().pushInfo('Save styles', f'Succesfully saved styles of {self.counter} layers.')
+            self.iface.messageBar().pushInfo(self.tr('Save Styles'), self.tr('Succesfully saved styles of {} selected layers.').format(self.counter))
 
     
     def loadStylesBtn(self):
@@ -309,7 +309,7 @@ class AdjustStyle:
         )
 
         if not os.access(self.url, os.R_OK):
-            self.iface.messageBar().pushWarning('Load Styles', "Can't read directory " + self.url)
+            self.iface.messageBar().pushWarning(self.tr('Load Styles'), self.tr("Can't read directory {}").format(self.url))
             return
         
         print('Load styles from:', self.url)
@@ -317,13 +317,13 @@ class AdjustStyle:
         self.mapToLayers(self.load_layer_style)
 
         if self.counter == 0:
-            self.iface.messageBar().pushWarnig('Load styles', f'Could not load any style for any layer.')
+            self.iface.messageBar().pushWarning(self.tr('Load styles'), self.tr('Could not load any style for any layer.'))
         elif self.counter > 0 and self.counter_fail == 0:
-            self.iface.messageBar().pushInfo('Load styles', f'Succesfully loaded styles of all {self.counter} layers.')
+            self.iface.messageBar().pushInfo(self.tr('Load styles'), f'Succesfully loaded styles of all {self.counter} selected layers.')
         else:
             self.iface.messageBar().pushInfo(
-                'Load styles', 
-                f'Succesfully loaded styles of {self.counter} layers but failed on {self.counter_fail} layers.'
+                self.tr('Load styles'), 
+                self.tr('Succesfully loaded styles of {} layers but failed on {} selected layers.').format(self.counter, self.counter_fail)
                 )
 
 
@@ -759,8 +759,8 @@ class AdjustStyle:
             
             choice = QMessageBox.question(
                 self.dockwidget,
-                'File exists',
-                f'File {filename} already exists. Do you want to overwrite it?',
+                self.tr('File exists'),
+                self.tr('File {} already exists. Do you want to overwrite it?').format(filename),
                 QMessageBox.YesToAll | QMessageBox.Yes | QMessageBox.No
             )
             if choice == QMessageBox.Yes:
@@ -775,7 +775,7 @@ class AdjustStyle:
 
         # status is a tuple (str, bool)
         if not status[1]:
-            self.iface.messageBar().pushWarning('Save Style ' + layer.name() + 'failed:', status[0])
+            self.iface.messageBar().pushWarning(self.tr('Save Style {} failed:').format(layer.name()), status[0])
         else:
             self.counter += 1
 
@@ -811,7 +811,6 @@ class AdjustStyle:
             self.counter += 1
         else:
             self.counter_fail += 1
-            print(status)
 
         QgsProject.instance().setDirty()
         layer.triggerRepaint()
