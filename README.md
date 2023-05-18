@@ -53,6 +53,8 @@ Should even work to save the styles of one project and load them in another one 
 - Change stroke width and font size by 5 % instead of a small absolute value, to make it work in map units
 - Changing stroke works for most renderer and symbol types now, including subsymbols (such as marker line)
 - Shapeburst and lineburst: correctly change color ramp and color2
+- Mark strings for translation
+- Add german translation
 - Flag project as modified ("dirty") after changing / loading the style
 - Do not crash on QgsNullSymbolRenderer
 - Fix message on loading styles with style files for only some layers
