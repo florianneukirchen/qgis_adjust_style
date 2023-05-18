@@ -490,7 +490,7 @@ class AdjustStyle:
                     rule.setSettings(settings)
 
         #  Only for real layers:
-        if not type(layer) == QgsFeatureRenderer:
+        if not isinstance(layer, QgsFeatureRenderer):
             # Set dirty flag, trigger repaint
             QgsProject.instance().setDirty()
             layer.triggerRepaint()
