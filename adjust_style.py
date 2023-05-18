@@ -292,12 +292,14 @@ class AdjustStyle:
         if not os.access(self.url, os.W_OK):
             self.iface.messageBar().pushWarning(self.tr('Save Styles'), self.tr("Can't write to directory {}").format(self.url))
             return
-        print('Save styles to:', self.url)
+        self.iface.mainWindow().statusBar().showMessage(self.tr('Save styles to: {}'.format(self.url)), 3000) 
 
         self.mapToLayers(self.save_layer_style)
 
         if self.counter > 0:
             self.iface.messageBar().pushInfo(self.tr('Save Styles'), self.tr('Succesfully saved styles of {} selected layers.').format(self.counter))
+        else:
+            self.iface.messageBar().pushWarning(self.tr('Error'), self.tr('Could not save styles.'))
 
     
     def loadStylesBtn(self):
@@ -312,7 +314,7 @@ class AdjustStyle:
             self.iface.messageBar().pushWarning(self.tr('Load Styles'), self.tr("Can't read directory {}").format(self.url))
             return
         
-        print('Load styles from:', self.url)
+        self.iface.mainWindow().statusBar().showMessage(self.tr('Load styles from: {}'.format(self.url)), 3000) 
 
         self.mapToLayers(self.load_layer_style)
 
