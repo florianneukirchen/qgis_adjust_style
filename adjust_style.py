@@ -404,7 +404,7 @@ class AdjustStyle:
         else:
             renderer = layer.renderer()
         
-        # Symbols
+        # Change symbols depending on renderer type
         if isinstance(renderer, QgsSingleSymbolRenderer):
             symbol = renderer.symbol()
             self.change_symbol_color(symbol)
@@ -435,7 +435,6 @@ class AdjustStyle:
                     self.change_symbol_color(symbol)
                     renderer.updateRangeSymbol(index, symbol)
 
-              
             else:
                 # Color Brewer Ramps and maybe other types
                 pass
@@ -465,7 +464,14 @@ class AdjustStyle:
 
             shader.setRasterShaderFunction(func)
             
-
+        # Raster layer with contour renderer
+        elif isinstance(renderer, QgsRasterContourRenderer):
+            symbol = renderer.contourSymbol().clone()
+            self.change_symbol_color(symbol)
+            renderer.setContourSymbol(symbol)
+            symbol = renderer.contourIndexSymbol().clone()
+            self.change_symbol_color(symbol)
+            renderer.setContourIndexSymbol(symbol)
 
         # Labels
      
