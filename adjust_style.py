@@ -444,7 +444,7 @@ class AdjustStyle:
                 pass
 
         # inverted polygon or dissolved renderer
-        elif isinstance(renderer, QgsFeatureRenderer):
+        elif type(renderer) in (QgsFeatureRenderer, QgsInvertedPolygonRenderer):
             self.layer_change_color(renderer)
 
 
