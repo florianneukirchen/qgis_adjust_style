@@ -643,6 +643,13 @@ class AdjustStyle:
         if isinstance(layer, QgsNullSymbolRenderer):
             return
         
+        # QGIS 3.24 introduces QgsGroupLayer and it does not have a renderer
+        try:
+            if isinstance(layer, QgsGroupLayer):
+                return
+        except NameError:
+            pass
+
         renderer = layer.renderer()
 
 
