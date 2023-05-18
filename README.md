@@ -1,5 +1,5 @@
 # QGIS Plugin Adjust Style
-Experimental [QGIS Plugin](https://plugins.qgis.org/plugins/qgis_adjust_style/) to adjust the style of a map with a few clicks instead of altering every single symbol for many categories or a number of label rules. It offers a quick way to adjust the style of all vector layers (or selected layers) in a consistant way, to check out how different colors / stroke widths / fonts work for a project, or to apply styles to another project. 
+Experimental [QGIS Plugin](https://plugins.qgis.org/plugins/qgis_adjust_style/) to adjust the style of a map with a few clicks instead of altering every single symbol for many categories or a number of label rules. It offers a quick way to adjust the style of all layers (or selected layers) in a consistant way, to check out how different colors / stroke widths / fonts work for a project, or to apply styles to another project. 
 
 It allows to: 
 - adjust color of all symbols (including color ramps and any number of symbol layers) and labels using the HSV color model (rotate hue, change saturation and value)
@@ -53,6 +53,7 @@ Should even work to save the styles of one project and load them in another one 
 - Change stroke width and font size by 5 % instead of a small absolute value, to make it work in map units
 - Changing stroke works for most renderer and symbol types now, including subsymbols (such as marker line)
 - Shapeburst and lineburst: correctly change color ramp and color2
+- Raster: Change color ramp of single band pseudo color renderer
 - Mark strings for translation
 - Add german translation
 - Flag project as modified ("dirty") after changing / loading the style
@@ -67,7 +68,6 @@ Should even work to save the styles of one project and load them in another one 
 - Initial release
 
 ## Known Bugs / Limitations
-- Raster layers are not changed
 - Annotations (annotation layers) are not changed
 - Color ramps: color brewer ramps are not modified 
 - Layer effects are not modified 
