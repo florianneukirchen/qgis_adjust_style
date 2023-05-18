@@ -484,6 +484,12 @@ class AdjustStyle:
                 huesat.setColorizeColor(color)
                 layer.pipe().set(huesat)
 
+        # Vector layers: paint effects
+        if isinstance(layer, QgsVectorLayer):
+            effects = renderer.paintEffect()
+            if effects.enabled():
+                self.change_effect_colors(effects)
+
 
 
 
@@ -544,7 +550,36 @@ class AdjustStyle:
                     self.change_ramp_colors(ramp)
                     symlayer.setColorRamp(ramp)
             
+            # Effects
+            effects = symlayer.paintEffect()
+            if effects and effects.enabled():
+                self.change_effect_colors(effects)
+
         return
+    
+    def change_effect_colors(self, effectstack):
+        for effect in effectstack.effectList():
+            if effect.enabled() and type(effect) in (QgsInnerGlowEffect, QgsDropShadowEffect, QgsInnerShadowEffect, QgsOuterGlowEffect):
+                color = effect.color()
+                color = self.change_color(color, self.value)
+                effect.setColor(color)
+
+                # try:
+                #     ramp = effect.ramp()
+                #     if isinstance(ramp, QgsGradientColorRamp):
+                #         ramp = ramp.clone()
+                #         self.change_ramp_colors(ramp)
+                #         effect.setColorRamp(ramp)
+                #     elif isinstance(ramp, QgsCptCityColorRamp):
+                #         ramp = ramp.cloneGradientRamp()
+                #         self.change_ramp_colors(ramp)
+                #         effect.setColorRamp(ramp)
+                # except AttributeError:
+                #     # Only glow effects can have ramps
+                #     pass
+                
+
+
 
     def change_ramp_colors(self, ramp):
         color = ramp.color1()
