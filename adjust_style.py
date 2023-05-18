@@ -450,13 +450,15 @@ class AdjustStyle:
             shader = renderer.shader()
             func = shader.rasterShaderFunction()
             ramp = func.sourceColorRamp()
-            print(type(ramp))
+
             if isinstance(ramp, QgsGradientColorRamp):
                 ramp = ramp.clone()
             elif isinstance(ramp, QgsCptCityColorRamp):
                 ramp = ramp.cloneGradientRamp()
             else:
+                # Nothing else to do
                 return
+            
             self.change_ramp_colors(ramp)
             func.setSourceColorRamp(ramp)
             func.classifyColorRamp()
