@@ -444,11 +444,13 @@ class AdjustStyle:
             self.layer_change_color(renderer)
 
 
-        """
-        # Raster Layer is not working, it crashes QGIS
+
+        # Raster Layer with pseudo color
         elif isinstance(renderer, QgsSingleBandPseudoColorRenderer):
-            func = renderer.shader().rasterShaderFunction()
+            shader = renderer.shader()
+            func = shader.rasterShaderFunction()
             ramp = func.sourceColorRamp()
+            print(type(ramp))
             if isinstance(ramp, QgsGradientColorRamp):
                 ramp = ramp.clone()
             elif isinstance(ramp, QgsCptCityColorRamp):
@@ -457,7 +459,13 @@ class AdjustStyle:
                 return
             self.change_ramp_colors(ramp)
             func.setSourceColorRamp(ramp)
-        """
+            func.classifyColorRamp()
+
+            shader.setRasterShaderFunction(func)
+
+            # layer.triggerRepaint()
+            
+
 
         # Labels
      
@@ -534,7 +542,6 @@ class AdjustStyle:
             new_stops.append(QgsGradientStop(offset, color))
         
         ramp.setStops(new_stops)
-
 
 
 
