@@ -462,8 +462,6 @@ class AdjustStyle:
             func.classifyColorRamp()
 
             shader.setRasterShaderFunction(func)
-
-            # layer.triggerRepaint()
             
 
 
@@ -483,7 +481,8 @@ class AdjustStyle:
                     settings = self.change_font_color(settings)
                     rule.setSettings(settings)
 
-        if not isinstance(layer, QgsFeatureRenderer):
+        #  Only for real layers:
+        if not type(layer) == QgsFeatureRenderer:
             # Set dirty flag, trigger repaint
             QgsProject.instance().setDirty()
             layer.triggerRepaint()
