@@ -1,12 +1,12 @@
 # QGIS Plugin Adjust Style
-Experimental [QGIS Plugin](https://plugins.qgis.org/plugins/qgis_adjust_style/) to adjust the style of a map with a few clicks instead of altering every single symbol for many categories or a number of label rules. It offers a quick way to adjust the style of all layers (or selected layers) in a consistant way, to check out how different colors / stroke widths / fonts work for a project, or to apply styles to another project. 
+[QGIS Plugin](https://plugins.qgis.org/plugins/qgis_adjust_style/) to adjust the style of a map with a few clicks instead of altering every single symbol (and symbol layer) for many layers, categories or for a number of label rules. It offers a quick way to adjust the style of all layers (or selected layers) consistently, to check out how different colors / stroke widths / fonts work for a project, and to save and load styles of all layers – or even to apply styles to another project. 
 
-It allows to: 
+With one mouse click, it allows to (in all seleced layers): 
 - adjust color of all symbols (including color ramps and any number of symbol layers) and labels using the HSV color model (rotate hue, change saturation and value)
 - change line thickness (i.e. stroke width of all symbols / symbol borders)
 - change font size of all labels
 - replace a font family used in labels with another font family
-- save / load the styles of all layers at once into/from a given folder.
+- save / load the styles of layers into/from a given folder.
 
 ![QGIS plugin adjust style](help/screenshot.png)
 
@@ -29,16 +29,20 @@ First, select the layers you want to work on. Possible choices:
 ### Change Color
 Adjusting colors works in the HSV color model. That means you can rotate the hue of the HSV colors as you would rotate a color wheel: set the degree of the rotation and hit "OK". The color grid above the slider works as a preview.
 
-To adjust saturation and value (= brightness), click on the respective plus and minus buttons. Be careful: You can't use the plus and minus button to undo the changes already made since the values of saturation and HSV value stay in the interval ranging from 0 to 255 and any color arriving at these borders can't be moved back in an consistent way. It is good practice to save the layer styles before using these buttons!
+To adjust saturation and value (= brightness), click on the respective plus and minus buttons to adjust the respective value ± 5. Be careful: You can't use the plus and minus button to undo the changes already made since saturation and HSV value stay in the interval ranging from 0 to 255 and any color arriving at these borders can't be moved back in an consistent way. 
+
+It is good practice to save the layer styles before using these buttons!
 
 ### Stroke Width
-Change the stroke width of lines and the borders of symbols of polygons and points with clicks on the plus and minus buttons.
+Change the stroke width of lines and the borders of polygon symbols and point symbols with clicks on the plus and minus buttons. 
+
+Stroke width is increased/decreased by 5 %; the change is subtle and may only be visible after several clicks. Hairlines remain hairlines.
 
 ### Labels
 Note: Changing the color of layers also changes the color of labels (text, buffer and background).
 
 #### Font Size
-Use the plus / minus buttons to change the font size of labels in increments of 0.5 pt.
+Use the plus / minus buttons to change the font size of labels in increments of 5 %.
 
 #### Replace Font
 Choose the font family to be replaced and select a new font family.
@@ -54,10 +58,14 @@ Should even work to save the styles of one project and load them in another one 
 - Changing stroke works for most renderer and symbol types now, including subsymbols (such as marker line)
 - Shapeburst and lineburst: correctly change color ramp and color2
 - Raster: Change color ramp of single band pseudo color renderer
+- Raster layers with colorize in the render pipeline: change color
+- Change colors in vector layer effects (glow, shadow)
 - Mark strings for translation
 - Add german translation
 - Flag project as modified ("dirty") after changing / loading the style
 - Do not crash on QgsNullSymbolRenderer
+- Change color ramp of heatmap renderer
+- Change color and stroke on raster contour renderer
 - Fix message on loading styles with style files for only some layers
 
 ### 0.2 (2023-05)
@@ -70,7 +78,6 @@ Should even work to save the styles of one project and load them in another one 
 ## Known Bugs / Limitations
 - Annotations (annotation layers) are not changed
 - Color ramps: color brewer ramps are not modified 
-- Layer effects are not modified 
 - Changing stroke width does not work for symbol layers based on QgsAbstractBrushedLineSymbolLayer such as lineburst
 
 
