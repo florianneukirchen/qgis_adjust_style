@@ -56,7 +56,7 @@ These buttons provide a quick way to save the styles of all (or all selected) la
 Should even work to save the styles of one project and load them in another one if the layer names match. 
 
 ## Change Log
-### 1.0 
+### Git Main -- 1.0 
 - Change stroke width and font size by 5 % instead of a small absolute value, to make it work in map units
 - Changing stroke works for most renderer and symbol types now, including subsymbols (such as marker line)
 - Shapeburst and lineburst: correctly change color ramp and color2
