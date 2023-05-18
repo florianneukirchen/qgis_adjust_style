@@ -453,9 +453,7 @@ class AdjustStyle:
                 ramp = ramp.cloneGradientRamp()
                 self.change_ramp_colors(ramp)
                 renderer.setColorRamp(ramp)
-
-
-        
+       
 
         # inverted polygon or dissolved renderer
         elif type(renderer) in (QgsFeatureRenderer, QgsInvertedPolygonRenderer):
@@ -540,15 +538,30 @@ class AdjustStyle:
 
     def change_symbol_color(self, symbol):
         for symlayer in symbol.symbolLayers():
+
+            # Marker symbols with subsymbol
+            if (isinstance(symlayer, QgsFilledMarkerSymbolLayer) 
+                  or isinstance(symlayer, QgsCentroidFillSymbolLayer) 
+                  or isinstance(symlayer, QgsPointPatternFillSymbolLayer) 
+                  or isinstance(symlayer, QgsLinePatternFillSymbolLayer) 
+                  or isinstance(symlayer, QgsHashedLineSymbolLayer)
+                  or isinstance(symlayer, QgsMarkerLineSymbolLayer)
+                  or isinstance(symlayer, QgsGeometryGeneratorSymbolLayer)
+                  or isinstance(symlayer, QgsRandomMarkerFillSymbolLayer)):
+                subsymbol = symlayer.subSymbol()
+                self.change_symbol_color(subsymbol)
+
+            # Most symbols
+            else:
             # Fill color
-            color = symlayer.color() 
-            color = self.change_color(color, self.value)
-            symlayer.setColor(color)
-            
-            # Stroke color
-            color = symlayer.strokeColor() 
-            color = self.change_color(color, self.value)
-            symlayer.setStrokeColor(color)
+                color = symlayer.color() 
+                color = self.change_color(color, self.value)
+                symlayer.setColor(color)
+                
+                # Stroke color
+                color = symlayer.strokeColor() 
+                color = self.change_color(color, self.value)
+                symlayer.setStrokeColor(color)
 
             # Gradient layers
             if isinstance(symlayer, QgsGradientFillSymbolLayer) or isinstance(symlayer, QgsShapeburstFillSymbolLayer) or isinstance(symlayer, QgsLineburstSymbolLayer):
@@ -568,6 +581,7 @@ class AdjustStyle:
                     self.change_ramp_colors(ramp)
                     symlayer.setColorRamp(ramp)
             
+
             # Effects
             effects = symlayer.paintEffect()
             if effects and effects.enabled():
@@ -727,6 +741,7 @@ class AdjustStyle:
                   or isinstance(symlayer, QgsLinePatternFillSymbolLayer) 
                   or isinstance(symlayer, QgsHashedLineSymbolLayer)
                   or isinstance(symlayer, QgsMarkerLineSymbolLayer)
+                  or isinstance(symlayer, QgsGeometryGeneratorSymbolLayer)
                   or isinstance(symlayer, QgsRandomMarkerFillSymbolLayer)):
                 subsymbol = symlayer.subSymbol()
                 self.change_symbol_stroke(subsymbol)
@@ -911,7 +926,8 @@ class AdjustStyle:
 
 
         # Load the style
-        status = layer.loadNamedStyle(url, True) 
+        # status = layer.loadNamedStyle(url, True) 
+        status = layer.loadNamedStyle(url)
         
         if status[1]:
             self.counter += 1
