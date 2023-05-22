@@ -27,12 +27,15 @@ First, select the layers you want to work on. Possible choices:
 - Active Layer
 - Selected Layers
 - Visible Layers
-- All Layers
+- All Layers 
+- All Layers + Canvas Background
 
 ### Change Color
 Adjusting colors works in the HSV color model. That means you can rotate the hue of the HSV colors as you would rotate a color wheel: set the degree of the rotation and hit "OK". The color grid above the slider works as a preview.
 
-To adjust saturation and value (= brightness), click on the respective plus and minus buttons to adjust the respective value ± 5. Be careful: You can't use the plus and minus button to undo the changes already made since saturation and HSV value stay in the interval ranging from 0 to 255 and any color arriving at these borders can't be moved back in an consistent way. 
+To adjust saturation and value (= brightness), click on the respective plus and minus buttons to adjust the respective value ± 5. Be careful: You can't use the plus and minus button to undo the changes already made, because: 
+- saturation and HSV value stay in the interval ranging from 0 to 255 and any color arriving at these borders can't be moved back in an consistent way. 
+- fully desaturating any color results in the complete loss of the hue, as achromatic colors (i.e. saturation of 0) do not have a hue.
 
 It is good practice to save the layer styles before using these buttons!
 
@@ -51,9 +54,12 @@ Use the plus / minus buttons to change the font size of labels in increments of 
 Choose the font family to be replaced and select a new font family.
 
 #### Save and Load Styles
-These buttons provide a quick way to save the styles of all (or all selected) layers. You only need to select a folder. The filename of the QML files corresponds to the layer name (with bad characters replaced by underscore). If there are several layers of the same name, you will get several files with an index value appended. 
+These buttons provide a quick way to save the styles of all (or all selected). You only need to select a folder. The filename of the QML files corresponds to the layer name (with bad characters replaced by underscore). If there are several layers of the same name, you will get several files with an index value appended. 
 
-Should even work to save the styles of one project and load them in another one if the layer names match. 
+With the radiobutton "All Layers + Canvas Background" checked, the background color of the project is loaded/saved as well (a simple text file with color in hex notation).
+
+##### Apply a map style to another project
+It even works to save the styles of one project and load them in another one if the layer names of the projects match. If not, you can still save the styles of all layers and apply them to individual layers by loading the respective QML file from the layer properties dialog.
 
 ## Change Log
 ### Git Main -- 1.0 
@@ -69,6 +75,7 @@ Should even work to save the styles of one project and load them in another one 
 - Do not crash on QgsNullSymbolRenderer
 - Change color ramp of heatmap renderer
 - Change color and stroke on raster contour renderer
+- Option to change background color of map canvas as well
 - Fix message on loading styles with style files for only some layers
 
 ### 0.2 (2023-05)
