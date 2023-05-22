@@ -1047,6 +1047,9 @@ class AdjustStyle:
             # Create color grid
             self.wheel = range(0, 360, 30)
 
+
+            tooltip = self.tr('Preview of rotating color hue (color wheel)')
+
             for column, hue in enumerate(self.wheel):
                 for row in range(2):
                     color = QColor()
@@ -1056,6 +1059,7 @@ class AdjustStyle:
                     palette = QPalette()
                     palette.setColor(QPalette.Window, color)
                     widget.setPalette(palette)
+                    widget.setToolTip(tooltip)
                     self.dockwidget.colorGrid.addWidget(widget, row, column)
 
             self.update_preview_colors()

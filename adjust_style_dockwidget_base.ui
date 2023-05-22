@@ -14,6 +14,9 @@
    <string>Adjust Syle </string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
+   <property name="toolTip">
+    <string/>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -123,6 +126,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Angle for rotating color hue (color wheel)</string>
+          </property>
           <property name="maximum">
            <number>359</number>
           </property>
@@ -133,6 +139,9 @@
         </item>
         <item>
          <widget class="QSpinBox" name="spinBox">
+          <property name="toolTip">
+           <string>Angle for rotating color hue (color wheel)</string>
+          </property>
           <property name="maximum">
            <number>359</number>
           </property>
@@ -140,6 +149,9 @@
         </item>
         <item>
          <widget class="QToolButton" name="hueButton">
+          <property name="toolTip">
+           <string>Rotate color hue (color wheel)</string>
+          </property>
           <property name="text">
            <string>OK</string>
           </property>
@@ -170,6 +182,9 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Increase Saturation (+ 5)</string>
+          </property>
           <property name="text">
            <string>+</string>
           </property>
@@ -182,6 +197,9 @@
             <width>25</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Decrease Saturantion (−5)</string>
           </property>
           <property name="text">
            <string>−</string>
@@ -216,6 +234,9 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Increase HSV Value (+5)</string>
+          </property>
           <property name="text">
            <string>+</string>
           </property>
@@ -228,6 +249,9 @@
             <width>25</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Decrease HSV Value (−5)</string>
           </property>
           <property name="text">
            <string>−</string>
@@ -259,6 +283,9 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Lines: Increase stroke width +5 %</string>
+          </property>
           <property name="text">
            <string>+</string>
           </property>
@@ -277,6 +304,9 @@
             <width>25</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Lines: Decrease stroke width −5 %</string>
           </property>
           <property name="text">
            <string>−</string>
@@ -321,6 +351,9 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Increase Font Size +5 %</string>
+          </property>
           <property name="text">
            <string>+</string>
           </property>
@@ -339,6 +372,9 @@
             <width>25</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Decrease Font Size −5 %</string>
           </property>
           <property name="text">
            <string>−</string>
@@ -391,6 +427,9 @@
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
          <widget class="QPushButton" name="saveStylesButton">
+          <property name="toolTip">
+           <string>Save styles of selected layers to a folder (as QML files)</string>
+          </property>
           <property name="text">
            <string>Save Styles</string>
           </property>
@@ -398,6 +437,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="loadStylesButton">
+          <property name="toolTip">
+           <string>Load styles of layers from a folder</string>
+          </property>
           <property name="text">
            <string>Load Styles</string>
           </property>
