@@ -311,25 +311,25 @@ class AdjustStyle:
         if self.dockwidget.buttonGroup.checkedId() == 5:
             bg = QgsProject.instance().backgroundColor().name()
 
-            if bg != '#ffffff':
-                url = os.path.join(self.url, 'backgroundcolor.txt')
 
-                # Check if file exits
-                if os.path.exists(url) and not self.overwrite:
-                    choice = QMessageBox.question(
-                        self.dockwidget,
-                        self.tr('File exists'),
-                        self.tr('File backgroundcolor.txt already exists. Do you want to overwrite it?'),
-                        QMessageBox.Yes | QMessageBox.No
-                    )
-                    if choice == QMessageBox.Yes:
-                        with open(url, 'w') as f:
-                            f.write(bg)
-                        bf_feetback = bf_feetback_saved
-                else:
+            url = os.path.join(self.url, 'backgroundcolor.txt')
+
+            # Check if file exits
+            if os.path.exists(url) and not self.overwrite:
+                choice = QMessageBox.question(
+                    self.dockwidget,
+                    self.tr('File exists'),
+                    self.tr('File backgroundcolor.txt already exists. Do you want to overwrite it?'),
+                    QMessageBox.Yes | QMessageBox.No
+                )
+                if choice == QMessageBox.Yes:
                     with open(url, 'w') as f:
                         f.write(bg)
                     bf_feetback = bf_feetback_saved
+            else:
+                with open(url, 'w') as f:
+                    f.write(bg)
+                bf_feetback = bf_feetback_saved
 
         # Feedback for user
         if self.counter > 0:
