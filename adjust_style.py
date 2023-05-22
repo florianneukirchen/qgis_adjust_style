@@ -301,8 +301,37 @@ class AdjustStyle:
 
         self.mapToLayers(self.save_layer_style)
 
+        # Also save projects background color if "all layers" is checked and background ist not white
+        # as simple txt file
+        bf_feetback = ''
+        bf_feetback_saved = ' ' + self.tr('Canvas background color has been saved.')
+
+        if self.dockwidget.buttonGroup.checkedId() == 4:
+            bg = QgsProject.instance().backgroundColor().name()
+
+            if bg != '#ffffff':
+                url = os.path.join(self.url, 'backgroundcolor.txt')
+
+                # Check if file exits
+                if os.path.exists(url) and not self.overwrite:
+                    choice = QMessageBox.question(
+                        self.dockwidget,
+                        self.tr('File exists'),
+                        self.tr('File backgroundcolor.txt already exists. Do you want to overwrite it?'),
+                        QMessageBox.Yes | QMessageBox.No
+                    )
+                    if choice == QMessageBox.Yes:
+                        with open(url, 'w') as f:
+                            f.write(bg)
+                        bf_feetback = bf_feetback_saved
+                else:
+                    with open(url, 'w') as f:
+                        f.write(bg)
+                    bf_feetback = bf_feetback_saved
+
+        # Feedback for user
         if self.counter > 0:
-            self.iface.messageBar().pushInfo(self.tr('Save Styles'), self.tr('Succesfully saved styles of {} selected layers.').format(self.counter))
+            self.iface.messageBar().pushInfo(self.tr('Save Styles'), self.tr('Succesfully saved styles of {} selected layers.').format(self.counter) + bf_feetback)
         else:
             self.iface.messageBar().pushWarning(self.tr('Error'), self.tr('Could not save styles.'))
 
@@ -327,6 +356,20 @@ class AdjustStyle:
 
         self.mapToLayers(self.load_layer_style)
 
+        # Eventually load canvas background color
+        url = os.path.join(self.url, 'backgroundcolor.txt')
+        
+        if self.dockwidget.buttonGroup.checkedId() == 4 and os.path.exists(url):
+            bg = ''
+            with open(url, 'r') as f:
+                bg = f.read()
+
+            bgcolor = QColor(bg.strip())
+            if bgcolor.isValid():
+                QgsProject.instance().setBackgroundColor(bgcolor)
+
+
+        # Feedback
         if self.counter == 0:
             self.iface.messageBar().pushWarning(self.tr('Load styles'), self.tr('Could not load any style for any layer.'))
         elif self.counter > 0 and self.counter_fail == 0:
@@ -343,21 +386,32 @@ class AdjustStyle:
     def mapToLayers(self, func):
         layerchoice = self.dockwidget.buttonGroup.checkedId()
         if layerchoice == 1:
+            # Radiobutton "Active layer" is checked
             layer = self.iface.activeLayer()
             func(layer)
 
         elif layerchoice == 2:
+            # Selected Layers is checked
             for layer in self.iface.layerTreeView().selectedLayers():
                 func(layer)
 
         elif layerchoice == 3:
+            # Visible layers is checked
             for layer in self.iface.mapCanvas().layers():
                 func(layer)
 
         elif layerchoice == 4:
+            # All layers is checked
             for layer in QgsProject.instance().mapLayers().values():
                 func(layer)
-        
+
+            # Also change canvas background color
+            if func == self.layer_change_color:
+                color = QgsProject.instance().backgroundColor()
+                color = self.change_color(color, self.value)
+                QgsProject.instance().setBackgroundColor(color)
+
+      
         return
 
     # Functions to change colors
@@ -954,6 +1008,10 @@ class AdjustStyle:
         layer.triggerRepaint()
         layer.emitStyleChanged()
         self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+
+
+
+
 
     #--------------------------------------------------------------------------
 
