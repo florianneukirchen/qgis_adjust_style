@@ -303,10 +303,12 @@ class AdjustStyle:
 
         # Also save projects background color if "all layers" is checked and background ist not white
         # as simple txt file
+
+        # Two options for later feedback
         bf_feetback = ''
         bf_feetback_saved = ' ' + self.tr('Canvas background color has been saved.')
 
-        if self.dockwidget.buttonGroup.checkedId() == 4:
+        if self.dockwidget.buttonGroup.checkedId() == 5:
             bg = QgsProject.instance().backgroundColor().name()
 
             if bg != '#ffffff':
@@ -359,7 +361,7 @@ class AdjustStyle:
         # Eventually load canvas background color
         url = os.path.join(self.url, 'backgroundcolor.txt')
         
-        if self.dockwidget.buttonGroup.checkedId() == 4 and os.path.exists(url):
+        if self.dockwidget.buttonGroup.checkedId() == 5 and os.path.exists(url):
             bg = ''
             with open(url, 'r') as f:
                 bg = f.read()
@@ -400,11 +402,13 @@ class AdjustStyle:
             for layer in self.iface.mapCanvas().layers():
                 func(layer)
 
-        elif layerchoice == 4:
+        elif layerchoice >= 4:
             # All layers is checked
             for layer in QgsProject.instance().mapLayers().values():
                 func(layer)
 
+
+        if layerchoice == 5:
             # Also change canvas background color
             if func == self.layer_change_color:
                 color = QgsProject.instance().backgroundColor()
@@ -1075,6 +1079,7 @@ class AdjustStyle:
             self.dockwidget.buttonGroup.setId(self.dockwidget.radioSelectedLayers, 2)
             self.dockwidget.buttonGroup.setId(self.dockwidget.radioVisibleLayers, 3)
             self.dockwidget.buttonGroup.setId(self.dockwidget.radioAllLayers, 4)
+            self.dockwidget.buttonGroup.setId(self.dockwidget.radioAllLayersCanvas, 5)
 
             # show the dockwidget
             self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)
