@@ -77,6 +77,7 @@ It even works to save the styles of one project and load them in another one if 
 - Change color and stroke on raster contour renderer
 - Option to change background color of map canvas as well
 - Fix message on loading styles with style files for only some layers
+- Add tooltips
 
 ### 0.2 (2023-05)
 - Do not crash on a QgsGroupLayer (this is a new QGIS feature)
