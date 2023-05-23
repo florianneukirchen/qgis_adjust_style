@@ -84,7 +84,7 @@ It even works to save the styles of one project and load them in another one if 
 - Raster layers with colorize in the render pipeline: change color
 - Change colors in vector layer effects (glow, shadow)
 - Mark strings for translation
-- Add german translation
+- Add German translation
 - Flag project as modified ("dirty") after changing / loading the style
 - Do not crash on QgsNullSymbolRenderer
 - Change color ramp of heatmap renderer
