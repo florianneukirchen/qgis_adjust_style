@@ -33,7 +33,7 @@ repository=https://github.com/florianneukirchen/qgis_adjust_style
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
 changelog=1.0
-    - Change stroke width and font size by 5 % instead of a small absolute value, to make it work in map units
+    - Change stroke width and font size by 5 percent instead of a small absolute value, to make it work in map units
     - Changing stroke works for most renderer and symbol types now, including subsymbols (such as marker line)
     - Shapeburst and lineburst: correctly change color ramp and color2
     - Raster: Change color ramp of single band pseudo color renderer
