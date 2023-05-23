@@ -40,12 +40,14 @@ changelog=1.0
     - Raster layers with colorize in the render pipeline: change color
     - Change colors in vector layer effects (glow, shadow)
     - Mark strings for translation
-    - Add german translation
+    - Add German translation
     - Flag project as modified ("dirty") after changing / loading the style
     - Do not crash on QgsNullSymbolRenderer
     - Change color ramp of heatmap renderer
     - Change color and stroke on raster contour renderer
+    - Option to change background color of map canvas as well
     - Fix message on loading styles with style files for only some layers
+    - Add tooltips
     0.2
     - Do not crash on a QgsGroupLayer (this is a new QGIS feature)
     - Fix crash of changing stroke width with renderers other than line and simple fill
