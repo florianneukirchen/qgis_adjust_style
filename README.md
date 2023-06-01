@@ -76,6 +76,8 @@ It even works to save the styles of one project and load them in another one if 
 [https://github.com/florianneukirchen/qgis_adjust_style/issues](https://github.com/florianneukirchen/qgis_adjust_style/issues)
 
 ## Change Log
+### 1.1 (2023-06)
+- Fix typo in plugin name in metadata (issue #1)
 ### 1.0 (2023-05)
 - Change stroke width and font size by 5 % instead of a small absolute value, to make it work in map units
 - Changing stroke works for most renderer and symbol types now, including subsymbols (such as marker line)
