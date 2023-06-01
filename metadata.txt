@@ -1,9 +1,10 @@
 # This file contains metadata for your plugin.
 
-# This file should be included when you package your plugin.# Mandatory items:
+# This file should be included when you package your plugin.
+# Mandatory items:
 
 [general]
-name=Adjust Syle 
+name=Adjust Style 
 qgisMinimumVersion=3.16
 description=Adjust the style of a map with a few clicks 
     instead of altering every single symbol (and symbol layer) for many layers, categories or a number of label rules. 
