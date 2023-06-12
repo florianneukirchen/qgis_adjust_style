@@ -857,13 +857,18 @@ class AdjustStyle:
         return
 
     def change_font_size(self, settings):
-        format = settings.format() # Returns QgsTextFormat
-        size = format.size()
-        size = size + size * self.value
-        if size < 0:
-            size = 0
-        format.setSize(size)
-        settings.setFormat(format)
+        # Catch AttributeError (issue #8)
+        try:
+            format = settings.format() # Returns QgsTextFormat
+        except AttributeError:
+            pass
+        else:
+            size = format.size()
+            size = size + size * self.value
+            if size < 0:
+                size = 0
+            format.setSize(size)
+            settings.setFormat(format)
         return settings
 
     # Replace Font
