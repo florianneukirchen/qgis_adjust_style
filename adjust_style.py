@@ -857,18 +857,15 @@ class AdjustStyle:
         return
 
     def change_font_size(self, settings):
-        # Catch AttributeError (issue #8)
-        try:
-            format = settings.format() # Returns QgsTextFormat
-        except AttributeError:
-            pass
-        else:
-            size = format.size()
-            size = size + size * self.value
-            if size < 0:
-                size = 0
-            format.setSize(size)
-            settings.setFormat(format)
+
+        format = settings.format() # Returns QgsTextFormat
+
+        size = format.size()
+        size = size + size * self.value
+        if size < 0:
+            size = 0
+        format.setSize(size)
+        settings.setFormat(format)
         return settings
 
     # Replace Font
@@ -902,13 +899,20 @@ class AdjustStyle:
             labeling = layer.labeling() # Returns QgsVectorLayerSimpleLabeling or QgsRuleBasedLabeling
 
             if isinstance(labeling, QgsVectorLayerSimpleLabeling):
-                format = labeling.settings().format() # Returns QgsTextFormat
-                self.fontset.add(format.font().family())
+                # catch attribute error, Issue #8
+                try:
+                    format = labeling.settings().format() # Returns QgsTextFormat
+                    self.fontset.add(format.font().family())
+                except AttributeError:
+                    pass
 
             if isinstance(labeling, QgsRuleBasedLabeling):
                 for rule in labeling.rootRule().children():
-                    format = rule.settings().format()
-                    self.fontset.add(format.font().family())
+                    try:
+                        format = rule.settings().format()
+                        self.fontset.add(format.font().family())
+                    except AttributeError:
+                        pass
 
     def replace_font(self, layer):
         if isinstance(layer, QgsVectorLayer) and layer.labelsEnabled():
@@ -916,21 +920,24 @@ class AdjustStyle:
 
             if isinstance(labeling, QgsVectorLayerSimpleLabeling):
                 settings = labeling.settings()
-                format = settings.format() # Returns QgsTextFormat
-                if format.font().family() == self.oldfont:
-                    format.setFont(self.newfont)
-                    settings.setFormat(format)
-                    labeling.setSettings(settings)
+                # It seems possible to get none here, Issue #8
+                if settings:
+                    format = settings.format() # Returns QgsTextFormat
+                    if format.font().family() == self.oldfont:
+                        format.setFont(self.newfont)
+                        settings.setFormat(format)
+                        labeling.setSettings(settings)
 
 
             if isinstance(labeling, QgsRuleBasedLabeling):
                 for rule in labeling.rootRule().children():
                     settings = rule.settings()
-                    format = settings.format()
-                    if format.font().family() == self.oldfont:
-                        format.setFont(self.newfont)
-                        settings.setFormat(format)
-                        rule.setSettings(settings)
+                    if settings:
+                        format = settings.format()
+                        if format.font().family() == self.oldfont:
+                            format.setFont(self.newfont)
+                            settings.setFormat(format)
+                            rule.setSettings(settings)
 
             QgsProject.instance().setDirty()
             layer.triggerRepaint() 
