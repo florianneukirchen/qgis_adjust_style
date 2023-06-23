@@ -618,6 +618,37 @@ class AdjustStyle:
                 subsymbol = symlayer.subSymbol()
                 self.change_symbol_color(subsymbol)
 
+            # Interpolated line (new in QGIS 3.20)
+            # Not working yet
+            try:
+                if isinstance(symlayer, QgsInterpolatedLineSymbolLayer):
+                    ipc = symlayer.interpolatedColor()
+
+                    color = ipc.singleColor()
+                    color = self.change_color(color, self.value)
+                    ipc.setColor
+
+
+                    crsh = ipc.colorRampShader()
+                    ramp = crsh.sourceColorRamp()
+                    print(ramp)
+                    if isinstance(ramp, QgsGradientColorRamp):
+                        ramp = ramp.clone()
+                        self.change_ramp_colors(ramp)
+                        crsh.setSourceColorRamp(ramp)
+                        # crsh.classifyColorRamp()
+                    elif isinstance(ramp, QgsCptCityColorRamp):
+                        ramp = ramp.cloneGradientRamp()
+                        self.change_ramp_colors(ramp)
+                        crsh.setSourceColorRamp(ramp)
+                        # crsh.classifyColorRamp()
+                    ipc.setColor(crsh)
+                    symlayer.setInterpolatedColor(ipc)
+
+
+            except NameError:
+                pass
+
             # Most symbols
             else:
             # Fill color
@@ -818,6 +849,30 @@ class AdjustStyle:
                   or isinstance(symlayer, QgsRandomMarkerFillSymbolLayer)):
                 subsymbol = symlayer.subSymbol()
                 self.change_symbol_stroke(subsymbol)
+
+            # Interpolated Line (New in QGIS 3.20)
+            try:
+                if isinstance(symlayer, QgsInterpolatedLineSymbolLayer):
+                    ipw = symlayer.interpolatedWidth()
+
+                    # Fixed stroke
+                    width = ipw.fixedStrokeWidth()
+                    width = width + width * self.value
+                    ipw.setFixedStrokeWidth(width)
+
+                    # Variable stroke
+                    width = ipw.minimumWidth()
+                    width = width + width * self.value
+                    ipw.setMinimumWidth(width)
+
+                    width = ipw.maximumWidth()
+                    width = width + width * self.value
+                    ipw.setMaximumWidth(width)
+
+                    symlayer.setInterpolatedWidth(ipw)
+
+            except NameError:
+                pass
 
             # Most other symbols
             else:
