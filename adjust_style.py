@@ -668,19 +668,19 @@ class AdjustStyle:
 
                 # Color ramp of glow effects
 
-                # try:
-                #     ramp = effect.ramp()
-                #     if isinstance(ramp, QgsGradientColorRamp):
-                #         ramp = ramp.clone()
-                #         self.change_ramp_colors(ramp)
-                #         effect.setColorRamp(ramp)
-                #     elif isinstance(ramp, QgsCptCityColorRamp):
-                #         ramp = ramp.cloneGradientRamp()
-                #         self.change_ramp_colors(ramp)
-                #         effect.setColorRamp(ramp)
-                # except AttributeError:
-                #     # Only glow effects can have ramps
-                #     pass
+                try:
+                    ramp = effect.ramp()
+                    if isinstance(ramp, QgsGradientColorRamp):
+                        ramp = ramp.clone()
+                        self.change_ramp_colors(ramp)
+                        effect.setRamp(ramp)
+                    elif isinstance(ramp, QgsCptCityColorRamp):
+                        ramp = ramp.cloneGradientRamp()
+                        self.change_ramp_colors(ramp)
+                        effect.setRamp(ramp)
+                except AttributeError:
+                    # Only glow effects can have ramps
+                    pass
                 
 
 
