@@ -460,6 +460,12 @@ class AdjustStyle:
         if isinstance(layer, QgsNullSymbolRenderer):
             return
         
+        # Handle Annotation layers
+        if isinstance(layer, QgsAnnotationLayer):
+            self.change_annotationlayer_colors(layer)
+            return
+
+
         # QGIS 3.24 introduces QgsGroupLayer and it does not have a renderer
         try:
             if isinstance(layer, QgsGroupLayer):
@@ -468,7 +474,7 @@ class AdjustStyle:
             pass
 
         # Make function callable with layer AND renderers with embedded renderer
-        # So we can call the function recursively
+        # So we can call the function recursively with embedded renderers.
         # "layer" might be a renderer in this case
         if type(layer) in (QgsFeatureRenderer, QgsInvertedPolygonRenderer):
             renderer = layer.embeddedRenderer()
@@ -572,9 +578,6 @@ class AdjustStyle:
             effects = renderer.paintEffect()
             if effects.enabled():
                 self.change_effect_colors(effects)
-
-
-
 
         # Labels
      
@@ -690,6 +693,31 @@ class AdjustStyle:
 
         return
     
+
+    def change_annotationlayer_colors(self, layer):
+        print(layer)
+        for item in layer.items().values():
+            print(item)
+            if isinstance(item, QgsAnnotationPointTextItem):
+                self.change_font_color(item)
+            else:
+                symbol = item.symbol()
+                self.change_symbol_color(symbol)
+
+            effects = layer.paintEffect()
+            if effects.enabled():
+                self.change_effect_colors(effects)
+
+            # Set dirty flag, trigger repaint
+            QgsProject.instance().setDirty()
+            layer.triggerRepaint()
+
+            # Also show the changes in "Layer Styling" panel and TOC
+            layer.emitStyleChanged()
+            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+
+
+
     def change_effect_colors(self, effectstack):
         for effect in effectstack.effectList():
             if effect.enabled() and type(effect) in (QgsInnerGlowEffect, QgsDropShadowEffect, QgsInnerShadowEffect, QgsOuterGlowEffect):
@@ -772,6 +800,19 @@ class AdjustStyle:
 
         # Do nothing on Null Symbol Renderer
         if isinstance(layer, QgsNullSymbolRenderer):
+            return
+        
+        # Handle Annotation layers
+        if isinstance(layer, QgsAnnotationLayer):
+            for item in layer.items().values():
+                if not isinstance(item, QgsAnnotationPointTextItem):
+                    symbol = item.symbol()
+                    self.change_symbol_stroke(symbol)
+
+            QgsProject.instance().setDirty()
+            layer.triggerRepaint()
+            layer.emitStyleChanged()
+            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
             return
         
         # QGIS 3.24 introduces QgsGroupLayer and it does not have a renderer
@@ -914,6 +955,16 @@ class AdjustStyle:
             layer.triggerRepaint()
             layer.emitStyleChanged()
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+
+        elif isinstance(layer, QgsAnnotationLayer):
+            for item in layer.items().values():
+                if isinstance(item, QgsAnnotationPointTextItem):
+                    self.change_font_size(item)
+            QgsProject.instance().setDirty()
+            layer.triggerRepaint()
+            layer.emitStyleChanged()
+            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+
         
         return
 
@@ -974,6 +1025,15 @@ class AdjustStyle:
                         self.fontset.add(format.font().family())
                     except AttributeError:
                         pass
+        
+        elif isinstance(layer, QgsAnnotationLayer):
+            for item in layer.items().values():
+                if isinstance(item, QgsAnnotationPointTextItem):
+                    format = item.format()
+                    self.fontset.add(format.font().family())
+
+
+
 
     def replace_font(self, layer):
         if isinstance(layer, QgsVectorLayer) and layer.labelsEnabled():
@@ -1003,8 +1063,20 @@ class AdjustStyle:
             QgsProject.instance().setDirty()
             layer.triggerRepaint() 
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
-            layer.emitStyleChanged()          
+            layer.emitStyleChanged()     
 
+        elif isinstance(layer, QgsAnnotationLayer):
+            for item in layer.items().values():
+                if isinstance(item, QgsAnnotationPointTextItem):
+                    format = item.format()
+                    if format.font().family() == self.oldfont:
+                            format.setFont(self.newfont)
+                            item.setFormat(format)
+
+            QgsProject.instance().setDirty()
+            layer.triggerRepaint() 
+            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+            layer.emitStyleChanged()             
 
     # Load and save styles
 
