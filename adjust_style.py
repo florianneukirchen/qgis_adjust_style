@@ -301,14 +301,14 @@ class AdjustStyle:
 
         self.mapToLayers(self.save_layer_style)
 
-        # Also save projects background color if "all layers" is checked and background ist not white
+        # Also save projects background color if checkCanvas is checked and background ist not white
         # as simple txt file
 
         # Two options for later feedback
         bf_feetback = ''
         bf_feetback_saved = ' ' + self.tr('Canvas background color has been saved.')
 
-        if self.dockwidget.buttonGroup.checkedId() == 5:
+        if self.dockwidget.checkCanvas.isChecked():
             bg = QgsProject.instance().backgroundColor().name()
 
 
@@ -361,7 +361,7 @@ class AdjustStyle:
         # Eventually load canvas background color
         url = os.path.join(self.url, 'backgroundcolor.txt')
         
-        if self.dockwidget.buttonGroup.checkedId() == 5 and os.path.exists(url):
+        if self.dockwidget.checkCanvas.isChecked() and os.path.exists(url):
             bg = ''
             with open(url, 'r') as f:
                 bg = f.read()
@@ -402,13 +402,19 @@ class AdjustStyle:
             for layer in self.iface.mapCanvas().layers():
                 func(layer)
 
-        elif layerchoice >= 4:
+        elif layerchoice == 4:
             # All layers is checked
             for layer in QgsProject.instance().mapLayers().values():
                 func(layer)
 
 
-        if layerchoice == 5:
+        if self.dockwidget.checkAnnotation.isChecked():
+            # Also change the main annotation layer
+            layer = QgsProject.instance().mainAnnotationLayer()
+            func(layer)
+
+
+        if self.dockwidget.checkCanvas.isChecked():
             # Also change canvas background color
             if func == self.layer_change_color:
                 color = QgsProject.instance().backgroundColor()
@@ -462,7 +468,9 @@ class AdjustStyle:
         
         # Handle Annotation layers
         if isinstance(layer, QgsAnnotationLayer):
-            self.change_annotationlayer_colors(layer)
+            if self.dockwidget.checkAnnotation.isChecked():
+                self.change_annotationlayer_colors(layer)
+            # Quit function, nothing else to do
             return
 
 
@@ -698,7 +706,7 @@ class AdjustStyle:
         print(layer)
         for item in layer.items().values():
             print(item)
-            if isinstance(item, QgsAnnotationPointTextItem):
+            if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                 self.change_font_color(item)
             else:
                 symbol = item.symbol()
@@ -804,8 +812,10 @@ class AdjustStyle:
         
         # Handle Annotation layers
         if isinstance(layer, QgsAnnotationLayer):
+            if not self.dockwidget.checkAnnotation.isChecked():
+                return
             for item in layer.items().values():
-                if not isinstance(item, QgsAnnotationPointTextItem):
+                if not (isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem)):
                     symbol = item.symbol()
                     self.change_symbol_stroke(symbol)
 
@@ -957,8 +967,10 @@ class AdjustStyle:
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
 
         elif isinstance(layer, QgsAnnotationLayer):
+            if not self.dockwidget.checkAnnotation.isChecked():
+                return
             for item in layer.items().values():
-                if isinstance(item, QgsAnnotationPointTextItem):
+                if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     self.change_font_size(item)
             QgsProject.instance().setDirty()
             layer.triggerRepaint()
@@ -1026,9 +1038,9 @@ class AdjustStyle:
                     except AttributeError:
                         pass
         
-        elif isinstance(layer, QgsAnnotationLayer):
+        elif isinstance(layer, QgsAnnotationLayer) and self.dockwidget.checkAnnotation.isChecked():
             for item in layer.items().values():
-                if isinstance(item, QgsAnnotationPointTextItem):
+                if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     format = item.format()
                     self.fontset.add(format.font().family())
 
@@ -1065,9 +1077,9 @@ class AdjustStyle:
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
             layer.emitStyleChanged()     
 
-        elif isinstance(layer, QgsAnnotationLayer):
+        elif isinstance(layer, QgsAnnotationLayer) and self.dockwidget.checkAnnotation.isChecked():
             for item in layer.items().values():
-                if isinstance(item, QgsAnnotationPointTextItem):
+                if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     format = item.format()
                     if format.font().family() == self.oldfont:
                             format.setFont(self.newfont)
@@ -1084,13 +1096,18 @@ class AdjustStyle:
         # Remove bad characters from layer name
         clean_name = re.sub(r'[^\w_.-]', '_', layer.name()) 
 
+        # Check if this is the main annotation layer
+        if layer == QgsProject.instance().mainAnnotationLayer():
+            filename = "Main_Annotation_Layer.qml"
+
         # Check if there are more layers of the same name
-        listoflayers = QgsProject.instance().mapLayersByName(layer.name())
-        if len(listoflayers) == 1:
-            filename = clean_name + '.qml'
         else:
-            i = listoflayers.index(layer)
-            filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
+            listoflayers = QgsProject.instance().mapLayersByName(layer.name())
+            if len(listoflayers) == 1:
+                filename = clean_name + '.qml'
+            else:
+                i = listoflayers.index(layer)
+                filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
 
         url = os.path.join(self.url, filename)
 
@@ -1126,23 +1143,28 @@ class AdjustStyle:
 
         url = os.path.join(self.url, clean_name + '.qml')
 
-        # Handle the dublicate layer name problem
-        listoflayers = QgsProject.instance().mapLayersByName(layer.name())
-        if len(listoflayers) > 1:
-            i = listoflayers.index(layer)
-            filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
-            url1 = os.path.join(self.url, filename) 
-            if os.path.exists(url1):
-                url = url1
-            else:
-                # Use a filename without number if it exists, else try (00)
-                if not os.path.exists(url):
-                    url = os.path.join(self.url, clean_name + '__(00).qml')
-        else:
-            # If filename without number does not exist, try (00)
-            if not os.path.exists(url):
-                    url = os.path.join(self.url, clean_name + '__(00).qml')
+        # Check if this is the main annotation layer
+        if layer == QgsProject.instance().mainAnnotationLayer():
+            filename = "Main_Annotation_Layer.qml"
+            url = os.path.join(self.url, filename)
 
+        # Handle the dublicate layer name problem
+        else:
+            listoflayers = QgsProject.instance().mapLayersByName(layer.name())
+            if len(listoflayers) > 1:
+                i = listoflayers.index(layer)
+                filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
+                url1 = os.path.join(self.url, filename) 
+                if os.path.exists(url1):
+                    url = url1
+                else:
+                    # Use a filename without number if it exists, else try (00)
+                    if not os.path.exists(url):
+                        url = os.path.join(self.url, clean_name + '__(00).qml')
+            else:
+                # If filename without number does not exist, try (00)
+                if not os.path.exists(url):
+                        url = os.path.join(self.url, clean_name + '__(00).qml')
 
         # Load the style
         # status = layer.loadNamedStyle(url, True) 
@@ -1228,7 +1250,6 @@ class AdjustStyle:
             self.dockwidget.buttonGroup.setId(self.dockwidget.radioSelectedLayers, 2)
             self.dockwidget.buttonGroup.setId(self.dockwidget.radioVisibleLayers, 3)
             self.dockwidget.buttonGroup.setId(self.dockwidget.radioAllLayers, 4)
-            self.dockwidget.buttonGroup.setId(self.dockwidget.radioAllLayersCanvas, 5)
 
             # show the dockwidget
             self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)

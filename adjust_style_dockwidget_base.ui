@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>278</width>
-    <height>365</height>
+    <height>406</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,13 +67,24 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioAllLayersCanvas">
+       <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>All Layers + Canvas Background</string>
+         <string>Including:</string>
         </property>
-        <attribute name="buttonGroup">
-         <string notr="true">buttonGroup</string>
-        </attribute>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkAnnotation">
+        <property name="text">
+         <string>Annotation Layers</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkCanvas">
+        <property name="text">
+         <string>Canvas Background</string>
+        </property>
        </widget>
       </item>
       <item>
