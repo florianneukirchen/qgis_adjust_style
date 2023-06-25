@@ -34,7 +34,7 @@ First, select the layers you want to work on. Possible choices:
 - Visible Layers
 - All Layers 
 Optionally check to include:
-- Annotation layers (both, annotations in the projects main annotation layer or additional annotation layers)
+- Main Annotation Layer
 - Canvas background color
 
 ### Change Color

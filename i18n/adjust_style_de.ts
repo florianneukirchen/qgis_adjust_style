@@ -74,17 +74,17 @@
         <translation>Stile von {} Ebenen geladen, aber kein Erfolg bei {} gewählten Ebenen.</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1117"/>
+        <location filename="../adjust_style.py" line="1112"/>
         <source>File exists</source>
         <translation>Datei existiert</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1117"/>
+        <location filename="../adjust_style.py" line="1112"/>
         <source>File {} already exists. Do you want to overwrite it?</source>
         <translation>Datei {} existiert bereits. Möchten Sie diese überschreiben?</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1135"/>
+        <location filename="../adjust_style.py" line="1130"/>
         <source>Save Style {} failed:</source>
         <translation>Stil von {} konnte nicht gespeichert werden:</translation>
     </message>
@@ -99,7 +99,7 @@
         <translation>Die Datei backgroundcolor.txt existiert bereits. Wollen Sie diese überschreiben?</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1218"/>
+        <location filename="../adjust_style.py" line="1213"/>
         <source>Preview of rotating color hue (color wheel)</source>
         <translation>Vorschau für die Rotation des Farbtons (Farbkreis drehen)</translation>
     </message>
@@ -258,8 +258,8 @@
     </message>
     <message>
         <location filename="../adjust_style_dockwidget_base.ui" line="79"/>
-        <source>Annotation Layers</source>
-        <translation>Beschriftungsebenen</translation>
+        <source>Main Annotation Layer</source>
+        <translation>Hauptbeschriftungsebene</translation>
     </message>
     <message>
         <location filename="../adjust_style_dockwidget_base.ui" line="86"/>

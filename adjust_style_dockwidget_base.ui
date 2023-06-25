@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>278</width>
-    <height>406</height>
+    <height>419</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -76,7 +76,7 @@
       <item>
        <widget class="QCheckBox" name="checkAnnotation">
         <property name="text">
-         <string>Annotation Layers</string>
+         <string>Main Annotation Layer</string>
         </property>
        </widget>
       </item>

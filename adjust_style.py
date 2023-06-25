@@ -468,8 +468,7 @@ class AdjustStyle:
         
         # Handle Annotation layers
         if isinstance(layer, QgsAnnotationLayer):
-            if self.dockwidget.checkAnnotation.isChecked():
-                self.change_annotationlayer_colors(layer)
+            self.change_annotationlayer_colors(layer)
             # Quit function, nothing else to do
             return
 
@@ -812,8 +811,6 @@ class AdjustStyle:
         
         # Handle Annotation layers
         if isinstance(layer, QgsAnnotationLayer):
-            if not self.dockwidget.checkAnnotation.isChecked():
-                return
             for item in layer.items().values():
                 if not (isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem)):
                     symbol = item.symbol()
@@ -967,8 +964,6 @@ class AdjustStyle:
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
 
         elif isinstance(layer, QgsAnnotationLayer):
-            if not self.dockwidget.checkAnnotation.isChecked():
-                return
             for item in layer.items().values():
                 if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     self.change_font_size(item)
@@ -1038,7 +1033,7 @@ class AdjustStyle:
                     except AttributeError:
                         pass
         
-        elif isinstance(layer, QgsAnnotationLayer) and self.dockwidget.checkAnnotation.isChecked():
+        elif isinstance(layer, QgsAnnotationLayer):
             for item in layer.items().values():
                 if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     format = item.format()
@@ -1077,7 +1072,7 @@ class AdjustStyle:
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
             layer.emitStyleChanged()     
 
-        elif isinstance(layer, QgsAnnotationLayer) and self.dockwidget.checkAnnotation.isChecked():
+        elif isinstance(layer, QgsAnnotationLayer):
             for item in layer.items().values():
                 if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     format = item.format()
