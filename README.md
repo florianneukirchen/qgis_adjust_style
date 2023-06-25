@@ -33,7 +33,9 @@ First, select the layers you want to work on. Possible choices:
 - Selected Layers
 - Visible Layers
 - All Layers 
-- All Layers + Canvas Background
+Optionally check to include:
+- Annotation layers (both, annotations in the projects main annotation layer or additional annotation layers)
+- Canvas background color
 
 ### Change Color
 Adjusting colors works in the HSV color model. That means you can rotate the hue of the HSV colors as you would rotate a color wheel: set the degree of the rotation and hit "OK". The color grid above the slider works as a preview.
@@ -65,11 +67,6 @@ With the radiobutton "All Layers + Canvas Background" checked, the background co
 
 #### Apply a map style to another project
 It even works to save the styles of one project and load them in another one if the layer names of the projects match. If not, you can still save the styles of all layers and apply them to individual layers by loading the respective QML file from the QGIS layer properties dialog.
-
-## Known Bugs / Limitations
-- Annotations (annotation layers) are not changed
-- Color ramps: color brewer ramps can not be modified 
-
 
 ## Bug Tracker
 [https://github.com/florianneukirchen/qgis_adjust_style/issues](https://github.com/florianneukirchen/qgis_adjust_style/issues)
