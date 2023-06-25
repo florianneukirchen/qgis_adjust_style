@@ -832,25 +832,8 @@ class AdjustStyle:
     def change_symbol_stroke(self, symbol):
         for symlayer in symbol.symbolLayers():
             print(symlayer)
-            # Line symbols
-            if isinstance(symlayer, QgsSimpleLineSymbolLayer):
-                width = symlayer.width()
-                width = width + width * self.value
-                symlayer.setWidth(width)
 
-            # Marker symbols with subsymbol
-            elif (isinstance(symlayer, QgsFilledMarkerSymbolLayer) 
-                  or isinstance(symlayer, QgsCentroidFillSymbolLayer) 
-                  or isinstance(symlayer, QgsPointPatternFillSymbolLayer) 
-                  or isinstance(symlayer, QgsLinePatternFillSymbolLayer) 
-                  or isinstance(symlayer, QgsHashedLineSymbolLayer)
-                  or isinstance(symlayer, QgsMarkerLineSymbolLayer)
-                  or isinstance(symlayer, QgsGeometryGeneratorSymbolLayer)
-                  or isinstance(symlayer, QgsRandomMarkerFillSymbolLayer)):
-                subsymbol = symlayer.subSymbol()
-                self.change_symbol_stroke(subsymbol)
-
-            # Interpolated Line (New in QGIS 3.20)
+            # Interpolated Line, Lineburst (New in QGIS)
             try:
                 if isinstance(symlayer, QgsInterpolatedLineSymbolLayer):
                     ipw = symlayer.interpolatedWidth()
@@ -871,8 +854,31 @@ class AdjustStyle:
 
                     symlayer.setInterpolatedWidth(ipw)
 
+                elif isinstance(symlayer, QgsLineburstSymbolLayer):
+                    width = symlayer.width()
+                    width = width + width * self.value
+                    symlayer.setWidth(width)
+
             except NameError:
                 pass
+
+            # Line symbols
+            if isinstance(symlayer, QgsSimpleLineSymbolLayer):
+                width = symlayer.width()
+                width = width + width * self.value
+                symlayer.setWidth(width)
+
+            # Marker symbols with subsymbol
+            elif (isinstance(symlayer, QgsFilledMarkerSymbolLayer) 
+                  or isinstance(symlayer, QgsCentroidFillSymbolLayer) 
+                  or isinstance(symlayer, QgsPointPatternFillSymbolLayer) 
+                  or isinstance(symlayer, QgsLinePatternFillSymbolLayer) 
+                  or isinstance(symlayer, QgsHashedLineSymbolLayer)
+                  or isinstance(symlayer, QgsMarkerLineSymbolLayer)
+                  or isinstance(symlayer, QgsGeometryGeneratorSymbolLayer)
+                  or isinstance(symlayer, QgsRandomMarkerFillSymbolLayer)):
+                subsymbol = symlayer.subSymbol()
+                self.change_symbol_stroke(subsymbol)
 
             # Most other symbols
             else:

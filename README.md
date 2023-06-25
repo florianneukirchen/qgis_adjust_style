@@ -69,16 +69,17 @@ It even works to save the styles of one project and load them in another one if 
 ## Known Bugs / Limitations
 - Annotations (annotation layers) are not changed
 - Color ramps: color brewer ramps can not be modified 
-- Changing stroke width does not work for symbol layers based on QgsAbstractBrushedLineSymbolLayer such as lineburst
+
 
 ## Bug Tracker
 [https://github.com/florianneukirchen/qgis_adjust_style/issues](https://github.com/florianneukirchen/qgis_adjust_style/issues)
 
 ## Change Log
 ### Git main
+- Also change stroke width of lineburst lines (issue #3)
 - Now also works on interpolated lines
-- Fix issue #2 Color ramps used in glow paint effect are not modified
-- Catch an exception issue #8
+- Fix issue #2: Color ramps used in glow paint effect are not modified
+- Catch an exception (issue #8)
 
 
 ### 1.1 (2023-06)
