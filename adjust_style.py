@@ -639,11 +639,9 @@ class AdjustStyle:
                     else: # ColorRamp
                         crsh = ipc.colorRampShader()
                         ramp = crsh.sourceColorRamp()
-                        print('a', ramp)
                         if isinstance(ramp, QgsGradientColorRamp):
                             ramp = ramp.clone()
                             self.change_ramp_colors(ramp)
-                            print('a', ramp)
                             crsh.setSourceColorRamp(ramp)
                             crsh.classifyColorRampV2()
                         elif isinstance(ramp, QgsCptCityColorRamp):
@@ -701,29 +699,23 @@ class AdjustStyle:
     
 
     def change_annotationlayer_colors(self, layer):
-        print(layer)
         for item in layer.items().values():
-            print(item)
             if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                 self.change_font_color(item)
             else:
                 symbol = item.symbol()
                 self.change_symbol_color(symbol)
 
-            print("effects")
             effects = layer.paintEffect()
             if effects.enabled():
                 self.change_effect_colors(effects)
 
-            print("repaint")
             # Set dirty flag, trigger repaint
             QgsProject.instance().setDirty()
             layer.triggerRepaint()
 
             # Also show the changes in "Layer Styling" panel and TOC
             layer.emitStyleChanged()
-
-            print("done")
 
 
 
@@ -881,7 +873,6 @@ class AdjustStyle:
 
     def change_symbol_stroke(self, symbol):
         for symlayer in symbol.symbolLayers():
-            print(symlayer)
 
             # Interpolated Line, Lineburst (New in QGIS)
             try:
