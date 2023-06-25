@@ -74,17 +74,17 @@
         <translation>Stile von {} Ebenen geladen, aber kein Erfolg bei {} gewählten Ebenen.</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="955"/>
+        <location filename="../adjust_style.py" line="1117"/>
         <source>File exists</source>
         <translation>Datei existiert</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="955"/>
+        <location filename="../adjust_style.py" line="1117"/>
         <source>File {} already exists. Do you want to overwrite it?</source>
         <translation>Datei {} existiert bereits. Möchten Sie diese überschreiben?</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="973"/>
+        <location filename="../adjust_style.py" line="1135"/>
         <source>Save Style {} failed:</source>
         <translation>Stil von {} konnte nicht gespeichert werden:</translation>
     </message>
@@ -99,7 +99,7 @@
         <translation>Die Datei backgroundcolor.txt existiert bereits. Wollen Sie diese überschreiben?</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1051"/>
+        <location filename="../adjust_style.py" line="1218"/>
         <source>Preview of rotating color hue (color wheel)</source>
         <translation>Vorschau für die Rotation des Farbtons (Farbkreis drehen)</translation>
     </message>
@@ -132,124 +132,139 @@
         <translation>Alle Ebenen</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="102"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="113"/>
         <source>Color (HSV): rotate hue by x°</source>
         <translation>Farbe (HSV): Farbton um x° rotieren</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="156"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="167"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="167"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="178"/>
         <source>Saturation</source>
         <translation>Sättigung</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="358"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="369"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="380"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="391"/>
         <source>−</source>
         <translation>−</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="225"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="236"/>
         <source>Value</source>
         <translation>Farbwert</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="268"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="279"/>
         <source>Stroke width</source>
         <translation>Liniendicke</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="336"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="347"/>
         <source>Font Size</source>
         <translation>Schriftgröße</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="400"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="411"/>
         <source>Replace Font</source>
         <translation>Schrift ersetzen</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="434"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="445"/>
         <source>Save Styles</source>
         <translation>Stile speichern</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="444"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="455"/>
         <source>Load Styles</source>
         <translation>Stile laden</translation>
     </message>
     <message>
         <location filename="../adjust_style_dockwidget_base.ui" line="72"/>
         <source>All Layers + Canvas Background</source>
-        <translation>Alle Ebenen + Projekt-Hintergrundfarbe</translation>
+        <translation type="obsolete">Alle Ebenen + Projekt-Hintergrundfarbe</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="143"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="154"/>
         <source>Angle for rotating color hue (color wheel)</source>
         <translation>Winkel bei Rotation des Farbtons (des Farbkreises)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="153"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="164"/>
         <source>Rotate color hue (color wheel)</source>
         <translation>Farbton (bzw. Farbkreis) drehen</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="186"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="197"/>
         <source>Increase Saturation (+ 5)</source>
         <translation>Farbsättigung erhöhen (+5)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="202"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="213"/>
         <source>Decrease Saturantion (−5)</source>
         <translation>Farbsättigung verringern (−5)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="238"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="249"/>
         <source>Increase HSV Value (+5)</source>
         <translation>HSV-Wert (Helligkeit) erhöhen (+5)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="254"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="265"/>
         <source>Decrease HSV Value (−5)</source>
         <translation>HSV-Wert (Helligkeit) verringern (−5)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="287"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="298"/>
         <source>Lines: Increase stroke width +5 %</source>
         <translation>Liniendicke vergrößern (+ 5 %)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="309"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="320"/>
         <source>Lines: Decrease stroke width −5 %</source>
         <translation>Liniendicke verringern (− 5 %)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="355"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="366"/>
         <source>Increase Font Size +5 %</source>
         <translation>Schriftgröße vergrößern (+ 5 %)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="377"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="388"/>
         <source>Decrease Font Size −5 %</source>
         <translation>Schriftgröße verkleinern (− 5 %)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="431"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="442"/>
         <source>Save styles of selected layers to a folder (as QML files)</source>
         <translation>Stile der gewählten Ebenen in einen Ordner speichern (als QML-Dateien)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="441"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="452"/>
         <source>Load styles of layers from a folder</source>
         <translation>Stile der Ebenen aus einem Ordner laden</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget_base.ui" line="72"/>
+        <source>Including:</source>
+        <translation>Inklusive:</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget_base.ui" line="79"/>
+        <source>Annotation Layers</source>
+        <translation>Beschriftungsebenen</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget_base.ui" line="86"/>
+        <source>Canvas Background</source>
+        <translation>Projekt-Hintergrundfarbe</translation>
     </message>
 </context>
 <context>
