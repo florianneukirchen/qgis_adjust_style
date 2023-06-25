@@ -9,10 +9,11 @@ With one mouse click, it allows to (in all seleced layers):
     - raster layers using the colorize option
     - labels (text color, background color, text buffer color)
     - background color of the map canvas of the project
+    - colors in annotations
 
 - change stroke width (i.e. line thickness) of all lines and borders of markers and polygons (± 5 % per click)
-- change font size of all labels (± 5 % per click)
-- replace a font family used in labels with another font family
+- change font size of all labels and annotations (± 5 % per click)
+- replace a font family used in labels / annotations with another font family
 - save / load the styles (QML files) of layers into/from a given folder 
 
 ![QGIS plugin adjust style](help/screenshot.png)
@@ -34,7 +35,7 @@ First, select the layers you want to work on. Possible choices:
 - Visible Layers
 - All Layers 
 Optionally check to include:
-- Main Annotation Layer (works for QGIS ≥ 3.22)
+- Main Annotation Layer (ignored with QGIS < 3.22)
 - Canvas background color
 
 ### Change Color
@@ -59,6 +60,9 @@ Use the plus / minus buttons to change the font size of labels in increments of 
 
 #### Replace Font
 Choose the font family to be replaced and select a new font family.
+
+### Annotations
+With the checkbox "Main Annotation Layer" checked, all marker symbols and text elements of the main annotation layer of the project are changed. If you are using additional annotation layers, they are counted as layers with the active / selected / visible / all layers comboboxes. 
 
 #### Save and Load Styles
 These buttons provide a quick way to save the styles of all (or all selected) layers. You only need to select a folder. The filename of the QML files corresponds to the layer name (with bad characters replaced by underscore). If there are several layers of the same name, you will get several files with an index value appended. 
