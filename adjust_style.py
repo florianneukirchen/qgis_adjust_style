@@ -710,17 +710,20 @@ class AdjustStyle:
                 symbol = item.symbol()
                 self.change_symbol_color(symbol)
 
+            print("effects")
             effects = layer.paintEffect()
             if effects.enabled():
                 self.change_effect_colors(effects)
 
+            print("repaint")
             # Set dirty flag, trigger repaint
             QgsProject.instance().setDirty()
             layer.triggerRepaint()
 
             # Also show the changes in "Layer Styling" panel and TOC
             layer.emitStyleChanged()
-            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+
+            print("done")
 
 
 
@@ -969,8 +972,6 @@ class AdjustStyle:
             QgsProject.instance().setDirty()
             layer.triggerRepaint()
             layer.emitStyleChanged()
-            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
-
         
         return
 
@@ -1081,7 +1082,6 @@ class AdjustStyle:
 
             QgsProject.instance().setDirty()
             layer.triggerRepaint() 
-            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
             layer.emitStyleChanged()             
 
     # Load and save styles
