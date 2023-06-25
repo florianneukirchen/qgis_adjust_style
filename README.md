@@ -34,7 +34,7 @@ First, select the layers you want to work on. Possible choices:
 - Visible Layers
 - All Layers 
 Optionally check to include:
-- Main Annotation Layer
+- Main Annotation Layer (works for QGIS ≥ 3.22)
 - Canvas background color
 
 ### Change Color

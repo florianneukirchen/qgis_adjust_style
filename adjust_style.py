@@ -421,7 +421,6 @@ class AdjustStyle:
                 color = self.change_color(color, self.value)
                 QgsProject.instance().setBackgroundColor(color)
 
-      
         return
 
     # Functions to change colors
