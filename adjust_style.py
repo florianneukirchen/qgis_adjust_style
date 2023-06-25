@@ -408,8 +408,13 @@ class AdjustStyle:
                 func(layer)
 
 
+        if self.dockwidget.checkAnnotation.isChecked():
+            # Also change the main annotation layer
+            layer = QgsProject.instance().mainAnnotationLayer()
+            func(layer)
+
+
         if self.dockwidget.checkCanvas.isChecked():
-            print("check")
             # Also change canvas background color
             if func == self.layer_change_color:
                 color = QgsProject.instance().backgroundColor()
@@ -699,7 +704,7 @@ class AdjustStyle:
         print(layer)
         for item in layer.items().values():
             print(item)
-            if isinstance(item, QgsAnnotationPointTextItem):
+            if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                 self.change_font_color(item)
             else:
                 symbol = item.symbol()
@@ -806,7 +811,7 @@ class AdjustStyle:
         # Handle Annotation layers
         if isinstance(layer, QgsAnnotationLayer):
             for item in layer.items().values():
-                if not isinstance(item, QgsAnnotationPointTextItem):
+                if not (isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem)):
                     symbol = item.symbol()
                     self.change_symbol_stroke(symbol)
 
@@ -959,7 +964,7 @@ class AdjustStyle:
 
         elif isinstance(layer, QgsAnnotationLayer):
             for item in layer.items().values():
-                if isinstance(item, QgsAnnotationPointTextItem):
+                if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     self.change_font_size(item)
             QgsProject.instance().setDirty()
             layer.triggerRepaint()
@@ -1029,7 +1034,7 @@ class AdjustStyle:
         
         elif isinstance(layer, QgsAnnotationLayer):
             for item in layer.items().values():
-                if isinstance(item, QgsAnnotationPointTextItem):
+                if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     format = item.format()
                     self.fontset.add(format.font().family())
 
@@ -1068,7 +1073,7 @@ class AdjustStyle:
 
         elif isinstance(layer, QgsAnnotationLayer):
             for item in layer.items().values():
-                if isinstance(item, QgsAnnotationPointTextItem):
+                if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     format = item.format()
                     if format.font().family() == self.oldfont:
                             format.setFont(self.newfont)
