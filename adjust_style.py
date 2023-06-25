@@ -468,7 +468,9 @@ class AdjustStyle:
         
         # Handle Annotation layers
         if isinstance(layer, QgsAnnotationLayer):
-            self.change_annotationlayer_colors(layer)
+            if self.dockwidget.checkAnnotation.isChecked():
+                self.change_annotationlayer_colors(layer)
+            # Quit function, nothing else to do
             return
 
 
@@ -810,6 +812,8 @@ class AdjustStyle:
         
         # Handle Annotation layers
         if isinstance(layer, QgsAnnotationLayer):
+            if not self.dockwidget.checkAnnotation.isChecked():
+                return
             for item in layer.items().values():
                 if not (isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem)):
                     symbol = item.symbol()
@@ -963,6 +967,8 @@ class AdjustStyle:
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
 
         elif isinstance(layer, QgsAnnotationLayer):
+            if not self.dockwidget.checkAnnotation.isChecked():
+                return
             for item in layer.items().values():
                 if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     self.change_font_size(item)
@@ -1032,7 +1038,7 @@ class AdjustStyle:
                     except AttributeError:
                         pass
         
-        elif isinstance(layer, QgsAnnotationLayer):
+        elif isinstance(layer, QgsAnnotationLayer) and self.dockwidget.checkAnnotation.isChecked():
             for item in layer.items().values():
                 if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     format = item.format()
@@ -1071,7 +1077,7 @@ class AdjustStyle:
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
             layer.emitStyleChanged()     
 
-        elif isinstance(layer, QgsAnnotationLayer):
+        elif isinstance(layer, QgsAnnotationLayer) and self.dockwidget.checkAnnotation.isChecked():
             for item in layer.items().values():
                 if isinstance(item, QgsAnnotationPointTextItem) or isinstance(item, QgsAnnotationLineTextItem):
                     format = item.format()
@@ -1090,13 +1096,18 @@ class AdjustStyle:
         # Remove bad characters from layer name
         clean_name = re.sub(r'[^\w_.-]', '_', layer.name()) 
 
+        # Check if this is the main annotation layer
+        if layer == QgsProject.instance().mainAnnotationLayer():
+            filename = "Main_Annotation_Layer.qml"
+
         # Check if there are more layers of the same name
-        listoflayers = QgsProject.instance().mapLayersByName(layer.name())
-        if len(listoflayers) == 1:
-            filename = clean_name + '.qml'
         else:
-            i = listoflayers.index(layer)
-            filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
+            listoflayers = QgsProject.instance().mapLayersByName(layer.name())
+            if len(listoflayers) == 1:
+                filename = clean_name + '.qml'
+            else:
+                i = listoflayers.index(layer)
+                filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
 
         url = os.path.join(self.url, filename)
 
@@ -1132,23 +1143,28 @@ class AdjustStyle:
 
         url = os.path.join(self.url, clean_name + '.qml')
 
-        # Handle the dublicate layer name problem
-        listoflayers = QgsProject.instance().mapLayersByName(layer.name())
-        if len(listoflayers) > 1:
-            i = listoflayers.index(layer)
-            filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
-            url1 = os.path.join(self.url, filename) 
-            if os.path.exists(url1):
-                url = url1
-            else:
-                # Use a filename without number if it exists, else try (00)
-                if not os.path.exists(url):
-                    url = os.path.join(self.url, clean_name + '__(00).qml')
-        else:
-            # If filename without number does not exist, try (00)
-            if not os.path.exists(url):
-                    url = os.path.join(self.url, clean_name + '__(00).qml')
+        # Check if this is the main annotation layer
+        if layer == QgsProject.instance().mainAnnotationLayer():
+            filename = "Main_Annotation_Layer.qml"
+            url = os.path.join(self.url, filename)
 
+        # Handle the dublicate layer name problem
+        else:
+            listoflayers = QgsProject.instance().mapLayersByName(layer.name())
+            if len(listoflayers) > 1:
+                i = listoflayers.index(layer)
+                filename = clean_name + '__(' + str(i).zfill(2) + ').qml'
+                url1 = os.path.join(self.url, filename) 
+                if os.path.exists(url1):
+                    url = url1
+                else:
+                    # Use a filename without number if it exists, else try (00)
+                    if not os.path.exists(url):
+                        url = os.path.join(self.url, clean_name + '__(00).qml')
+            else:
+                # If filename without number does not exist, try (00)
+                if not os.path.exists(url):
+                        url = os.path.join(self.url, clean_name + '__(00).qml')
 
         # Load the style
         # status = layer.loadNamedStyle(url, True) 
