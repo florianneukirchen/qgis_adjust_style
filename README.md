@@ -76,12 +76,11 @@ It even works to save the styles of one project and load them in another one if 
 
 ## Change Log
 ### Git main
-- Also change stroke width of lineburst lines (issue #3)
+- Change color / font size of annotations a.k.a. annotation layers, also fixes a crash (issue #4)
+- Change stroke width of lineburst lines (issue #3)
 - Now also works on interpolated lines
 - Fix issue #2: Color ramps used in glow paint effect are not modified
 - Catch an exception (issue #8)
-
-
 ### 1.1 (2023-06)
 - Fix typo in plugin name in metadata (issue #1)
 ### 1.0 (2023-05)
