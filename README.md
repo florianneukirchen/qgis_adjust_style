@@ -76,7 +76,7 @@ It even works to save the styles of one project and load them in another one if 
 [https://github.com/florianneukirchen/qgis_adjust_style/issues](https://github.com/florianneukirchen/qgis_adjust_style/issues)
 
 ## Change Log
-### Git main
+### 1.2 (2023-06)
 - Change color / font size of annotations a.k.a. annotation layers, also fixes a crash (issue #4)
 - Change stroke width of lineburst lines (issue #3)
 - Now also works on interpolated lines
