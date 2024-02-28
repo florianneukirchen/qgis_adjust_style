@@ -613,19 +613,28 @@ class AdjustStyle:
 
 
     def change_symbol_color(self, symbol):
-        for symlayer in symbol.symbolLayers():
+        if not symbol:
+            return
+        
+        # used by Line Pattern Fill (new in QGIS 3.36)
+        if isinstance(symbol, QgsFillSymbol):
+            for symlayer in symbol.symbolLayers():
+                self.change_symbol_color(symlayer)
 
+        # Iterate through Symbol Layers
+        try:
+            symlayers = symbol.symbolLayers()
+        except AttributeError:
+            # No Symbol Layers in Symbol
+            symlayers = []
+
+        for symlayer in symlayers:
             # Marker symbols with subsymbol
-            if (isinstance(symlayer, QgsFilledMarkerSymbolLayer) 
-                  or isinstance(symlayer, QgsCentroidFillSymbolLayer) 
-                  or isinstance(symlayer, QgsPointPatternFillSymbolLayer) 
-                  or isinstance(symlayer, QgsLinePatternFillSymbolLayer) 
-                  or isinstance(symlayer, QgsHashedLineSymbolLayer)
-                  or isinstance(symlayer, QgsMarkerLineSymbolLayer)
-                  or isinstance(symlayer, QgsGeometryGeneratorSymbolLayer)
-                  or isinstance(symlayer, QgsRandomMarkerFillSymbolLayer)):
+            try:
                 subsymbol = symlayer.subSymbol()
                 self.change_symbol_color(subsymbol)
+            except AttributeError:
+                pass 
 
             # Interpolated line (new in QGIS 3.20)
             try:
@@ -872,7 +881,17 @@ class AdjustStyle:
 
 
     def change_symbol_stroke(self, symbol):
-        for symlayer in symbol.symbolLayers():
+        if not symbol:
+            return
+        
+        # Iterate through Symbol Layers
+        try:
+            symlayers = symbol.symbolLayers()
+        except AttributeError:
+            # No Symbal Layers in Symbol
+            symlayers = []
+
+        for symlayer in symlayers:
 
             # Interpolated Line, Lineburst (New in QGIS)
             try:
@@ -910,16 +929,11 @@ class AdjustStyle:
                 symlayer.setWidth(width)
 
             # Marker symbols with subsymbol
-            elif (isinstance(symlayer, QgsFilledMarkerSymbolLayer) 
-                  or isinstance(symlayer, QgsCentroidFillSymbolLayer) 
-                  or isinstance(symlayer, QgsPointPatternFillSymbolLayer) 
-                  or isinstance(symlayer, QgsLinePatternFillSymbolLayer) 
-                  or isinstance(symlayer, QgsHashedLineSymbolLayer)
-                  or isinstance(symlayer, QgsMarkerLineSymbolLayer)
-                  or isinstance(symlayer, QgsGeometryGeneratorSymbolLayer)
-                  or isinstance(symlayer, QgsRandomMarkerFillSymbolLayer)):
+            try:
                 subsymbol = symlayer.subSymbol()
                 self.change_symbol_stroke(subsymbol)
+            except AttributeError:
+                pass
 
             # Most other symbols
             else:
