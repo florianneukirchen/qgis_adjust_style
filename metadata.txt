@@ -8,7 +8,7 @@ name=Adjust Style
 qgisMinimumVersion=3.22
 description=Quickly adjust the symbology (colors, stroke, font) for all layers.
 
-version=1.2
+version=1.3
 
 author=Florian Neukirchen
 email=mail@riannek.de
@@ -34,7 +34,7 @@ repository=https://github.com/florianneukirchen/qgis_adjust_style
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
 changelog=1.3
-    - Works for Filled Line (new in QGIS 3.36)
+    - Implement adjusting Filled Line (new in QGIS 3.36)
     - Set QGIS minimum version to 3.22, as not everything was working in QGIS 3.16.
     - Catch exception with replace font dialog if selection does not contain any fonts
     - update German translation
