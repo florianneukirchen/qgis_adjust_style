@@ -1000,6 +1000,10 @@ class AdjustStyle:
         # Get a set of all fonts in the project
         self.fontset = set()
         self.mapToLayers(self.collect_fonts)
+        if not self.fontset:
+            # set is empty
+            self.iface.messageBar().pushWarning(self.tr('Replace Font'), self.tr('The selection does not contain any fonts.'))
+            return
         
         # Populate combo box
         self.dlg.currentFontsComboBox.clear()

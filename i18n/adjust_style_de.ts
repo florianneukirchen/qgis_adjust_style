@@ -74,17 +74,17 @@
         <translation>Stile von {} Ebenen geladen, aber kein Erfolg bei {} gewählten Ebenen.</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1112"/>
+        <location filename="../adjust_style.py" line="1120"/>
         <source>File exists</source>
         <translation>Datei existiert</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1112"/>
+        <location filename="../adjust_style.py" line="1120"/>
         <source>File {} already exists. Do you want to overwrite it?</source>
         <translation>Datei {} existiert bereits. Möchten Sie diese überschreiben?</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1130"/>
+        <location filename="../adjust_style.py" line="1138"/>
         <source>Save Style {} failed:</source>
         <translation>Stil von {} konnte nicht gespeichert werden:</translation>
     </message>
@@ -99,9 +99,19 @@
         <translation>Die Datei backgroundcolor.txt existiert bereits. Wollen Sie diese überschreiben?</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1213"/>
+        <location filename="../adjust_style.py" line="1221"/>
         <source>Preview of rotating color hue (color wheel)</source>
         <translation>Vorschau für die Rotation des Farbtons (Farbkreis drehen)</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style.py" line="1005"/>
+        <source>Replace Font</source>
+        <translation>Schrift ersetzen</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style.py" line="1005"/>
+        <source>The selection does not contain any fonts.</source>
+        <translation>Die Auswahl enthält keine Schriften.</translation>
     </message>
 </context>
 <context>

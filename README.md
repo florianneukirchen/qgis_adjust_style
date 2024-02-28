@@ -79,6 +79,8 @@ It even works to save the styles of one project and load them in another one if 
 ### Upcoming 1.3 (Git)
 - Works for Filled Line (new in QGIS 3.36)
 - Set QGIS minimum version to 3.22, as not everything was working in QGIS 3.16
+- Catch exception with replace font dialog if selection does not contain any fonts
+- Update German translation
 ### 1.2 (2023-06)
 - Change color / font size of annotations a.k.a. annotation layers, also fixes a crash (issue #4)
 - Change stroke width of lineburst lines (issue #3)
