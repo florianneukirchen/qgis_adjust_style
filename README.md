@@ -76,7 +76,7 @@ It even works to save the styles of one project and load them in another one if 
 [https://github.com/florianneukirchen/qgis_adjust_style/issues](https://github.com/florianneukirchen/qgis_adjust_style/issues)
 
 ## Change Log
-### Upcoming 1.3 (Git)
+### 1.3 (2024-02)
 - Implement adjusting Filled Line (new in QGIS 3.36)
 - Set QGIS minimum version to 3.22, as not everything was working in QGIS 3.16
 - Catch exception with replace font dialog if selection does not contain any fonts
