@@ -64,7 +64,7 @@ Choose the font family to be replaced and select a new font family.
 ### Annotations
 With the checkbox "Main Annotation Layer" checked, all marker symbols and text elements of the main annotation layer of the project are changed. If you are using additional annotation layers, they are counted as layers with the active / selected / visible / all layers comboboxes. 
 
-#### Save and Load Styles
+### Save and Load Styles
 These buttons provide a quick way to save the styles of all (or all selected) layers. You only need to select a folder. The filename of the QML files corresponds to the layer name (with bad characters replaced by underscore). If there are several layers of the same name, you will get several files with an index value appended. 
 
 With the radiobutton "All Layers + Canvas Background" checked, the background color of the project is loaded/saved as well (a simple text file with color in hex notation).
