@@ -236,6 +236,12 @@ class AdjustStyle:
         self.dockwidget.spinBox.setValue(self.dockwidget.horizontalSlider.value())
         self.update_preview_colors()
 
+    def changeSpinboxChangeValue(self):
+        self.dockwidget.changeSlider.setValue(int(self.dockwidget.changeSpinBox.value()))
+
+    def changeSliderChangeValue(self):
+        self.dockwidget.changeSpinBox.setValue(int(self.dockwidget.changeSlider.value()))
+
 
     #--------------------------------------------------------------------------
 
@@ -247,39 +253,39 @@ class AdjustStyle:
         self.mapToLayers(self.layer_change_color)
 
     def saturationPlusBtn(self):
-        self.value = 5
+        self.value = self.dockwidget.changeSpinBox.value()
         self.change_color = self.change_saturation
         self.mapToLayers(self.layer_change_color)       
 
     def saturationMinusBtn(self):
-        self.value = -5
+        self.value = self.dockwidget.changeSpinBox.value() * -1
         self.change_color = self.change_saturation
         self.mapToLayers(self.layer_change_color)  
 
     def hsvValuePlusBtn(self):
-        self.value = 5
+        self.value = self.dockwidget.changeSpinBox.value()
         self.change_color = self.change_hsv_value
         self.mapToLayers(self.layer_change_color)  
 
     def hsvValueMinusBtn(self):
-        self.value = -5
+        self.value = self.dockwidget.changeSpinBox.value() * -1
         self.change_color = self.change_hsv_value
         self.mapToLayers(self.layer_change_color)  
 
     def strokeWidthPlusBtn(self):
-        self.value = 0.05
+        self.value = self.dockwidget.changeSpinBox.value() / 100
         self.mapToLayers(self.layer_change_stroke)  
 
     def strokeWidthMinusBtn(self):
-        self.value = -0.05
+        self.value = self.dockwidget.changeSpinBox.value() * -1 / 100
         self.mapToLayers(self.layer_change_stroke)  
 
     def fontSizePlusBtn(self):
-        self.value = 0.05
+        self.value = self.dockwidget.changeSpinBox.value() / 100
         self.mapToLayers(self.layer_font_size)
 
     def fontSizeMinusBtn(self):
-        self.value = -0.05
+        self.value = self.dockwidget.changeSpinBox.value() * -1 / 100
         self.mapToLayers(self.layer_font_size)
 
     def saveStylesBtn(self):
@@ -1208,11 +1214,16 @@ class AdjustStyle:
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
             # Init slider and spinbox widgets
-            self.value = 30
-            self.dockwidget.horizontalSlider.setValue(self.value) 
-            self.dockwidget.spinBox.setValue(self.value) 
+            self.value = 20
+            self.dockwidget.horizontalSlider.setValue(30) 
+            self.dockwidget.spinBox.setValue(30) 
             self.dockwidget.horizontalSlider.valueChanged[int].connect(self.sliderChangeValue)
-            self.dockwidget.spinBox.valueChanged.connect(self.spinboxChangeValue)
+            self.dockwidget.spinBox.valueChanged[int].connect(self.spinboxChangeValue)
+
+            self.dockwidget.changeSlider.setValue(self.value)
+            self.dockwidget.changeSpinBox.setValue(self.value)
+            self.dockwidget.changeSlider.valueChanged.connect(self.changeSliderChangeValue)
+            self.dockwidget.changeSpinBox.valueChanged.connect(self.changeSpinboxChangeValue)
 
             # Create color grid
             self.wheel = range(0, 360, 30)

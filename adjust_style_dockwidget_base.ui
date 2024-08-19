@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>278</width>
-    <height>419</height>
+    <height>626</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,6 +18,19 @@
     <string/>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
@@ -171,6 +184,60 @@
        </layout>
       </item>
       <item>
+       <widget class="Line" name="line_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string> Change by </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="changeSlider">
+          <property name="minimum">
+           <number>5</number>
+          </property>
+          <property name="maximum">
+           <number>90</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="changeSpinBox">
+          <property name="minimum">
+           <number>5</number>
+          </property>
+          <property name="maximum">
+           <number>90</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QLabel" name="label_2">
@@ -194,7 +261,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Increase Saturation (+ 5)</string>
+           <string>Increase Saturation</string>
           </property>
           <property name="text">
            <string>+</string>
@@ -210,7 +277,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Decrease Saturantion (−5)</string>
+           <string>Decrease Saturantion</string>
           </property>
           <property name="text">
            <string>−</string>
@@ -246,7 +313,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Increase HSV Value (+5)</string>
+           <string>Increase HSV Value</string>
           </property>
           <property name="text">
            <string>+</string>
@@ -262,7 +329,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Decrease HSV Value (−5)</string>
+           <string>Decrease HSV Value</string>
           </property>
           <property name="text">
            <string>−</string>
@@ -295,7 +362,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Lines: Increase stroke width +5 %</string>
+           <string>Lines: Increase stroke width (change in %)</string>
           </property>
           <property name="text">
            <string>+</string>
@@ -317,7 +384,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Lines: Decrease stroke width −5 %</string>
+           <string>Lines: Decrease stroke (change in %)</string>
           </property>
           <property name="text">
            <string>−</string>
@@ -363,7 +430,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Increase Font Size +5 %</string>
+           <string>Increase Font Size (change in %)</string>
           </property>
           <property name="text">
            <string>+</string>
@@ -385,7 +452,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Decrease Font Size −5 %</string>
+           <string>Decrease Font Size (change in %)</string>
           </property>
           <property name="text">
            <string>−</string>
@@ -459,19 +526,6 @@
        </layout>
       </item>
      </layout>
-    </item>
-    <item row="1" column="0">
-     <spacer name="verticalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
     </item>
    </layout>
   </widget>
