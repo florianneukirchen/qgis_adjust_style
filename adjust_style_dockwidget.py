@@ -25,7 +25,8 @@
 import os
 
 from qgis.PyQt import QtGui, QtWidgets, uic
-from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtCore import pyqtSignal, Qt
+from qgis.PyQt.QtWidgets import QAction
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'adjust_style_dockwidget_base.ui'))
@@ -48,3 +49,39 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def closeEvent(self, event):
         self.closingPlugin.emit()
         event.accept()
+
+
+
+class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
+    def __init__(self, parent=None):
+        super(AdjustStyleLayoutDockWidget, self).__init__(parent)
+
+
+
+class AdjustStyleLayoutHandler():
+    def __init__(self, plugin_instance, designer):
+        self.plugin_instance = plugin_instance
+        self.designer = designer
+        self.dockwidget = None
+
+
+        self.action = QAction(plugin_instance.icon, plugin_instance.menu, designer)
+        self.action.triggered.connect(self.openDesignerDockWidget)
+        self.action.setEnabled(True)
+
+        toolbar = designer.actionsToolbar()
+        toolbar.addAction(self.action)
+
+        
+
+    def openDesignerDockWidget(self):
+        if self.dockwidget is None:
+            self.dockwidget = AdjustStyleLayoutDockWidget(self.designer.window())
+            self.designer.addDockWidget(Qt.LeftDockWidgetArea, self.dockwidget)
+
+        self.dockwidget.show()
+
+    def unload(self):
+        toolbar = self.designer.actionsToolbar()
+        toolbar.removeAction(self.action)
+        self.dockwidget = None

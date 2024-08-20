@@ -30,7 +30,7 @@ from qgis.PyQt.QtWidgets import QAction, QFileDialog, QMessageBox, QWidget, QLab
 from .resources import *
 
 # Import the code for the DockWidget
-from .adjust_style_dockwidget import AdjustStyleDockWidget
+from .adjust_style_dockwidget import AdjustStyleDockWidget, AdjustStyleLayoutDockWidget, AdjustStyleLayoutHandler
 from .adjust_style_font_dialog import ReplaceFontDialog
 import os.path
 
@@ -68,12 +68,16 @@ class AdjustStyle:
 
         # Declare instance attributes
         self.actions = []
+        self.layouts = []
         self.menu = self.tr(u'&Adjust Syle ')
+        icon_path = ':/plugins/adjust_style/icon.png'
+        self.icon = QIcon(icon_path)
 
         #print "** INITIALIZING AdjustStyle"
 
         self.pluginIsActive = False
         self.dockwidget = None
+
 
 
     # noinspection PyMethodMayBeStatic
@@ -94,7 +98,6 @@ class AdjustStyle:
 
     def add_action(
         self,
-        icon_path,
         text,
         callback,
         enabled_flag=True,
@@ -104,10 +107,6 @@ class AdjustStyle:
         whats_this=None,
         parent=None):
         """Add a toolbar icon to the toolbar.
-
-        :param icon_path: Path to the icon for this action. Can be a resource
-            path (e.g. ':/plugins/foo/bar.png') or a normal file system path.
-        :type icon_path: str
 
         :param text: Text that should be shown in menu items for this action.
         :type text: str
@@ -142,8 +141,7 @@ class AdjustStyle:
         :rtype: QAction
         """
 
-        icon = QIcon(icon_path)
-        action = QAction(icon, text, parent)
+        action = QAction(self.icon, text, parent)
         action.triggered.connect(callback)
         action.setEnabled(enabled_flag)
 
@@ -169,12 +167,14 @@ class AdjustStyle:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ':/plugins/adjust_style/icon.png'
         self.add_action(
-            icon_path,
             text=self.tr(u'Adjust Style'),
             callback=self.run,
             parent=self.iface.mainWindow())
+              
+        self.iface.layoutDesignerOpened.connect(self.whenOpenedDesignerInterface)
+        self.iface.layoutDesignerWillBeClosed.connect(self.whenClosedDesignerInterface)
+        
 
     #--------------------------------------------------------------------------
 
@@ -207,6 +207,31 @@ class AdjustStyle:
             self.iface.removeToolBarIcon(action)
         # remove the toolbar
         # del self.toolbar
+
+    #--------------------------------------------------------------------------
+
+    def whenOpenedDesignerInterface(self, designer):
+
+        layout_handler = AdjustStyleLayoutHandler(self, designer)
+        self.layouts.append(layout_handler)
+
+
+
+    def whenClosedDesignerInterface(self, designer):
+        for layout in self.layouts:
+            if layout.designer == designer:
+                layout.unload()
+                self.layouts.remove(layout)
+
+
+        """
+        QgsLayoutItemLegend
+QgsLayoutItemLabel
+QgsLayoutItemScaleBar
+        """
+
+
+
 
     #--------------------------------------------------------------------------
 
