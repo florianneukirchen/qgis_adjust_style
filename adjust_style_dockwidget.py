@@ -173,6 +173,9 @@ class AdjustStyleLayoutHandler():
         toolbar = designer.actionsToolbar()
         toolbar.addAction(self.action)
 
+        editmenu = designer.editMenu()
+        editmenu.addAction(self.action)
+
         
 
     def openDesignerDockWidget(self):
@@ -185,4 +188,6 @@ class AdjustStyleLayoutHandler():
     def unload(self):
         toolbar = self.designer.actionsToolbar()
         toolbar.removeAction(self.action)
+        editmenu = self.designer.editMenu()
+        editmenu.removeAction(self.action)
         self.dockwidget = None
