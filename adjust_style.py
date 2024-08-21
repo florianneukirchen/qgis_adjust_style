@@ -25,7 +25,7 @@ import re
 from qgis.core import *
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon, QColor, QPalette
-from qgis.PyQt.QtWidgets import QAction, QFileDialog, QMessageBox, QWidget, QLabel
+from qgis.PyQt.QtWidgets import QAction, QFileDialog, QMessageBox
 # Initialize Qt resources from file resources.py
 from .resources import *
 
@@ -208,6 +208,10 @@ class AdjustStyle:
         # remove the toolbar
         # del self.toolbar
 
+        for layout in self.layouts:
+            layout.unload()
+        self.layouts=[]
+
     #--------------------------------------------------------------------------
 
     def whenOpenedDesignerInterface(self, designer):
@@ -232,40 +236,6 @@ QgsLayoutItemScaleBar
 
 
 
-
-    #--------------------------------------------------------------------------
-
-    # Update preview colors
-
-    def update_preview_colors(self):
-        for column, hue in enumerate(self.wheel):
-            h = hue + self.dockwidget.spinBox.value()
-            if h >= 360:
-                h = h - 360
-            color = QColor()
-            color.setHsv(h, 250, 250, 250)
-            widget = self.dockwidget.colorGrid.itemAtPosition(1, column).widget()
-            palette = QPalette()
-            palette.setColor(QPalette.Window, color)
-            widget.setPalette(palette)
-
-
-
-
-    # Connect slider and spinbox
-    def spinboxChangeValue(self):
-        self.dockwidget.horizontalSlider.setValue(self.dockwidget.spinBox.value())
-        self.update_preview_colors()
-
-    def sliderChangeValue(self):
-        self.dockwidget.spinBox.setValue(self.dockwidget.horizontalSlider.value())
-        self.update_preview_colors()
-
-    def changeSpinboxChangeValue(self):
-        self.dockwidget.changeSlider.setValue(int(self.dockwidget.changeSpinBox.value()))
-
-    def changeSliderChangeValue(self):
-        self.dockwidget.changeSpinBox.setValue(int(self.dockwidget.changeSlider.value()))
 
 
     #--------------------------------------------------------------------------
@@ -1238,37 +1208,7 @@ QgsLayoutItemScaleBar
             # connect to provide cleanup on closing of dockwidget
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
-            # Init slider and spinbox widgets
             self.value = 20
-            self.dockwidget.horizontalSlider.setValue(30) 
-            self.dockwidget.spinBox.setValue(30) 
-            self.dockwidget.horizontalSlider.valueChanged[int].connect(self.sliderChangeValue)
-            self.dockwidget.spinBox.valueChanged[int].connect(self.spinboxChangeValue)
-
-            self.dockwidget.changeSlider.setValue(self.value)
-            self.dockwidget.changeSpinBox.setValue(self.value)
-            self.dockwidget.changeSlider.valueChanged.connect(self.changeSliderChangeValue)
-            self.dockwidget.changeSpinBox.valueChanged.connect(self.changeSpinboxChangeValue)
-
-            # Create color grid
-            self.wheel = range(0, 360, 30)
-
-
-            tooltip = self.tr('Preview of rotating color hue (color wheel)')
-
-            for column, hue in enumerate(self.wheel):
-                for row in range(2):
-                    color = QColor()
-                    color.setHsv(hue, 250, 250, 250)
-                    widget = QLabel(' ')
-                    widget.setAutoFillBackground(True) 
-                    palette = QPalette()
-                    palette.setColor(QPalette.Window, color)
-                    widget.setPalette(palette)
-                    widget.setToolTip(tooltip)
-                    self.dockwidget.colorGrid.addWidget(widget, row, column)
-
-            self.update_preview_colors()
 
             # Connect buttons
             self.dockwidget.hueButton.clicked.connect(self.hueBtn)

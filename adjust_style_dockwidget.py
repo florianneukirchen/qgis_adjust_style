@@ -26,7 +26,8 @@ import os
 
 from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal, Qt
-from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtWidgets import QAction, QLabel
+from qgis.PyQt.QtGui import QColor, QPalette
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'adjust_style_dockwidget_base.ui'))
@@ -45,6 +46,74 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # http://doc.qt.io/qt-5/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
+
+        # Init slider and spinbox widgets
+        self.horizontalSlider.setValue(30) 
+        self.spinBox.setValue(30) 
+        self.horizontalSlider.valueChanged[int].connect(self.sliderChangeValue)
+        self.spinBox.valueChanged[int].connect(self.spinboxChangeValue)
+
+        self.changeSlider.setValue(20)
+        self.changeSpinBox.setValue(20)
+        self.changeSlider.valueChanged.connect(self.changeSliderChangeValue)
+        self.changeSpinBox.valueChanged.connect(self.changeSpinboxChangeValue)
+
+        # Create color grid
+        self.wheel = range(0, 360, 30)
+
+
+        tooltip = self.tr('Preview of rotating color hue (color wheel)')
+
+        for column, hue in enumerate(self.wheel):
+            for row in range(2):
+                color = QColor()
+                color.setHsv(hue, 250, 250, 250)
+                widget = QLabel(' ')
+                widget.setAutoFillBackground(True) 
+                palette = QPalette()
+                palette.setColor(QPalette.Window, color)
+                widget.setPalette(palette)
+                widget.setToolTip(tooltip)
+                self.colorGrid.addWidget(widget, row, column)
+
+        self.update_preview_colors()
+
+
+    #--------------------------------------------------------------------------
+
+    # Update preview colors
+
+    def update_preview_colors(self):
+        for column, hue in enumerate(self.wheel):
+            h = hue + self.spinBox.value()
+            if h >= 360:
+                h = h - 360
+            color = QColor()
+            color.setHsv(h, 250, 250, 250)
+            widget = self.colorGrid.itemAtPosition(1, column).widget()
+            palette = QPalette()
+            palette.setColor(QPalette.Window, color)
+            widget.setPalette(palette)
+
+
+    # Connect slider and spinbox
+    def spinboxChangeValue(self):
+        self.horizontalSlider.setValue(self.spinBox.value())
+        self.update_preview_colors()
+
+    def sliderChangeValue(self):
+        self.spinBox.setValue(self.horizontalSlider.value())
+        self.update_preview_colors()
+
+    def changeSpinboxChangeValue(self):
+        self.changeSlider.setValue(int(self.changeSpinBox.value()))
+
+    def changeSliderChangeValue(self):
+        self.changeSpinBox.setValue(int(self.changeSlider.value()))
+
+
+
+
 
     def closeEvent(self, event):
         self.closingPlugin.emit()
