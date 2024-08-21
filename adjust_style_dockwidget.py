@@ -26,7 +26,7 @@ import os
 
 from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal, Qt
-from qgis.PyQt.QtWidgets import QAction, QLabel
+from qgis.PyQt.QtWidgets import QAction, QLabel, QCheckBox
 from qgis.PyQt.QtGui import QColor, QPalette
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -124,6 +124,38 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
     def __init__(self, parent=None):
         super(AdjustStyleLayoutDockWidget, self).__init__(parent)
+
+        self.radioActiveLayer.setParent(None)
+        self.radioAllLayers.setParent(None)
+        self.radioSelectedLayers.setParent(None)
+        self.radioVisibleLayers.setParent(None)
+        self.label_6.setParent(None)
+        self.checkAnnotation.setParent(None)
+        self.checkCanvas.setParent(None)
+        self.loadStylesButton.setParent(None)
+        self.saveStylesButton.setParent(None)
+
+        container = self.verticalLayout_2
+
+        self.checkLegend = QCheckBox('Legend')
+        self.checkScalebar = QCheckBox('Scalebar')
+        self.checkTextLabels = QCheckBox('Text Labels')
+        self.checkShapes = QCheckBox('Shapes')
+
+        self.checkLegend.setChecked(True)
+        self.checkScalebar.setChecked(True)
+        self.checkTextLabels.setChecked(True)
+        self.checkShapes.setChecked(True)
+
+
+        container.insertWidget(0, self.checkLegend)
+        container.insertWidget(1, self.checkScalebar)
+        container.insertWidget(2, self.checkTextLabels)
+        container.insertWidget(3, self.checkShapes)
+
+
+        
+
 
 
 
