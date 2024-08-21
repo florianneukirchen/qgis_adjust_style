@@ -215,6 +215,7 @@ class AdjustStyle:
     #--------------------------------------------------------------------------
 
     def whenOpenedDesignerInterface(self, designer):
+        # The signal returns the instance of QgsLayoutDesignerInterface
 
         layout_handler = AdjustStyleLayoutHandler(self, designer)
         self.layouts.append(layout_handler)
