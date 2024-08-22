@@ -136,6 +136,7 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         self.checkCanvas.setParent(None)
         self.loadStylesButton.setParent(None)
         self.saveStylesButton.setParent(None)
+        self.line_2.setParent(None)
 
         container = self.verticalLayout_2
 
