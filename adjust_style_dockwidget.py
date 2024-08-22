@@ -231,11 +231,11 @@ class AdjustStyleLayoutHandler():
 
     def strokeWidthPlusBtn(self):
         self.plugin_instance.value = self.dockwidget.changeSpinBox.value() / 100
-        self.mapToLayout(self.plugin_instance.layer_change_stroke)  
+        self.mapToLayout(self.layout_change_stroke)  
 
     def strokeWidthMinusBtn(self):
         self.plugin_instance.value = self.dockwidget.changeSpinBox.value() * -1 / 100
-        self.mapToLayout(self.plugin_instance.layer_change_stroke)  
+        self.mapToLayout(self.layout_change_stroke)  
 
     def fontSizePlusBtn(self):
         self.plugin_instance.value = self.dockwidget.changeSpinBox.value() / 100
@@ -341,3 +341,48 @@ class AdjustStyleLayoutHandler():
             symbol = item.symbol()
             self.plugin_instance.change_symbol_color(symbol)
             item.refresh()
+
+
+    def layout_change_stroke(self, item):
+
+        if isinstance(item, QgsLayoutItemLegend) and self.dockwidget.checkLegend.isChecked():
+            self.frame_change_stroke(item)
+            item.refresh()
+            
+        elif isinstance(item, QgsLayoutItemScaleBar) and self.dockwidget.checkScalebar.isChecked():
+            symbol = item.fillSymbol()
+            self.plugin_instance.change_symbol_stroke(symbol)
+
+            symbol = item.alternateFillSymbol()
+            self.plugin_instance.change_symbol_stroke(symbol)
+
+            symbol = item.lineSymbol()
+            self.plugin_instance.change_symbol_stroke(symbol)
+
+            symbol = item.divisionLineSymbol()
+            self.plugin_instance.change_symbol_stroke(symbol)
+
+            symbol = item.subdivisionLineSymbol()
+            self.plugin_instance.change_symbol_stroke(symbol)
+
+            self.frame_change_stroke(item)
+
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemLabel) and self.dockwidget.checkTextLabels.isChecked():
+            self.frame_change_stroke(item)
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemShape) and self.dockwidget.checkShapes.isChecked():
+            symbol = item.symbol()
+            self.plugin_instance.change_symbol_stroke(symbol)
+            item.refresh()
+
+
+    def frame_change_stroke(self, item):
+        if item.frameEnabled():
+            measure = item.frameStrokeWidth() # Returns QgsLayoutMeasurement
+            width = measure.length() + measure.length() * self.plugin_instance.value
+            measure.setLength(width)
+            item.setFrameStrokeWidth(measure)
+
