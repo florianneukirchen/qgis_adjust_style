@@ -28,6 +28,7 @@ from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal, Qt
 from qgis.PyQt.QtWidgets import QAction, QLabel, QCheckBox
 from qgis.PyQt.QtGui import QColor, QPalette
+from qgis.core import QgsLayoutItemLegend, QgsLayoutItemScaleBar, QgsLayoutItemLabel, QgsLayoutItemShape, QgsLegendStyle
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'adjust_style_dockwidget_base.ui'))
@@ -183,6 +184,16 @@ class AdjustStyleLayoutHandler():
             self.dockwidget = AdjustStyleLayoutDockWidget(self.designer.window())
             self.designer.addDockWidget(Qt.LeftDockWidgetArea, self.dockwidget)
 
+            self.dockwidget.hueButton.clicked.connect(self.hueBtn)
+            self.dockwidget.plusSatButton.clicked.connect(self.saturationPlusBtn)
+            self.dockwidget.minusSatButton.clicked.connect(self.saturationMinusBtn)
+            self.dockwidget.plusValueButton.clicked.connect(self.hsvValuePlusBtn)
+            self.dockwidget.minusValueButton.clicked.connect(self.hsvValueMinusBtn)
+            self.dockwidget.plusStrokeWidthButton.clicked.connect(self.strokeWidthPlusBtn)
+            self.dockwidget.minusStrokeWidthButton.clicked.connect(self.strokeWidthMinusBtn)
+            self.dockwidget.plusFontSizeButton.clicked.connect(self.fontSizePlusBtn)
+            self.dockwidget.minusFontSizeButton.clicked.connect(self.fontSizeMinusBtn)
+
         self.dockwidget.show()
 
     def unload(self):
@@ -191,3 +202,142 @@ class AdjustStyleLayoutHandler():
         editmenu = self.designer.editMenu()
         editmenu.removeAction(self.action)
         self.dockwidget = None
+
+
+    def hueBtn(self):
+        self.plugin_instance.value = self.dockwidget.spinBox.value()
+        self.plugin_instance.change_color = self.plugin_instance.rotate_hue
+        self.mapToLayout(self.layout_change_color)
+
+    def saturationPlusBtn(self):
+        self.plugin_instance.value = self.dockwidget.changeSpinBox.value()
+        self.plugin_instance.change_color = self.plugin_instance.change_saturation
+        self.mapToLayout(self.layout_change_color)       
+
+    def saturationMinusBtn(self):
+        self.plugin_instance.value = self.dockwidget.changeSpinBox.value() * -1
+        self.plugin_instance.change_color = self.plugin_instance.change_saturation
+        self.mapToLayout(self.layout_change_color)  
+
+    def hsvValuePlusBtn(self):
+        self.plugin_instance.value = self.dockwidget.changeSpinBox.value()
+        self.plugin_instance.change_color = self.plugin_instance.change_hsv_value
+        self.mapToLayout(self.layout_change_color)  
+
+    def hsvValueMinusBtn(self):
+        self.plugin_instance.value = self.dockwidget.changeSpinBox.value() * -1
+        self.plugin_instance.change_color = self.plugin_instance.change_hsv_value
+        self.mapToLayout(self.layout_change_color)  
+
+    def strokeWidthPlusBtn(self):
+        self.plugin_instance.value = self.dockwidget.changeSpinBox.value() / 100
+        self.mapToLayout(self.plugin_instance.layer_change_stroke)  
+
+    def strokeWidthMinusBtn(self):
+        self.plugin_instance.value = self.dockwidget.changeSpinBox.value() * -1 / 100
+        self.mapToLayout(self.plugin_instance.layer_change_stroke)  
+
+    def fontSizePlusBtn(self):
+        self.plugin_instance.value = self.dockwidget.changeSpinBox.value() / 100
+        self.mapToLayout(self.plugin_instance.layer_font_size)
+
+    def fontSizeMinusBtn(self):
+        self.plugin_instance.value = self.dockwidget.changeSpinBox.value() * -1 / 100
+        self.mapToLayout(self.plugin_instance.layer_font_size)
+
+    def mapToLayout(self, func):
+        layout = self.designer.layout()
+
+        for item in layout.items():
+            func(item)
+
+                
+
+    def layout_change_color(self, item):
+
+        legend_components = [
+            QgsLegendStyle.Title,
+            QgsLegendStyle.Subgroup,
+            QgsLegendStyle.Group,
+            QgsLegendStyle.SymbolLabel
+        ]
+
+        if isinstance(item, QgsLayoutItemLegend) and self.dockwidget.checkLegend.isChecked():
+
+            for component in legend_components:
+                try:
+                    style = item.style(component)
+                    format = style.textFormat()
+                    format = self.plugin_instance.change_font_color(format)
+                    style.setTextFormat(format)
+                    item.setStyle(component, style)
+
+                except AttributeError:
+                    print('Style change of legend requires QGIS >= 3.30')
+                    break
+
+            if item.hasBackground():
+                background = item.backgroundColor()
+                background = self.plugin_instance.change_color(background, self.plugin_instance.value)
+                item.setBackgroundColor(background)
+
+            if item.frameEnabled():
+                frame = item.frameStrokeColor()
+                frame = self.plugin_instance.change_color(frame, self.plugin_instance.value)
+                item.setFrameStrokeColor(frame)
+
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemScaleBar) and self.dockwidget.checkScalebar.isChecked():
+            format = item.textFormat()
+            format = self.plugin_instance.change_font_color(format)
+            item.setTextFormat(format)
+
+            symbol = item.fillSymbol()
+            self.plugin_instance.change_symbol_color(symbol)
+
+            symbol = item.alternateFillSymbol()
+            self.plugin_instance.change_symbol_color(symbol)
+
+            symbol = item.lineSymbol()
+            self.plugin_instance.change_symbol_color(symbol)
+
+            symbol = item.divisionLineSymbol()
+            self.plugin_instance.change_symbol_color(symbol)
+
+            symbol = item.subdivisionLineSymbol()
+            self.plugin_instance.change_symbol_color(symbol)
+
+            if item.hasBackground():
+                background = item.backgroundColor()
+                background = self.plugin_instance.change_color(background, self.plugin_instance.value)
+                item.setBackgroundColor(background)
+
+            if item.frameEnabled():
+                frame = item.frameStrokeColor()
+                frame = self.plugin_instance.change_color(frame, self.plugin_instance.value)
+                item.setFrameStrokeColor(frame)
+
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemLabel) and self.dockwidget.checkTextLabels.isChecked():
+            format = item.textFormat()
+            format = self.plugin_instance.change_font_color(format)
+            item.setTextFormat(format)
+
+            if item.hasBackground():
+                background = item.backgroundColor()
+                background = self.plugin_instance.change_color(background, self.plugin_instance.value)
+                item.setBackgroundColor(background)
+
+            if item.frameEnabled():
+                frame = item.frameStrokeColor()
+                frame = self.plugin_instance.change_color(frame, self.plugin_instance.value)
+                item.setFrameStrokeColor(frame)
+
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemShape) and self.dockwidget.checkShapes.isChecked():
+            symbol = item.symbol()
+            self.plugin_instance.change_symbol_color(symbol)
+            item.refresh()

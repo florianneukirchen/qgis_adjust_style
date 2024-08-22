@@ -229,15 +229,6 @@ class AdjustStyle:
                 self.layouts.remove(layout)
 
 
-        """
-        QgsLayoutItemLegend
-QgsLayoutItemLabel
-QgsLayoutItemScaleBar
-        """
-
-
-
-
 
     #--------------------------------------------------------------------------
 
@@ -777,8 +768,12 @@ QgsLayoutItemScaleBar
 
 
     def change_font_color(self, settings):
-
-        format = settings.format() # Returns QgsTextFormat
+        
+        if isinstance(settings, QgsTextFormat):
+            # When called from layout items
+            format = settings
+        else:
+            format = settings.format() # Returns QgsTextFormat
 
         # Font
         color = format.color()
@@ -799,6 +794,9 @@ QgsLayoutItemScaleBar
             symbol = bg.fillSymbol()
             self.change_symbol_color(symbol)
 
+        if isinstance(settings, QgsTextFormat):
+            return format
+        
         settings.setFormat(format)
 
         return settings
