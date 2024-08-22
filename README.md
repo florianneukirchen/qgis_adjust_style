@@ -76,6 +76,12 @@ It even works to save the styles of one project and load them in another one if 
 [https://github.com/florianneukirchen/qgis_adjust_style/issues](https://github.com/florianneukirchen/qgis_adjust_style/issues)
 
 ## Change Log
+
+### 1.9 (Development version)
+- Major code refactoring
+- Allow to set the strength of the change (from 5 to 90, used as absolute value for HSV color parts and as percentage for sizes)
+- Implement another dock widget for the layout designer window and adjust the layout items (change of legend font / font color only supported for QGIS >= 3.30)
+
 ### 1.3 (2024-02)
 - Implement adjusting Filled Line (new in QGIS 3.36)
 - Set QGIS minimum version to 3.22, as not everything was working in QGIS 3.16

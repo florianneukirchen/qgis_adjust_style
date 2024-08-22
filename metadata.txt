@@ -8,7 +8,7 @@ name=Adjust Style
 qgisMinimumVersion=3.22
 description=Quickly adjust the symbology (colors, stroke, font) for all layers.
 
-version=1.3
+version=1.9
 
 author=Florian Neukirchen
 email=mail@riannek.de
@@ -33,7 +33,11 @@ repository=https://github.com/florianneukirchen/qgis_adjust_style
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=1.3
+changelog=1.9
+    - Major code refactoring
+    - Allow to set the strength of the change (from 5 to 90, used as absolute value for HSV color parts and as percentage for sizes)
+    - Implement another dock widget for the layout designer window and adjust the layout items (change of legend font / font color only supported for QGIS >= 3.30)
+    1.3
     - Implement adjusting Filled Line (new in QGIS 3.36)
     - Set QGIS minimum version to 3.22, as not everything was working in QGIS 3.16.
     - Catch exception with replace font dialog if selection does not contain any fonts
@@ -75,7 +79,7 @@ homepage=https://github.com/florianneukirchen/qgis_adjust_style
 category=Plugins
 icon=icon.png
 # experimental flag
-experimental=False
+experimental=True
 
 # deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False
