@@ -25,7 +25,7 @@
 import os
 
 from qgis.PyQt import QtGui, QtWidgets, uic
-from qgis.PyQt.QtCore import pyqtSignal, Qt, QCoreApplication
+from qgis.PyQt.QtCore import pyqtSignal, Qt
 from qgis.PyQt.QtWidgets import QAction, QLabel, QCheckBox
 from qgis.PyQt.QtGui import QColor, QPalette
 from qgis.core import QgsLayoutItemLegend, QgsLayoutItemScaleBar, QgsLayoutItemLabel, QgsLayoutItemShape, QgsLegendStyle
@@ -81,8 +81,6 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
         self.update_preview_colors()
 
-    def tr(self, message):
-        return QCoreApplication.translate('AdjustStyle', message)
 
 
     #--------------------------------------------------------------------------
@@ -141,10 +139,10 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
 
         container = self.verticalLayout_2
 
-        self.checkLegend = QCheckBox('Legend')
-        self.checkScalebar = QCheckBox('Scalebar')
-        self.checkTextLabels = QCheckBox('Text Labels')
-        self.checkShapes = QCheckBox('Shapes')
+        self.checkLegend = QCheckBox(self.tr('Legend'))
+        self.checkScalebar = QCheckBox(self.tr('Scalebar'))
+        self.checkTextLabels = QCheckBox(self.tr('Text'))
+        self.checkShapes = QCheckBox(self.tr('Shapes'))
 
         self.checkLegend.setChecked(True)
         self.checkScalebar.setChecked(True)
@@ -158,8 +156,7 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         container.insertWidget(3, self.checkShapes)
 
 
-    def tr(self, message):
-        return QCoreApplication.translate('AdjustStyle', message)
+
 
 
 

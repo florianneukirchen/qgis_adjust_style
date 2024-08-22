@@ -208,7 +208,7 @@
         <item>
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string> Change by </string>
+           <string>Change by </string>
           </property>
          </widget>
         </item>
