@@ -981,14 +981,21 @@ class AdjustStyle:
         return
 
     def change_font_size(self, settings):
-
-        format = settings.format() # Returns QgsTextFormat
+        if isinstance(settings, QgsTextFormat):
+            # When called from layout items
+            format = settings
+        else:
+            format = settings.format() # Returns QgsTextFormat
 
         size = format.size()
         size = size + size * self.value
         if size < 0:
             size = 0
         format.setSize(size)
+
+        if isinstance(settings, QgsTextFormat):
+            return format
+
         settings.setFormat(format)
         return settings
 

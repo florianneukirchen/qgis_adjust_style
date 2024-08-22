@@ -239,11 +239,11 @@ class AdjustStyleLayoutHandler():
 
     def fontSizePlusBtn(self):
         self.plugin_instance.value = self.dockwidget.changeSpinBox.value() / 100
-        self.mapToLayout(self.plugin_instance.layer_font_size)
+        self.mapToLayout(self.layout_font_size)
 
     def fontSizeMinusBtn(self):
         self.plugin_instance.value = self.dockwidget.changeSpinBox.value() * -1 / 100
-        self.mapToLayout(self.plugin_instance.layer_font_size)
+        self.mapToLayout(self.layout_font_size)
 
     def mapToLayout(self, func):
         layout = self.designer.layout()
@@ -348,7 +348,7 @@ class AdjustStyleLayoutHandler():
         if isinstance(item, QgsLayoutItemLegend) and self.dockwidget.checkLegend.isChecked():
             self.frame_change_stroke(item)
             item.refresh()
-            
+
         elif isinstance(item, QgsLayoutItemScaleBar) and self.dockwidget.checkScalebar.isChecked():
             symbol = item.fillSymbol()
             self.plugin_instance.change_symbol_stroke(symbol)
@@ -386,3 +386,39 @@ class AdjustStyleLayoutHandler():
             measure.setLength(width)
             item.setFrameStrokeWidth(measure)
 
+    def layout_font_size(self, item):
+
+        legend_components = [
+            QgsLegendStyle.Title,
+            QgsLegendStyle.Subgroup,
+            QgsLegendStyle.Group,
+            QgsLegendStyle.SymbolLabel
+        ]
+
+        if isinstance(item, QgsLayoutItemLegend) and self.dockwidget.checkLegend.isChecked():
+
+            for component in legend_components:
+                try:
+                    style = item.style(component)
+                    format = style.textFormat()
+                    format = self.plugin_instance.change_font_size(format)
+                    style.setTextFormat(format)
+                    item.setStyle(component, style)
+
+                except AttributeError:
+                    print('Style change of legend requires QGIS >= 3.30')
+                    break
+
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemScaleBar) and self.dockwidget.checkScalebar.isChecked():
+            format = item.textFormat()
+            format = self.plugin_instance.change_font_size(format)
+            item.setTextFormat(format)
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemLabel) and self.dockwidget.checkTextLabels.isChecked():
+            format = item.textFormat()
+            format = self.plugin_instance.change_font_size(format)
+            item.setTextFormat(format)
+            item.refresh()
