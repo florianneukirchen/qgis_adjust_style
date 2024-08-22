@@ -1001,16 +1001,29 @@ class AdjustStyle:
 
     # Replace Font
 
-    def replace_font_dlg(self):
-        self.dlg = ReplaceFontDialog()
+    def replace_font_dlg(self, layout=None):
+        
 
         # Get a set of all fonts in the project
-        self.fontset = set()
-        self.mapToLayers(self.collect_fonts)
+        
+        if layout:
+            self.fontset = layout.collect_fonts()
+            parent = layout.designer.window()
+        else:
+            self.fontset = set()
+            self.mapToLayers(self.collect_fonts)
+            parent = self.iface.mainWindow()
+
         if not self.fontset:
             # set is empty
-            self.iface.messageBar().pushWarning(self.tr('Replace Font'), self.tr('The selection does not contain any fonts.'))
+            if layout:
+                messagebar = layout.designer.messageBar()
+            else:
+                messagebar = self.iface.messageBar()
+            messagebar.pushInfo(self.tr('Replace Font'), self.tr('The selection does not contain any fonts.'))
             return
+        
+        self.dlg = ReplaceFontDialog(parent=parent)
         
         # Populate combo box
         self.dlg.currentFontsComboBox.clear()
@@ -1026,7 +1039,10 @@ class AdjustStyle:
             i = self.dlg.currentFontsComboBox.currentIndex()
             self.oldfont = self.fontset[i] # string
             self.newfont = self.dlg.fontComboBox.currentFont() # QFont
-            self.mapToLayers(self.replace_font)
+            if layout:
+                layout.replace_font()
+            else:
+                self.mapToLayers(self.replace_font)
 
  
     def collect_fonts(self, layer):

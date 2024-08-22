@@ -166,7 +166,6 @@ class AdjustStyleLayoutHandler():
         self.designer = designer
         self.dockwidget = None
 
-
         self.action = QAction(plugin_instance.icon, plugin_instance.menu, designer)
         self.action.triggered.connect(self.openDesignerDockWidget)
         self.action.setEnabled(True)
@@ -176,6 +175,13 @@ class AdjustStyleLayoutHandler():
 
         editmenu = designer.editMenu()
         editmenu.addAction(self.action)
+
+        self.legend_components = [
+            QgsLegendStyle.Title,
+            QgsLegendStyle.Subgroup,
+            QgsLegendStyle.Group,
+            QgsLegendStyle.SymbolLabel
+        ]
 
         
 
@@ -193,6 +199,7 @@ class AdjustStyleLayoutHandler():
             self.dockwidget.minusStrokeWidthButton.clicked.connect(self.strokeWidthMinusBtn)
             self.dockwidget.plusFontSizeButton.clicked.connect(self.fontSizePlusBtn)
             self.dockwidget.minusFontSizeButton.clicked.connect(self.fontSizeMinusBtn)
+            self.dockwidget.replaceFontButton.clicked.connect(self.replace_font_dlg)
 
         self.dockwidget.show()
 
@@ -245,6 +252,9 @@ class AdjustStyleLayoutHandler():
         self.plugin_instance.value = self.dockwidget.changeSpinBox.value() * -1 / 100
         self.mapToLayout(self.layout_font_size)
 
+    def replace_font_dlg(self):
+        self.plugin_instance.replace_font_dlg(self)
+
     def mapToLayout(self, func):
         layout = self.designer.layout()
 
@@ -255,16 +265,8 @@ class AdjustStyleLayoutHandler():
 
     def layout_change_color(self, item):
 
-        legend_components = [
-            QgsLegendStyle.Title,
-            QgsLegendStyle.Subgroup,
-            QgsLegendStyle.Group,
-            QgsLegendStyle.SymbolLabel
-        ]
-
         if isinstance(item, QgsLayoutItemLegend) and self.dockwidget.checkLegend.isChecked():
-
-            for component in legend_components:
+            for component in self.legend_components:
                 try:
                     style = item.style(component)
                     format = style.textFormat()
@@ -388,16 +390,9 @@ class AdjustStyleLayoutHandler():
 
     def layout_font_size(self, item):
 
-        legend_components = [
-            QgsLegendStyle.Title,
-            QgsLegendStyle.Subgroup,
-            QgsLegendStyle.Group,
-            QgsLegendStyle.SymbolLabel
-        ]
-
         if isinstance(item, QgsLayoutItemLegend) and self.dockwidget.checkLegend.isChecked():
 
-            for component in legend_components:
+            for component in self.legend_components:
                 try:
                     style = item.style(component)
                     format = style.textFormat()
@@ -422,3 +417,51 @@ class AdjustStyleLayoutHandler():
             format = self.plugin_instance.change_font_size(format)
             item.setTextFormat(format)
             item.refresh()
+
+    def collect_fonts(self):
+        layout = self.designer.layout()
+        self.fonts = set()
+
+        for item in layout.items():
+            if isinstance(item, QgsLayoutItemLabel) and self.dockwidget.checkTextLabels.isChecked():
+                self.extract_font(item)
+
+
+            elif isinstance(item, QgsLayoutItemScaleBar) and self.dockwidget.checkScalebar.isChecked():
+                self.extract_font(item)
+
+            elif isinstance(item, QgsLayoutItemLegend) and self.dockwidget.checkLegend.isChecked():
+                for component in self.legend_components:
+                    self.extract_font(item.style(component))
+
+        return self.fonts
+    
+    def extract_font(self, item):
+        format = item.textFormat()
+        try:
+            self.fonts.add(format.font().family())
+        except AttributeError:
+            pass
+
+    def replace_font(self):
+        layout = self.designer.layout()
+
+        for item in layout.items():
+            if isinstance(item, QgsLayoutItemLabel) and self.dockwidget.checkTextLabels.isChecked():
+                self.replace_font_item(item)
+
+            elif isinstance(item, QgsLayoutItemScaleBar) and self.dockwidget.checkScalebar.isChecked():
+                self.replace_font_item(item)
+
+            elif isinstance(item, QgsLayoutItemLegend) and self.dockwidget.checkLegend.isChecked():
+                for component in self.legend_components:
+                    style = item.style(component)
+                    style = self.replace_font_item(style)
+                    item.setStyle(component, style)
+
+    def replace_font_item(self, item):
+        format = item.textFormat()
+        if format.font().family() == self.plugin_instance.oldfont:
+            format.setFont(self.plugin_instance.newfont)
+            item.setTextFormat(format)
+        return item
