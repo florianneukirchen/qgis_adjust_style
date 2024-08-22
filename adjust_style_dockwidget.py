@@ -25,7 +25,7 @@
 import os
 
 from qgis.PyQt import QtGui, QtWidgets, uic
-from qgis.PyQt.QtCore import pyqtSignal, Qt
+from qgis.PyQt.QtCore import pyqtSignal, Qt, QCoreApplication
 from qgis.PyQt.QtWidgets import QAction, QLabel, QCheckBox
 from qgis.PyQt.QtGui import QColor, QPalette
 from qgis.core import QgsLayoutItemLegend, QgsLayoutItemScaleBar, QgsLayoutItemLabel, QgsLayoutItemShape, QgsLegendStyle
@@ -64,6 +64,8 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
 
         tooltip = self.tr('Preview of rotating color hue (color wheel)')
+        print(self.tr)
+        print("t", tooltip)
 
         for column, hue in enumerate(self.wheel):
             for row in range(2):
@@ -78,6 +80,9 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
                 self.colorGrid.addWidget(widget, row, column)
 
         self.update_preview_colors()
+
+    def tr(self, message):
+        return QCoreApplication.translate('AdjustStyle', message)
 
 
     #--------------------------------------------------------------------------
@@ -111,8 +116,6 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
     def changeSliderChangeValue(self):
         self.changeSpinBox.setValue(int(self.changeSlider.value()))
-
-
 
 
 
@@ -155,7 +158,8 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         container.insertWidget(3, self.checkShapes)
 
 
-        
+    def tr(self, message):
+        return QCoreApplication.translate('AdjustStyle', message)
 
 
 
