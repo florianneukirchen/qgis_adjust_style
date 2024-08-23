@@ -15,7 +15,7 @@ With one mouse click, it allows to (in all seleced layers):
 - change font size of all labels and annotations 
 - replace a font family used in labels / annotations with another font family
 - save / load the styles (QML files) of layers into/from a given folder 
-- Since version 1.9, the same changes can be applied to print layouts (text labels, legend, scale bar, shapes).
+- Since version 1.9, the same changes can be applied to print layouts (text labels, legend, scale bar, etc.).
 
 ![QGIS plugin adjust style](help/screenshot.png)
 
@@ -28,6 +28,11 @@ Alternatively, copy (or git clone) the folder with the code into your QGIS plugi
 
 ## Usage
 Start the plugin from the plugin menu or the plugin toolbar; a dockwidget opens on the right side of the main window.
+
+Since version 1.9, another dockwidget is avaible in the layout composer window.
+
+Since version 1.9 of the plugin, you can choose the strength of the change in the range of 5 to 90. This is added / substracted as absolute value when changing HSV color saturation or value (in the range 0 to 255); and as percentage for changes to font size or stroke.
+In earlier versions, changes of HSV color saturation and value are ± 5 (in the range 0 to 255) and changes of font size or stroke width is ± 5 %.
 
 ### Select Layers
 First, select the layers you want to work on. Possible choices:
@@ -42,7 +47,7 @@ Optionally check to include:
 ### Change Color
 Adjusting colors works in the HSV color model. That means you can rotate the hue of the HSV colors as you would rotate a color wheel: set the degree of the rotation and hit "OK". The color grid above the slider works as a preview.
 
-To adjust saturation and value (= brightness), click on the respective plus and minus buttons to adjust the respective value ± 5. Be careful: You can't use the plus and minus button to undo the changes already made, because: 
+To adjust saturation and value (= brightness), click on the respective plus and minus buttons. Be careful: You can't use the plus and minus button to undo the changes already made, because: 
 - saturation and HSV value stay in the interval ranging from 0 to 255 and any color arriving at these borders can't be moved back in an consistent way. 
 - fully desaturating any color results in the complete loss of the hue, as achromatic colors (i.e. saturation of 0; white, black, grey) do not have a hue.
 
@@ -51,7 +56,7 @@ It is good practice to save the layer styles before using these buttons!
 ### Stroke Width
 Change the stroke width of lines and of the borders of polygons and point markers with clicks on the plus and minus buttons. Also works for raster layers with contour renderer.
 
-Stroke width is increased/decreased by 5 %; the change is subtle and may only be obvious after several clicks. Hairlines remain hairlines.
+Note: Hairlines remain hairlines.
 
 ### Labels
 Note: Changing the color of layers also changes the color of labels (text, buffer and background color).
@@ -68,7 +73,7 @@ With the checkbox "Main Annotation Layer" checked, all marker symbols and text e
 ### Save and Load Styles
 These buttons provide a quick way to save the styles of all (or all selected) layers. You only need to select a folder. The filename of the QML files corresponds to the layer name (with bad characters replaced by underscore). If there are several layers of the same name, you will get several files with an index value appended. 
 
-With the radiobutton "All Layers + Canvas Background" checked, the background color of the project is loaded/saved as well (a simple text file with color in hex notation).
+With "Canvas Background" checked, the background color of the project is loaded/saved as well (a simple text file with color in hex notation).
 
 #### Apply a map style to another project
 It even works to save the styles of one project and load them in another one if the layer names of the projects match. If not, you can still save the styles of all layers and apply them to individual layers by loading the respective QML file from the QGIS layer properties dialog.
@@ -78,12 +83,11 @@ It even works to save the styles of one project and load them in another one if 
 
 ## Change Log
 
-### 1.9 (Development version)
-- Major code refactoring
+### 1.9 (2024-08, Development version)
+- Code refactoring
 - Allow to set the strength of the change (from 5 to 90, used as absolute value for HSV color parts and as percentage for sizes)
 - Implement another dock widget for the layout designer window to adjust the style of layout items 
 - Set minimum QGIS version to 3.30 (changes to legend in print layout don't work with older versions)
-
 ### 1.3 (2024-02)
 - Implement adjusting Filled Line (new in QGIS 3.36)
 - Set QGIS minimum version to 3.22, as not everything was working in QGIS 3.16

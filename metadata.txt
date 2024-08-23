@@ -16,7 +16,7 @@ email=mail@riannek.de
 about=Adjust the symbology of a map with a few clicks instead of altering every single symbol (and symbol layer) in a project with many layers, categories and label rules. With one click you can change the symbol or fonts on all layers (or all selected layers) consistantly, try out how different colors / stroke widths / fonts work for a project.
     Allows to save and load styles of all layers – or even to apply styles to another project. 
     With one click, it allows to adjust color of all symbols (including color ramps and any number of symbol layers) and labels using the HSV color model: rotate hue (think of a color wheel), change saturation and value; change line thickness (i.e. stroke width of all symbols / symbol borders); change font size of all labels; replace a font family used in labels with another font family; save / load the styles of all layers at once into/from a given folder. 
-    Since version 1.9, the same changes can be applied to print layouts (text labels, legend, scale bar, shapes).
+    Since version 1.9, the same changes can be applied to print layouts (text labels, legend, scale bar, etc.).
 
 tracker=https://github.com/florianneukirchen/qgis_adjust_style/issues
 repository=https://github.com/florianneukirchen/qgis_adjust_style
