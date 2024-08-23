@@ -38,6 +38,8 @@ from qgis.core import (
     QgsLayoutMeasurement,
     QgsLayoutTable,
     QgsLayoutItemMarker,
+    QgsLayoutItemPolygon,
+    QgsLayoutItemPolyline
     )
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -153,6 +155,7 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         self.checkScalebar = QCheckBox(self.tr('Scalebar'))
         self.checkShapes = QCheckBox(self.tr('Shapes'))
         self.checkMarker = QCheckBox(self.tr('Marker'))
+        self.checkLinesPolygons = QCheckBox(self.tr('Lines, Polygons, Arrows'))
         self.checkTable = QCheckBox(self.tr('Tables'))
 
         self.checkLegend.setChecked(True)
@@ -160,6 +163,7 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         self.checkTextLabels.setChecked(True)
         self.checkShapes.setChecked(True)
         self.checkMarker.setChecked(True)
+        self.checkLinesPolygons.setChecked(True)
         self.checkTable.setChecked(True)
 
 
@@ -168,7 +172,8 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         container.insertWidget(2, self.checkScalebar)
         container.insertWidget(3, self.checkShapes)
         container.insertWidget(4, self.checkMarker)
-        container.insertWidget(5, self.checkTable)
+        container.insertWidget(5, self.checkLinesPolygons)
+        container.insertWidget(6, self.checkTable)
         
 
 
@@ -368,6 +373,28 @@ class AdjustStyleLayoutHandler():
             self.plugin_instance.change_symbol_color(symbol)
             item.refresh()
 
+        elif isinstance(item, QgsLayoutItemPolygon) and self.dockwidget.checkLinesPolygons.isChecked():
+            symbol = item.symbol()
+            self.plugin_instance.change_symbol_color(symbol)
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemPolyline) and self.dockwidget.checkLinesPolygons.isChecked():
+            symbol = item.symbol()
+            self.plugin_instance.change_symbol_color(symbol)
+            # Arrows
+            if item.endMarker() == 1:
+                color = item.arrowHeadFillColor()
+                color = self.plugin_instance.change_color(color, self.plugin_instance.value)
+                item.setArrowHeadFillColor(color)
+
+                color = item.arrowHeadStrokeColor()
+                color = self.plugin_instance.change_color(color, self.plugin_instance.value)
+                item.setArrowHeadStrokeColor(color)
+
+            item.refresh()
+
+
+        # Tables
         elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
             table = item.multiFrame()
             print(table)
@@ -452,6 +479,23 @@ class AdjustStyleLayoutHandler():
             self.plugin_instance.change_symbol_stroke(symbol)
             item.refresh()
 
+        elif isinstance(item, QgsLayoutItemPolygon) and self.dockwidget.checkLinesPolygons.isChecked():
+            symbol = item.symbol()
+            self.plugin_instance.change_symbol_stroke(symbol)
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemPolyline) and self.dockwidget.checkLinesPolygons.isChecked():
+            symbol = item.symbol()
+            self.plugin_instance.change_symbol_stroke(symbol)
+
+            # Arrows
+            if item.endMarker() == 1:
+                width = item.arrowHeadStrokeWidth()
+                width = width + width * self.plugin_instance.value
+                item.setArrowHeadStrokeWidth(width)
+            item.refresh()
+
+        # Tables
         elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
             table = item.multiFrame()
             # Make shure it is really a layout table
