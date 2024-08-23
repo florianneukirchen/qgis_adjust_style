@@ -519,6 +519,15 @@ class AdjustStyleLayoutHandler():
                 for component in self.legend_components:
                     self.extract_font(item.style(component))
 
+            elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
+                table = item.multiFrame()
+                if isinstance(table, QgsLayoutTable):
+                    try:
+                        self.fonts.add(table.headerTextFormat().font().family())
+                        self.fonts.add(table.contentTextFormat().font().family())
+                    except AttributeError:
+                        pass
+
         return self.fonts
     
     def extract_font(self, item):
@@ -543,6 +552,19 @@ class AdjustStyleLayoutHandler():
                     style = item.style(component)
                     style = self.replace_font_item(style)
                     item.setStyle(component, style)
+
+            elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
+                table = item.multiFrame()
+                if isinstance(table, QgsLayoutTable):
+                    format = table.headerTextFormat()
+                    if format.font().family() == self.plugin_instance.oldfont:
+                        format.setFont(self.plugin_instance.newfont)
+                        table.setHeaderTextFormat(format)
+
+                    format = table.contentTextFormat()
+                    if format.font().family() == self.plugin_instance.oldfont:
+                        format.setFont(self.plugin_instance.newfont)
+                        table.setContentTextFormat(format)
 
     def replace_font_item(self, item):
         format = item.textFormat()
