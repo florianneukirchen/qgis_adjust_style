@@ -488,6 +488,21 @@ class AdjustStyleLayoutHandler():
             item.setTextFormat(format)
             item.refresh()
 
+        elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
+            table = item.multiFrame()
+            # Make shure it is really a layout table
+            if isinstance(table, QgsLayoutTable):
+                format = table.headerTextFormat()
+                format = self.plugin_instance.change_font_size(format)
+                table.setHeaderTextFormat(format)
+
+                format = table.contentTextFormat()
+                format = self.plugin_instance.change_font_size(format)
+                table.setContentTextFormat(format)
+
+                item.refresh()
+
+
     def collect_fonts(self):
         layout = self.designer.layout()
         self.fonts = set()
