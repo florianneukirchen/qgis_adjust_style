@@ -152,12 +152,14 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         self.checkLegend = QCheckBox(self.tr('Legend'))
         self.checkScalebar = QCheckBox(self.tr('Scalebar'))
         self.checkShapes = QCheckBox(self.tr('Shapes'))
+        self.checkMarker = QCheckBox(self.tr('Marker'))
         self.checkTable = QCheckBox(self.tr('Tables'))
 
         self.checkLegend.setChecked(True)
         self.checkScalebar.setChecked(True)
         self.checkTextLabels.setChecked(True)
         self.checkShapes.setChecked(True)
+        self.checkMarker.setChecked(True)
         self.checkTable.setChecked(True)
 
 
@@ -165,7 +167,8 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         container.insertWidget(1, self.checkLegend)
         container.insertWidget(2, self.checkScalebar)
         container.insertWidget(3, self.checkShapes)
-        container.insertWidget(4, self.checkTable)
+        container.insertWidget(4, self.checkMarker)
+        container.insertWidget(5, self.checkTable)
         
 
 
@@ -360,6 +363,11 @@ class AdjustStyleLayoutHandler():
             self.plugin_instance.change_symbol_color(symbol)
             item.refresh()
 
+        elif isinstance(item, QgsLayoutItemMarker) and self.dockwidget.checkMarker.isChecked():
+            symbol = item.symbol()
+            self.plugin_instance.change_symbol_color(symbol)
+            item.refresh()
+
         elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
             table = item.multiFrame()
             print(table)
@@ -435,6 +443,11 @@ class AdjustStyleLayoutHandler():
             item.refresh()
 
         elif isinstance(item, QgsLayoutItemShape) and self.dockwidget.checkShapes.isChecked():
+            symbol = item.symbol()
+            self.plugin_instance.change_symbol_stroke(symbol)
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemMarker) and self.dockwidget.checkMarker.isChecked():
             symbol = item.symbol()
             self.plugin_instance.change_symbol_stroke(symbol)
             item.refresh()
