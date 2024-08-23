@@ -36,7 +36,8 @@ from qgis.core import (
     QgsLegendStyle,
     QgsLayoutFrame,
     QgsLayoutMeasurement,
-    QgsLayoutTable
+    QgsLayoutTable,
+    QgsLayoutItemMarker,
     )
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -147,9 +148,9 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
 
         container = self.verticalLayout_2
 
+        self.checkTextLabels = QCheckBox(self.tr('Text'))
         self.checkLegend = QCheckBox(self.tr('Legend'))
         self.checkScalebar = QCheckBox(self.tr('Scalebar'))
-        self.checkTextLabels = QCheckBox(self.tr('Text'))
         self.checkShapes = QCheckBox(self.tr('Shapes'))
         self.checkTable = QCheckBox(self.tr('Tables'))
 
@@ -160,9 +161,9 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         self.checkTable.setChecked(True)
 
 
-        container.insertWidget(0, self.checkLegend)
-        container.insertWidget(1, self.checkScalebar)
-        container.insertWidget(2, self.checkTextLabels)
+        container.insertWidget(0, self.checkTextLabels)
+        container.insertWidget(1, self.checkLegend)
+        container.insertWidget(2, self.checkScalebar)
         container.insertWidget(3, self.checkShapes)
         container.insertWidget(4, self.checkTable)
         
