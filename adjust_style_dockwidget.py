@@ -39,7 +39,8 @@ from qgis.core import (
     QgsLayoutTable,
     QgsLayoutItemMarker,
     QgsLayoutItemPolygon,
-    QgsLayoutItemPolyline
+    QgsLayoutItemPolyline,
+    QgsLayoutItemPicture
     )
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -153,6 +154,7 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         self.checkTextLabels = QCheckBox(self.tr('Text'))
         self.checkLegend = QCheckBox(self.tr('Legend'))
         self.checkScalebar = QCheckBox(self.tr('Scalebar'))
+        self.checkSVG = QCheckBox(self.tr('North arrow, parameterized SVG'))
         self.checkShapes = QCheckBox(self.tr('Shapes'))
         self.checkMarker = QCheckBox(self.tr('Marker'))
         self.checkLinesPolygons = QCheckBox(self.tr('Lines, Polygons, Arrows'))
@@ -160,6 +162,7 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
 
         self.checkLegend.setChecked(True)
         self.checkScalebar.setChecked(True)
+        self.checkSVG.setChecked(True)
         self.checkTextLabels.setChecked(True)
         self.checkShapes.setChecked(True)
         self.checkMarker.setChecked(True)
@@ -170,10 +173,11 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         container.insertWidget(0, self.checkTextLabels)
         container.insertWidget(1, self.checkLegend)
         container.insertWidget(2, self.checkScalebar)
-        container.insertWidget(3, self.checkShapes)
-        container.insertWidget(4, self.checkMarker)
-        container.insertWidget(5, self.checkLinesPolygons)
-        container.insertWidget(6, self.checkTable)
+        container.insertWidget(3, self.checkSVG)
+        container.insertWidget(4, self.checkShapes)
+        container.insertWidget(5, self.checkMarker)
+        container.insertWidget(6, self.checkLinesPolygons)
+        container.insertWidget(7, self.checkTable)
         
 
 
@@ -393,6 +397,26 @@ class AdjustStyleLayoutHandler():
 
             item.refresh()
 
+        elif isinstance(item, QgsLayoutItemPicture) and self.dockwidget.checkSVG.isChecked():
+            color = item.svgFillColor()
+            color = self.plugin_instance.change_color(color, self.plugin_instance.value)
+            item.setSvgFillColor(color)
+
+            color = item.svgStrokeColor()
+            color = self.plugin_instance.change_color(color, self.plugin_instance.value)
+            item.setSvgStrokeColor(color)
+
+            if item.hasBackground():
+                background = item.backgroundColor()
+                background = self.plugin_instance.change_color(background, self.plugin_instance.value)
+                item.setBackgroundColor(background)
+            
+            if item.frameEnabled():
+                frame = item.frameStrokeColor()
+                frame = self.plugin_instance.change_color(frame, self.plugin_instance.value)
+                item.setFrameStrokeColor(frame)
+            
+            item.refresh()
 
         # Tables
         elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
@@ -495,6 +519,12 @@ class AdjustStyleLayoutHandler():
                 item.setArrowHeadStrokeWidth(width)
             item.refresh()
 
+        elif isinstance(item, QgsLayoutItemPicture) and self.dockwidget.checkSVG.isChecked():
+            width = item.svgStrokeWidth()
+            width = width + width * self.plugin_instance.value
+            item.setSvgStrokeWidth(width)
+            item.refresh()
+
         # Tables
         elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
             table = item.multiFrame()
@@ -503,8 +533,6 @@ class AdjustStyleLayoutHandler():
                 width = table.gridStrokeWidth()
                 width = width + width * self.plugin_instance.value
                 table.setGridStrokeWidth(width)
-
-
 
 
     def frame_change_stroke(self, item):
