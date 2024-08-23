@@ -117,7 +117,7 @@
 <context>
     <name>AdjustStyleDockWidget</name>
     <message>
-        <location filename="../adjust_style_dockwidget.py" line="66"/>
+        <location filename="../adjust_style_dockwidget.py" line="80"/>
         <source>Preview of rotating color hue (color wheel)</source>
         <translation>Vorschau für die Rotation des Farbtons (Farbkreis drehen)</translation>
     </message>
@@ -333,24 +333,49 @@
 <context>
     <name>AdjustStyleLayoutDockWidget</name>
     <message>
-        <location filename="../adjust_style_dockwidget.py" line="142"/>
+        <location filename="../adjust_style_dockwidget.py" line="156"/>
         <source>Legend</source>
         <translation>Legende</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget.py" line="143"/>
+        <location filename="../adjust_style_dockwidget.py" line="157"/>
         <source>Scalebar</source>
         <translation>Maßstab</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget.py" line="144"/>
+        <location filename="../adjust_style_dockwidget.py" line="155"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget.py" line="145"/>
+        <location filename="../adjust_style_dockwidget.py" line="159"/>
         <source>Shapes</source>
         <translation>Formen</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget.py" line="158"/>
+        <source>North arrow, parameterized SVG</source>
+        <translation>Nordpfeil, parametisiertes SVG</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget.py" line="160"/>
+        <source>Marker</source>
+        <translation>Markierung</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget.py" line="161"/>
+        <source>Lines, Polygons, Arrows</source>
+        <translation>Linien, Polygone, Pfeile</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget.py" line="162"/>
+        <source>Tables</source>
+        <translation>Tabellen</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget.py" line="163"/>
+        <source>Page Background</source>
+        <translation>Seite Hintergrundfarbe</translation>
     </message>
 </context>
 <context>
