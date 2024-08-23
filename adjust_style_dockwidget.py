@@ -73,8 +73,6 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
 
         tooltip = self.tr('Preview of rotating color hue (color wheel)')
-        print(self.tr)
-        print("t", tooltip)
 
         for column, hue in enumerate(self.wheel):
             for row in range(2):
