@@ -375,6 +375,12 @@ class AdjustStyleLayoutHandler():
         elif isinstance(item, QgsLayoutItemMarker) and self.dockwidget.checkMarker.isChecked():
             symbol = item.symbol()
             self.plugin_instance.change_symbol_color(symbol)
+
+            if item.hasBackground():
+                background = item.backgroundColor()
+                background = self.plugin_instance.change_color(background, self.plugin_instance.value)
+                item.setBackgroundColor(background)
+                
             item.refresh()
 
         elif isinstance(item, QgsLayoutItemPolygon) and self.dockwidget.checkLinesPolygons.isChecked():
