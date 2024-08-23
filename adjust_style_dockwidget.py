@@ -431,6 +431,16 @@ class AdjustStyleLayoutHandler():
             self.plugin_instance.change_symbol_stroke(symbol)
             item.refresh()
 
+        elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkAttributetable.isChecked():
+            attributeTable = item.multiFrame()
+            # Make shure it is really an attribute table
+            if isinstance(attributeTable, QgsLayoutItemAttributeTable):
+                width = attributeTable.gridStrokeWidth()
+                width = width + width * self.plugin_instance.value
+                attributeTable.setGridStrokeWidth(width)
+
+
+
 
     def frame_change_stroke(self, item):
         if item.frameEnabled():
