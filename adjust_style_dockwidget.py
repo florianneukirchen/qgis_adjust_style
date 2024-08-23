@@ -364,7 +364,7 @@ class AdjustStyleLayoutHandler():
         elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
             table = item.multiFrame()
             print(table)
-            # Make shure it is really an attribute table
+            # Make shure it is really a table
             if isinstance(table, QgsLayoutTable):
                 color = table.backgroundColor()
                 color = self.plugin_instance.change_color(color, self.plugin_instance.value)
@@ -389,6 +389,7 @@ class AdjustStyleLayoutHandler():
                         color = cellstyle.cellBackgroundColor
                         cellstyle.cellBackgroundColor = self.plugin_instance.change_color(color, self.plugin_instance.value)
 
+                # On attribute tables, there could also be conditonal styles, but we ignore them for now
 
                 if item.hasBackground():
                     background = item.backgroundColor()
