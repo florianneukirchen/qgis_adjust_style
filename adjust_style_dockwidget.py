@@ -207,9 +207,6 @@ class AdjustStyleLayoutHandler():
             QgsLegendStyle.Group,
             QgsLegendStyle.SymbolLabel
         ]
-
-        print(self.designer.layout().items()) 
-
         
 
     def openDesignerDockWidget(self):
