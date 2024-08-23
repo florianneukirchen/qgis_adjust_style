@@ -382,6 +382,14 @@ class AdjustStyleLayoutHandler():
                 color = self.plugin_instance.change_color(color, self.plugin_instance.value)
                 table.setGridColor(color)
 
+                # Advanced style settings
+                for i in range(9):
+                    cellstyle = table.cellStyle(i)
+                    if cellstyle.enabled:
+                        color = cellstyle.cellBackgroundColor
+                        cellstyle.cellBackgroundColor = self.plugin_instance.change_color(color, self.plugin_instance.value)
+
+
                 if item.hasBackground():
                     background = item.backgroundColor()
                     background = self.plugin_instance.change_color(background, self.plugin_instance.value)
