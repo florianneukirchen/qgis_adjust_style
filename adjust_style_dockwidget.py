@@ -36,7 +36,7 @@ from qgis.core import (
     QgsLegendStyle,
     QgsLayoutFrame,
     QgsLayoutMeasurement,
-    QgsLayoutItemAttributeTable
+    QgsLayoutTable
     )
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -153,20 +153,20 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         self.checkScalebar = QCheckBox(self.tr('Scalebar'))
         self.checkTextLabels = QCheckBox(self.tr('Text'))
         self.checkShapes = QCheckBox(self.tr('Shapes'))
-        self.checkAttributetable = QCheckBox(self.tr('Attribute table'))
+        self.checkTable = QCheckBox(self.tr('Tables'))
 
         self.checkLegend.setChecked(True)
         self.checkScalebar.setChecked(True)
         self.checkTextLabels.setChecked(True)
         self.checkShapes.setChecked(True)
-        self.checkAttributetable.setChecked(True)
+        self.checkTable.setChecked(True)
 
 
         container.insertWidget(0, self.checkLegend)
         container.insertWidget(1, self.checkScalebar)
         container.insertWidget(2, self.checkTextLabels)
         container.insertWidget(3, self.checkShapes)
-        container.insertWidget(4, self.checkAttributetable)
+        container.insertWidget(4, self.checkTable)
         
 
 
@@ -361,26 +361,26 @@ class AdjustStyleLayoutHandler():
             self.plugin_instance.change_symbol_color(symbol)
             item.refresh()
 
-        elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkAttributetable.isChecked():
-            attributeTable = item.multiFrame()
-            print(attributeTable)
+        elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
+            table = item.multiFrame()
+            print(table)
             # Make shure it is really an attribute table
-            if isinstance(attributeTable, QgsLayoutItemAttributeTable):
-                color = attributeTable.backgroundColor()
+            if isinstance(table, QgsLayoutTable):
+                color = table.backgroundColor()
                 color = self.plugin_instance.change_color(color, self.plugin_instance.value)
-                attributeTable.setBackgroundColor(color)
+                table.setBackgroundColor(color)
 
-                color = attributeTable.contentFontColor()
+                color = table.contentFontColor()
                 color = self.plugin_instance.change_color(color, self.plugin_instance.value)
-                attributeTable.setContentFontColor(color)
+                table.setContentFontColor(color)
 
-                color = attributeTable.headerFontColor()
+                color = table.headerFontColor()
                 color = self.plugin_instance.change_color(color, self.plugin_instance.value)
-                attributeTable.setHeaderFontColor(color)
+                table.setHeaderFontColor(color)
 
-                color = attributeTable.gridColor()
+                color = table.gridColor()
                 color = self.plugin_instance.change_color(color, self.plugin_instance.value)
-                attributeTable.setGridColor(color)
+                table.setGridColor(color)
 
                 if item.hasBackground():
                     background = item.backgroundColor()
@@ -431,13 +431,13 @@ class AdjustStyleLayoutHandler():
             self.plugin_instance.change_symbol_stroke(symbol)
             item.refresh()
 
-        elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkAttributetable.isChecked():
-            attributeTable = item.multiFrame()
-            # Make shure it is really an attribute table
-            if isinstance(attributeTable, QgsLayoutItemAttributeTable):
-                width = attributeTable.gridStrokeWidth()
+        elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkTable.isChecked():
+            table = item.multiFrame()
+            # Make shure it is really a layout table
+            if isinstance(table, QgsLayoutTable):
+                width = table.gridStrokeWidth()
                 width = width + width * self.plugin_instance.value
-                attributeTable.setGridStrokeWidth(width)
+                table.setGridStrokeWidth(width)
 
 
 
