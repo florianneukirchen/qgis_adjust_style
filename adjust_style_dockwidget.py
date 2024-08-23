@@ -28,7 +28,16 @@ from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal, Qt
 from qgis.PyQt.QtWidgets import QAction, QLabel, QCheckBox
 from qgis.PyQt.QtGui import QColor, QPalette
-from qgis.core import QgsLayoutItemLegend, QgsLayoutItemScaleBar, QgsLayoutItemLabel, QgsLayoutItemShape, QgsLegendStyle
+from qgis.core import (
+    QgsLayoutItemLegend, 
+    QgsLayoutItemScaleBar, 
+    QgsLayoutItemLabel, 
+    QgsLayoutItemShape, 
+    QgsLegendStyle,
+    QgsLayoutFrame,
+    QgsLayoutMeasurement,
+    QgsLayoutItemAttributeTable
+    )
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'adjust_style_dockwidget_base.ui'))
@@ -144,17 +153,21 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         self.checkScalebar = QCheckBox(self.tr('Scalebar'))
         self.checkTextLabels = QCheckBox(self.tr('Text'))
         self.checkShapes = QCheckBox(self.tr('Shapes'))
+        self.checkAttributetable = QCheckBox(self.tr('Attribute table'))
 
         self.checkLegend.setChecked(True)
         self.checkScalebar.setChecked(True)
         self.checkTextLabels.setChecked(True)
         self.checkShapes.setChecked(True)
+        self.checkAttributetable.setChecked(True)
 
 
         container.insertWidget(0, self.checkLegend)
         container.insertWidget(1, self.checkScalebar)
         container.insertWidget(2, self.checkTextLabels)
         container.insertWidget(3, self.checkShapes)
+        container.insertWidget(4, self.checkAttributetable)
+        
 
 
 
@@ -184,6 +197,8 @@ class AdjustStyleLayoutHandler():
             QgsLegendStyle.Group,
             QgsLegendStyle.SymbolLabel
         ]
+
+        print(self.designer.layout().items()) 
 
         
 
@@ -345,6 +360,40 @@ class AdjustStyleLayoutHandler():
             symbol = item.symbol()
             self.plugin_instance.change_symbol_color(symbol)
             item.refresh()
+
+        elif isinstance(item, QgsLayoutFrame) and self.dockwidget.checkAttributetable.isChecked():
+            attributeTable = item.multiFrame()
+            print(attributeTable)
+            # Make shure it is really an attribute table
+            if isinstance(attributeTable, QgsLayoutItemAttributeTable):
+                color = attributeTable.backgroundColor()
+                color = self.plugin_instance.change_color(color, self.plugin_instance.value)
+                attributeTable.setBackgroundColor(color)
+
+                color = attributeTable.contentFontColor()
+                color = self.plugin_instance.change_color(color, self.plugin_instance.value)
+                attributeTable.setContentFontColor(color)
+
+                color = attributeTable.headerFontColor()
+                color = self.plugin_instance.change_color(color, self.plugin_instance.value)
+                attributeTable.setHeaderFontColor(color)
+
+                color = attributeTable.gridColor()
+                color = self.plugin_instance.change_color(color, self.plugin_instance.value)
+                attributeTable.setGridColor(color)
+
+                if item.hasBackground():
+                    background = item.backgroundColor()
+                    background = self.plugin_instance.change_color(background, self.plugin_instance.value)
+                    item.setBackgroundColor(background)
+
+                if item.frameEnabled():
+                    frame = item.frameStrokeColor()
+                    frame = self.plugin_instance.change_color(frame, self.plugin_instance.value)
+                    item.setFrameStrokeColor(frame)
+
+                item.refresh()
+
 
 
     def layout_change_stroke(self, item):
