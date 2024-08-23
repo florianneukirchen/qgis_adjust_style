@@ -40,7 +40,8 @@ from qgis.core import (
     QgsLayoutItemMarker,
     QgsLayoutItemPolygon,
     QgsLayoutItemPolyline,
-    QgsLayoutItemPicture
+    QgsLayoutItemPicture,
+    QgsLayoutItemPage
     )
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -159,6 +160,7 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         self.checkMarker = QCheckBox(self.tr('Marker'))
         self.checkLinesPolygons = QCheckBox(self.tr('Lines, Polygons, Arrows'))
         self.checkTable = QCheckBox(self.tr('Tables'))
+        self.checkPage = QCheckBox(self.tr('Page Background'))
 
         self.checkLegend.setChecked(True)
         self.checkScalebar.setChecked(True)
@@ -168,7 +170,7 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         self.checkMarker.setChecked(True)
         self.checkLinesPolygons.setChecked(True)
         self.checkTable.setChecked(True)
-
+        self.checkPage.setChecked(True)
 
         container.insertWidget(0, self.checkTextLabels)
         container.insertWidget(1, self.checkLegend)
@@ -178,11 +180,8 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
         container.insertWidget(5, self.checkMarker)
         container.insertWidget(6, self.checkLinesPolygons)
         container.insertWidget(7, self.checkTable)
+        container.insertWidget(8, self.checkPage)
         
-
-
-
-
 
 
 
@@ -380,7 +379,7 @@ class AdjustStyleLayoutHandler():
                 background = item.backgroundColor()
                 background = self.plugin_instance.change_color(background, self.plugin_instance.value)
                 item.setBackgroundColor(background)
-                
+
             item.refresh()
 
         elif isinstance(item, QgsLayoutItemPolygon) and self.dockwidget.checkLinesPolygons.isChecked():
@@ -422,6 +421,11 @@ class AdjustStyleLayoutHandler():
                 frame = self.plugin_instance.change_color(frame, self.plugin_instance.value)
                 item.setFrameStrokeColor(frame)
             
+            item.refresh()
+
+        elif isinstance(item, QgsLayoutItemPage) and self.dockwidget.checkPage.isChecked():
+            symbol = item.pageStyleSymbol()
+            self.plugin_instance.change_symbol_color(symbol)
             item.refresh()
 
         # Tables
