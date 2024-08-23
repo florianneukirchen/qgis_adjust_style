@@ -5,7 +5,7 @@
 
 [general]
 name=Adjust Style 
-qgisMinimumVersion=3.22
+qgisMinimumVersion=3.30
 description=Quickly adjust the symbology (colors, stroke, font) for all layers.
 
 version=1.9
@@ -13,17 +13,10 @@ version=1.9
 author=Florian Neukirchen
 email=mail@riannek.de
 
-about=Adjust the style of a map with a few clicks instead of altering every single symbol 
-    (all symbol layers) for many layers, categories or a number of label rules. A quick way to adjust 
-    the symbology of all layers (or selected layers) consistantly, to check out how different colors 
-    / stroke widths / fonts work for a project, and to save and load styles of all layers – or even 
-    to apply styles to another project.
-    With one click, it allows to adjust color of all symbols (including color ramps and any number of 
-    symbol layers) and labels using the HSV color model (rotate hue, change saturation and value); 
-    change line thickness (i.e. stroke width of all symbols / symbol borders);
-    change font size of all labels;
-    replace a font family used in labels with another font family;
-    save / load the styles of all layers at once into/from a given folder.
+about=Adjust the symbology of a map with a few clicks instead of altering every single symbol (and symbol layer) in a project with many layers, categories and label rules. With one click you can change the symbol or fonts on all layers (or all selected layers) consistantly, try out how different colors / stroke widths / fonts work for a project.
+    Allows to save and load styles of all layers – or even to apply styles to another project. 
+    With one click, it allows to adjust color of all symbols (including color ramps and any number of symbol layers) and labels using the HSV color model: rotate hue (think of a color wheel), change saturation and value; change line thickness (i.e. stroke width of all symbols / symbol borders); change font size of all labels; replace a font family used in labels with another font family; save / load the styles of all layers at once into/from a given folder. 
+    Since version 1.9, the same changes can be applied to print layouts (text labels, legend, scale bar, shapes).
 
 tracker=https://github.com/florianneukirchen/qgis_adjust_style/issues
 repository=https://github.com/florianneukirchen/qgis_adjust_style
@@ -36,7 +29,8 @@ hasProcessingProvider=no
 changelog=1.9
     - Major code refactoring
     - Allow to set the strength of the change (from 5 to 90, used as absolute value for HSV color parts and as percentage for sizes)
-    - Implement another dock widget for the layout designer window and adjust the layout items (change of legend font / font color only supported for QGIS >= 3.30)
+    - Implement another dock widget for the layout designer window to adjust the style layout items (text labels, legend, scale bar, shapes)
+    - Set minimum QGIS version to 3.30 (changes to legend in print layout don't work with older versions)
     1.3
     - Implement adjusting Filled Line (new in QGIS 3.36)
     - Set QGIS minimum version to 3.22, as not everything was working in QGIS 3.16.

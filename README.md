@@ -1,8 +1,8 @@
 # QGIS Plugin Adjust Style
-[QGIS Plugin](https://plugins.qgis.org/plugins/qgis_adjust_style/) to adjust the style of a map with a few clicks instead of altering every single symbol (and symbol layer) for many layers, categories or for a number of label rules. It offers a quick way to change the style of all layers (or selected layers) consistently, to check out how different colors / stroke widths / fonts work for a project, and to save and load styles of all layers at once – or even to apply styles to another project. 
+[QGIS Plugin](https://plugins.qgis.org/plugins/qgis_adjust_style/) to adjust the symbology of a map with a few clicks instead of altering every single symbol (and symbol layer) for many layers, categories or for a number of label rules. It offers a quick way to change the style of all layers (or selected layers) consistently, to check out how different colors / stroke widths / fonts work for a project, and to save and load styles of all layers at once – or even to apply styles to another project. 
 
 With one mouse click, it allows to (in all seleced layers): 
-- adjust color using the HSV color model (rotate hue, change saturation and value): 
+- adjust color using the HSV color model: rotate hue (think of a color wheel), change saturation and value: 
     - all symbols (with any number of symbol layers) including color ramps used in graduated / categorized / heatmap renderers
     - colors used in paint effects (glow, shadow)
     - color ramps in raster pseudocolor
@@ -11,10 +11,11 @@ With one mouse click, it allows to (in all seleced layers):
     - background color of the map canvas of the project
     - colors in annotations
 
-- change stroke width (i.e. line thickness) of all lines and borders of markers and polygons (± 5 % per click)
-- change font size of all labels and annotations (± 5 % per click)
+- change stroke width (i.e. line thickness) of all lines and borders of markers and polygons 
+- change font size of all labels and annotations 
 - replace a font family used in labels / annotations with another font family
 - save / load the styles (QML files) of layers into/from a given folder 
+- Since version 1.9, the same changes can be applied to print layouts (text labels, legend, scale bar, shapes).
 
 ![QGIS plugin adjust style](help/screenshot.png)
 
@@ -80,7 +81,8 @@ It even works to save the styles of one project and load them in another one if 
 ### 1.9 (Development version)
 - Major code refactoring
 - Allow to set the strength of the change (from 5 to 90, used as absolute value for HSV color parts and as percentage for sizes)
-- Implement another dock widget for the layout designer window and adjust the layout items (change of legend font / font color only supported for QGIS >= 3.30)
+- Implement another dock widget for the layout designer window to adjust the style of layout items 
+- Set minimum QGIS version to 3.30 (changes to legend in print layout don't work with older versions)
 
 ### 1.3 (2024-02)
 - Implement adjusting Filled Line (new in QGIS 3.36)
