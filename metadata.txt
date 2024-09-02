@@ -8,7 +8,7 @@ name=Adjust Style
 qgisMinimumVersion=3.30
 description=Quickly adjust the symbology (colors, stroke, font) for all layers.
 
-version=1.9
+version=2.0
 
 author=Florian Neukirchen
 email=mail@riannek.de
@@ -26,7 +26,10 @@ repository=https://github.com/florianneukirchen/qgis_adjust_style
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=1.9
+changelog=2.0
+    - First stable release with new dock in layout designer window
+    - Implement color change of the new single color renderer
+    1.9
     - Major code refactoring
     - Allow to set the strength of the change (from 5 to 90, used as absolute value for HSV color parts and as percentage for sizes)
     - Implement another dock widget for the layout designer window to adjust the style layout items (text labels, legend, scale bar, shapes)
@@ -73,7 +76,7 @@ homepage=https://github.com/florianneukirchen/qgis_adjust_style
 category=Plugins
 icon=icon.png
 # experimental flag
-experimental=True
+experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False

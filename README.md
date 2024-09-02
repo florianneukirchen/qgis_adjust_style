@@ -83,6 +83,10 @@ It even works to save the styles of one project and load them in another one if 
 
 ## Change Log
 
+### Upcoming 2.0 (GIT)
+- First stable release with new dock in layout designer window
+- Implement color change of the new single color renderer
+
 ### 1.9 (2024-08, Development version)
 - Code refactoring
 - Allow to set the strength of the change (from 5 to 90, used as absolute value for HSV color parts and as percentage for sizes)
