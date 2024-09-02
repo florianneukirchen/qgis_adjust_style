@@ -562,6 +562,15 @@ class AdjustStyle:
             self.change_symbol_color(symbol)
             renderer.setContourIndexSymbol(symbol)
 
+        # Raster layers with single color renderer (New in QGIS 3.38)
+        try:
+            if isinstance(renderer, QgsRasterSingleColorRenderer):
+                color = renderer.color()
+                color = self.change_color(color, self.value)
+                renderer.setColor(color)
+        except NameError:
+            pass
+
         # Raster layers with "colorize" in the render pipeline
         if isinstance(layer, QgsRasterLayer):
             huesat = layer.pipe().hueSaturationFilter() # May be none
