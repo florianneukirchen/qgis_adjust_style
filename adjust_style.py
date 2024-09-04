@@ -464,6 +464,29 @@ class AdjustStyle:
             # Quit function, nothing else to do
             return
 
+        # Mesh Layer
+        if isinstance(layer, QgsMeshLayer):
+            renderer_settings = layer.rendererSettings()
+            # Vector Settings (Arrows)
+            group = renderer_settings.activeVectorDatasetGroup()
+            settings = renderer_settings.vectorSettings(group)
+            settings = self.change_interpolated_color(settings)
+            renderer_settings.setVectorSettings(group, settings)
+
+            # Scalar Settings (Mesh Contour Color)
+            group = renderer_settings.activeScalarDatasetGroup()
+            settings = renderer_settings.scalarSettings(group)
+            settings = self.change_interpolated_color(settings)
+            renderer_settings.setScalarSettings(group, settings)
+
+            layer.setRendererSettings(renderer_settings)
+
+            QgsProject.instance().setDirty()
+            layer.triggerRepaint()
+            layer.emitStyleChanged()
+            return
+
+
 
         # QGIS 3.24 introduces QgsGroupLayer and it does not have a renderer
         try:
@@ -478,7 +501,11 @@ class AdjustStyle:
         if type(layer) in (QgsFeatureRenderer, QgsInvertedPolygonRenderer):
             renderer = layer.embeddedRenderer()
         else:
-            renderer = layer.renderer()
+            try:
+                renderer = layer.renderer()
+            except AttributeError:
+                print(layer, "has no renderer")
+                return
         
         # Vector layers: Change symbols depending on renderer type
         if isinstance(renderer, QgsSingleSymbolRenderer):
@@ -510,7 +537,6 @@ class AdjustStyle:
                     symbol = range.symbol().clone()
                     self.change_symbol_color(symbol)
                     renderer.updateRangeSymbol(index, symbol)
-
             else:
                 # Color Brewer Ramps and maybe other types
                 pass
@@ -642,28 +668,8 @@ class AdjustStyle:
             try:
                 if isinstance(symlayer, QgsInterpolatedLineSymbolLayer):
                     ipc = symlayer.interpolatedColor()
-                    
-                    if ipc.coloringMethod() == ipc.SingleColor:
-                        color = ipc.singleColor()
-                        color = self.change_color(color, self.value)
-                        ipc.setColor(color)
-                    else: # ColorRamp
-                        crsh = ipc.colorRampShader()
-                        ramp = crsh.sourceColorRamp()
-                        if isinstance(ramp, QgsGradientColorRamp):
-                            ramp = ramp.clone()
-                            self.change_ramp_colors(ramp)
-                            crsh.setSourceColorRamp(ramp)
-                            crsh.classifyColorRampV2()
-                        elif isinstance(ramp, QgsCptCityColorRamp):
-                            ramp = ramp.cloneGradientRamp()
-                            self.change_ramp_colors(ramp)
-                            crsh.setSourceColorRamp(ramp)
-                            crsh.classifyColorRampV2()
-                        ipc.setColor(crsh)
+                    ipc = self.change_interpolated_color(ipc)
                     symlayer.setInterpolatedColor(ipc)
-
-
             except NameError:
                 pass
 
@@ -707,6 +713,46 @@ class AdjustStyle:
                 self.change_effect_colors(effects)
 
         return
+
+    def change_interpolated_color(self, ipc):
+        # ipc can be QgsInterpolatedLineColor or QgsMeshRendererVectorSettings or QgsMeshRendererScalarSettings
+
+        try:
+            coloring_method = ipc.coloringMethod()
+        except AttributeError:
+            coloring_method = 1 # Color Ramp
+        if coloring_method == 0:
+            # Single color
+            if isinstance(ipc, QgsInterpolatedLineColor):
+                color = ipc.singleColor()
+            else:
+                color = ipc.color() 
+            color = self.change_color(color, self.value)
+            ipc.setColor(color)
+            return ipc
+        
+        # ColorRamp
+        crsh = ipc.colorRampShader()
+        ramp = crsh.sourceColorRamp()
+        if isinstance(ramp, QgsGradientColorRamp):
+            ramp = ramp.clone()
+            self.change_ramp_colors(ramp)
+            crsh.setSourceColorRamp(ramp)
+            crsh.classifyColorRampV2()
+        elif isinstance(ramp, QgsCptCityColorRamp):
+            ramp = ramp.cloneGradientRamp()
+            self.change_ramp_colors(ramp)
+            crsh.setSourceColorRamp(ramp)
+            crsh.classifyColorRampV2()
+
+        if isinstance(ipc, QgsInterpolatedLineColor):
+            ipc.setColor(crsh)
+        elif isinstance(ipc, QgsMeshRendererVectorSettings):
+            ipc.setColorRampShader(crsh)
+        elif isinstance(ipc, QgsMeshRendererScalarSettings):
+            ipc.setColorRampShader(crsh)
+
+        return ipc
     
 
     def change_annotationlayer_colors(self, layer):
