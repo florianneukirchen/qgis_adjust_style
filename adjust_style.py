@@ -879,7 +879,26 @@ class AdjustStyle:
             layer.emitStyleChanged()
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
             return
-        
+        # Mesh Layer
+        if isinstance(layer, QgsMeshLayer):
+            renderer_settings = layer.rendererSettings()
+            # Vector Settings (Arrows)
+            group = renderer_settings.activeVectorDatasetGroup()
+            settings = renderer_settings.vectorSettings(group)
+            width = settings.lineWidth()
+            width = width + width * self.value
+            settings.setLineWidth(width)
+            renderer_settings.setVectorSettings(group, settings)
+
+            layer.setRendererSettings(renderer_settings)
+
+            QgsProject.instance().setDirty()
+            layer.triggerRepaint()
+            layer.emitStyleChanged()
+            return
+
+
+
         # QGIS 3.24 introduces QgsGroupLayer and it does not have a renderer
         try:
             if isinstance(layer, QgsGroupLayer):
@@ -887,7 +906,11 @@ class AdjustStyle:
         except NameError:
             pass
 
-        renderer = layer.renderer()
+        try:
+            renderer = layer.renderer()
+        except AttributeError:
+            print(layer, "has no renderer")
+            return
 
 
         # Use embedded renderer for "inverted polygon" and dissolved renderer 
