@@ -7,7 +7,7 @@
                              -------------------
         begin                : 2022-11-07
         git sha              : $Format:%H$
-        copyright            : (C) 2022 by me
+        copyright            : (C) 2023-2024 by Florian Neukirchen
         email                : mail@riannek.de
  ***************************************************************************/
 
