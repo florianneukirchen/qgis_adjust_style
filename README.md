@@ -10,7 +10,6 @@ With one mouse click, it allows to (in all seleced layers or for selected compon
     - labels (text color, background color, text buffer color)
     - background color of the map canvas of the project
     - colors in annotations
-
 - change stroke width (i.e. line thickness) of all lines and borders of markers and polygons 
 - change font size of all labels and annotations 
 - replace a font family used in labels / annotations with another font family
