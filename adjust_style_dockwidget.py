@@ -68,8 +68,8 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.horizontalSlider.valueChanged[int].connect(self.sliderChangeValue)
         self.spinBox.valueChanged[int].connect(self.spinboxChangeValue)
 
-        self.changeSlider.setValue(20)
-        self.changeSpinBox.setValue(20)
+        self.changeSlider.setValue(10)
+        self.changeSpinBox.setValue(10)
         self.changeSlider.valueChanged.connect(self.changeSliderChangeValue)
         self.changeSpinBox.valueChanged.connect(self.changeSpinboxChangeValue)
 
