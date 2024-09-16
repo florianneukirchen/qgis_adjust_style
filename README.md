@@ -29,12 +29,11 @@ Alternatively, copy (or git clone) the folder with the code into your QGIS plugi
 ## Usage
 Start the plugin from the plugin menu or the plugin toolbar; a dockwidget opens on the right side of the main window.
 
-Since version 1.9, another dockwidget is avaible in the layout composer window.
+Another dockwidget is available in the layout composer window (since version 1.9).
 
-Since version 1.9 of the plugin, you can choose the strength of the change in the range of 5 to 90. This is added / substracted as absolute value when changing HSV color saturation or value (in the range 0 to 255); and as percentage for changes to font size or stroke.
-In earlier versions, changes of HSV color saturation and value are ± 5 (in the range 0 to 255) and changes of font size or stroke width is ± 5 %.
+The "change by" slider / spin box sets the strength of the change in the range of 5 to 90. Stroke width or font size will be increased / decreased by a corresponding percentage. When changing HSV color saturation or value, the value is added / substracted as absolute value (in the range 0 to 255).
 
-### Select Layers
+### Select Layers or Print Layout Components
 First, select the layers you want to work on. Possible choices:
 - Active Layer
 - Selected Layers
@@ -43,6 +42,17 @@ First, select the layers you want to work on. Possible choices:
 Optionally check to include:
 - Main Annotation Layer (ignored with QGIS < 3.22)
 - Canvas background color
+
+The dockwidget for print layout has the following choices:
+- Labels (text boxes)
+- Legend
+- Scalebar
+- North arrow and parameterized SVG
+- Shapes (rectangles, circles, triangles)
+- Marker
+- Lines, Polygons, Arrows
+- Tables
+- Page Background 
 
 ### Change Color
 Adjusting colors works in the HSV color model. That means you can rotate the hue of the HSV colors as you would rotate a color wheel: set the degree of the rotation and hit "OK". The color grid above the slider works as a preview.
@@ -83,10 +93,11 @@ It even works to save the styles of one project and load them in another one if 
 
 ## Change Log
 
-### Upcoming 2.0 (GIT)
+### 2.0 (2024-09)
 - First stable release with the new dock in the layout designer window
 - Implement color change on Mesh layers
 - Implement color change of the new single color renderer
+- Set initial value of change to 10
 
 ### 1.9 (2024-08, Development version)
 - Code refactoring
