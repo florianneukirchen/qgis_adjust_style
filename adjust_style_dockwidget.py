@@ -152,7 +152,7 @@ class AdjustStyleLayoutDockWidget(AdjustStyleDockWidget):
 
         container = self.verticalLayout_2
 
-        self.checkTextLabels = QCheckBox(self.tr('Text'))
+        self.checkTextLabels = QCheckBox(self.tr('Label (Text Box)'))
         self.checkLegend = QCheckBox(self.tr('Legend'))
         self.checkScalebar = QCheckBox(self.tr('Scalebar'))
         self.checkSVG = QCheckBox(self.tr('North arrow, parameterized SVG'))
