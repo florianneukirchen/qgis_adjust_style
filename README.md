@@ -1,7 +1,7 @@
 # QGIS Plugin Adjust Style
 [QGIS Plugin](https://plugins.qgis.org/plugins/qgis_adjust_style/) to adjust the symbology of a map with a few clicks instead of altering every single symbol (and symbol layer) for many layers, categories or for a number of label rules. It offers a quick way to change the style of all layers (or selected layers) consistently, to check out how different colors / stroke widths / fonts work for a project, and to save and load styles of all layers at once – or even to apply styles to another project. 
 
-With one mouse click, it allows to (in all seleced layers or for selected components of a print layout): 
+With one mouse click, it allows to (in all seleced layers): 
 - adjust color using the HSV color model: rotate hue (think of a color wheel), change saturation and value: 
     - all symbols (with any number of symbol layers) including color ramps used in graduated / categorized / heatmap renderers
     - colors used in paint effects (glow, shadow)
@@ -14,7 +14,9 @@ With one mouse click, it allows to (in all seleced layers or for selected compon
 - change font size of all labels and annotations 
 - replace a font family used in labels / annotations with another font family
 - save / load the styles (QML files) of layers into/from a given folder 
-- Since version 1.9, the same changes can be applied to print layouts (text labels, legend, scale bar, etc.).
+- replace font family or change font size everywhere in a print layout
+- change colors or stroke width in a print layout
+
 
 ![QGIS plugin adjust style](help/screenshot.png)
 
