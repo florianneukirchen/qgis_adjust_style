@@ -207,6 +207,9 @@
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLabel" name="label_7">
+          <property name="toolTip">
+           <string>Percentage (change of stroke, font size) / absolute value (change of saturation, value)</string>
+          </property>
           <property name="text">
            <string>Change by </string>
           </property>
@@ -214,6 +217,9 @@
         </item>
         <item>
          <widget class="QSlider" name="changeSlider">
+          <property name="toolTip">
+           <string>Percentage (change of stroke, font size) / absolute value (change of saturation, value)</string>
+          </property>
           <property name="minimum">
            <number>5</number>
           </property>
@@ -227,6 +233,9 @@
         </item>
         <item>
          <widget class="QSpinBox" name="changeSpinBox">
+          <property name="toolTip">
+           <string>Percentage (change of stroke, font size) / absolute value (change of saturation, value)</string>
+          </property>
           <property name="minimum">
            <number>5</number>
           </property>
@@ -474,6 +483,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="replaceFontButton">
+          <property name="toolTip">
+           <string>Replace a font family with another one</string>
+          </property>
           <property name="text">
            <string>Replace Font</string>
           </property>
