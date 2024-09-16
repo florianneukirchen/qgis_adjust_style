@@ -74,17 +74,17 @@
         <translation>Stile von {} Ebenen geladen, aber kein Erfolg bei {} gewählten Ebenen.</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1143"/>
+        <location filename="../adjust_style.py" line="1221"/>
         <source>File exists</source>
         <translation>Datei existiert</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1143"/>
+        <location filename="../adjust_style.py" line="1221"/>
         <source>File {} already exists. Do you want to overwrite it?</source>
         <translation>Datei {} existiert bereits. Möchten Sie diese überschreiben?</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1161"/>
+        <location filename="../adjust_style.py" line="1239"/>
         <source>Save Style {} failed:</source>
         <translation>Stil von {} konnte nicht gespeichert werden:</translation>
     </message>
@@ -104,12 +104,12 @@
         <translation type="obsolete">Vorschau für die Rotation des Farbtons (Farbkreis drehen)</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1023"/>
+        <location filename="../adjust_style.py" line="1101"/>
         <source>Replace Font</source>
         <translation>Schrift ersetzen</translation>
     </message>
     <message>
-        <location filename="../adjust_style.py" line="1023"/>
+        <location filename="../adjust_style.py" line="1101"/>
         <source>The selection does not contain any fonts.</source>
         <translation>Die Auswahl enthält keine Schriften.</translation>
     </message>
@@ -160,47 +160,47 @@
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="245"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="254"/>
         <source>Saturation</source>
         <translation>Sättigung</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="436"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="445"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="458"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="467"/>
         <source>−</source>
         <translation>−</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="303"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="312"/>
         <source>Value</source>
         <translation>Farbwert</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="346"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="355"/>
         <source>Stroke width</source>
         <translation>Liniendicke</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="414"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="423"/>
         <source>Font Size</source>
         <translation>Schriftgröße</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="478"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="490"/>
         <source>Replace Font</source>
         <translation>Schrift ersetzen</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="512"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="524"/>
         <source>Save Styles</source>
         <translation>Stile speichern</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="522"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="534"/>
         <source>Load Styles</source>
         <translation>Stile laden</translation>
     </message>
@@ -260,12 +260,12 @@
         <translation type="obsolete">Schriftgröße verkleinern (− 5 %)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="509"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="521"/>
         <source>Save styles of selected layers to a folder (as QML files)</source>
         <translation>Stile der gewählten Ebenen in einen Ordner speichern (als QML-Dateien)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="519"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="531"/>
         <source>Load styles of layers from a folder</source>
         <translation>Stile der Ebenen aus einem Ordner laden</translation>
     </message>
@@ -285,49 +285,59 @@
         <translation>Projekt-Hintergrundfarbe</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="211"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="214"/>
         <source>Change by </source>
         <translation>Änderum um </translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="264"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="273"/>
         <source>Increase Saturation</source>
         <translation>Farbsättigung erhöhen</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="280"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="289"/>
         <source>Decrease Saturantion</source>
         <translation>Farbsättigung verringern</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="316"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="325"/>
         <source>Increase HSV Value</source>
         <translation>HSV-Wert (Helligkeit) erhöhen</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="332"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="341"/>
         <source>Decrease HSV Value</source>
         <translation>HSV-Wert (Helligkeit) verringern</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="365"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="374"/>
         <source>Lines: Increase stroke width (change in %)</source>
         <translation>Liniendicke vergrößern (Änderung in %)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="387"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="396"/>
         <source>Lines: Decrease stroke (change in %)</source>
         <translation>Liniendicke verringern (Änderung in %)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="433"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="442"/>
         <source>Increase Font Size (change in %)</source>
         <translation>Schriftgröße vergrößern (Änderung in %)</translation>
     </message>
     <message>
-        <location filename="../adjust_style_dockwidget_base.ui" line="455"/>
+        <location filename="../adjust_style_dockwidget_base.ui" line="464"/>
         <source>Decrease Font Size (change in %)</source>
         <translation>Schriftgröße verkleinern (Änderung in %)</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget_base.ui" line="237"/>
+        <source>Percentage (change of stroke, font size) / absolute value (change of saturation, value)</source>
+        <translation>Prozent (Änderung Liniendicke, Schritgröße) / Absolutwert (Änderung Sättigung, Wert)</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget_base.ui" line="487"/>
+        <source>Replace a font family with another one</source>
+        <translation>Schrift durch eine andere ersetzen</translation>
     </message>
 </context>
 <context>
