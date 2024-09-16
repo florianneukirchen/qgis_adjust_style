@@ -355,7 +355,7 @@
     <message>
         <location filename="../adjust_style_dockwidget.py" line="155"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation type="obsolete">Text</translation>
     </message>
     <message>
         <location filename="../adjust_style_dockwidget.py" line="159"/>
@@ -386,6 +386,11 @@
         <location filename="../adjust_style_dockwidget.py" line="163"/>
         <source>Page Background</source>
         <translation>Seite Hintergrundfarbe</translation>
+    </message>
+    <message>
+        <location filename="../adjust_style_dockwidget.py" line="155"/>
+        <source>Label (Text Box)</source>
+        <translation>Label (Textbox)</translation>
     </message>
 </context>
 <context>
