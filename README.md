@@ -97,7 +97,7 @@ It even works to save the styles of one project and load them in another one if 
 - First stable release with the new dock in the layout designer window
 - Implement color change on Mesh layers
 - Implement color change of the new single color renderer
-- Set initial value of change to 10
+- Set initial "change by" to 10
 
 ### 1.9 (2024-08, Development version)
 - Code refactoring

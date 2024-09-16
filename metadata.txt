@@ -29,6 +29,8 @@ hasProcessingProvider=no
 changelog=2.0
     - First stable release with new dock in layout designer window
     - Implement color change of the new single color renderer
+    - Implement color change on Mesh layers
+    - Set initial "change by" to 10
     1.9
     - Major code refactoring
     - Allow to set the strength of the change (from 5 to 90, used as absolute value for HSV color parts and as percentage for sizes)
