@@ -38,15 +38,15 @@ LOCALES =
 # translation
 SOURCES = \
 	__init__.py \
-	style_tool.py style_tool_dockwidget.py
+	adjust_style.py adjust_style_dockwidget.py
 
-PLUGINNAME = style_tool
+PLUGINNAME = adjust_style
 
 PY_FILES = \
 	__init__.py \
-	style_tool.py style_tool_dockwidget.py
+	adjust_style.py adjust_style_dockwidget.py
 
-UI_FILES = style_tool_dockwidget_base.ui
+UI_FILES = adjust_style_dockwidget_base.ui
 
 EXTRAS = metadata.txt icon.png
 
