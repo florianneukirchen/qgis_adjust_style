@@ -86,7 +86,7 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
                 widget = QLabel(' ')
                 widget.setAutoFillBackground(True) 
                 palette = QPalette()
-                palette.setColor(QPalette.Window, color)
+                palette.setColor(QPalette.ColorRole.Window, color)
                 widget.setPalette(palette)
                 widget.setToolTip(tooltip)
                 self.colorGrid.addWidget(widget, row, column)
@@ -108,7 +108,7 @@ class AdjustStyleDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             color.setHsv(h, 250, 250, 250)
             widget = self.colorGrid.itemAtPosition(1, column).widget()
             palette = QPalette()
-            palette.setColor(QPalette.Window, color)
+            palette.setColor(QPalette.ColorRole.Window, color)
             widget.setPalette(palette)
 
 
@@ -202,17 +202,17 @@ class AdjustStyleLayoutHandler():
         editmenu.addAction(self.action)
 
         self.legend_components = [
-            QgsLegendStyle.Title,
-            QgsLegendStyle.Subgroup,
-            QgsLegendStyle.Group,
-            QgsLegendStyle.SymbolLabel
+            QgsLegendStyle.Style.Title,
+            QgsLegendStyle.Style.Subgroup,
+            QgsLegendStyle.Style.Group,
+            QgsLegendStyle.Style.SymbolLabel
         ]
         
 
     def openDesignerDockWidget(self):
         if self.dockwidget is None:
             self.dockwidget = AdjustStyleLayoutDockWidget(self.designer.window())
-            self.designer.addDockWidget(Qt.LeftDockWidgetArea, self.dockwidget)
+            self.designer.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, self.dockwidget)
 
             self.dockwidget.hueButton.clicked.connect(self.hueBtn)
             self.dockwidget.plusSatButton.clicked.connect(self.saturationPlusBtn)

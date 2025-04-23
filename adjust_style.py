@@ -313,9 +313,9 @@ class AdjustStyle:
                     self.dockwidget,
                     self.tr('File exists'),
                     self.tr('File backgroundcolor.txt already exists. Do you want to overwrite it?'),
-                    QMessageBox.Yes | QMessageBox.No
+                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
                 )
-                if choice == QMessageBox.Yes:
+                if choice == QMessageBox.StandardButton.Yes:
                     with open(url, 'w') as f:
                         f.write(bg)
                     bf_feetback = bf_feetback_saved
@@ -1110,7 +1110,7 @@ class AdjustStyle:
         
         # Show dialog, run dialog event loop
         self.dlg.show()
-        result = self.dlg.exec_()
+        result = self.dlg.exec()
 
         # See if OK was pressed
         if result:
@@ -1222,11 +1222,11 @@ class AdjustStyle:
                 self.dockwidget,
                 self.tr('File exists'),
                 self.tr('File {} already exists. Do you want to overwrite it?').format(filename),
-                QMessageBox.YesToAll | QMessageBox.Yes | QMessageBox.No
+                QMessageBox.StandardButton.YesToAll | QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
             )
-            if choice == QMessageBox.Yes:
+            if choice == QMessageBox.StandardButton.Yes:
                 pass
-            elif choice == QMessageBox.YesToAll:
+            elif choice == QMessageBox.StandardButton.YesToAll:
                 self.overwrite = True
             else:
                 return
@@ -1331,5 +1331,5 @@ class AdjustStyle:
             self.dockwidget.buttonGroup.setId(self.dockwidget.radioAllLayers, 4)
 
             # show the dockwidget
-            self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)
+            self.iface.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.dockwidget)
             self.dockwidget.show()
