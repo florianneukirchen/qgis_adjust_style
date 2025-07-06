@@ -6,9 +6,10 @@
 [general]
 name=Adjust Style 
 qgisMinimumVersion=3.30
+supportsQt6=True
 description=Quickly adjust the symbology (colors, stroke, font) for all layers.
 
-version=2.0
+version=2.1
 
 author=Florian Neukirchen
 email=mail@riannek.de
@@ -26,7 +27,9 @@ repository=https://github.com/florianneukirchen/qgis_adjust_style
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=2.0
+changelog=2.1
+    - Support Qt6 / QGIS 4
+    2.0
     - First stable release with new dock in layout designer window
     - Implement color change of the new single color renderer
     - Implement color change on Mesh layers

@@ -94,6 +94,9 @@ It even works to save the styles of one project and load them in another one if 
 
 ## Change Log
 
+### 2.1 (2025-07)
+- Support Qt6 / QGIS 4
+
 ### 2.0 (2024-09)
 - First stable release with the new dock in the layout designer window
 - Implement color change on Mesh layers
