@@ -93,9 +93,11 @@ It even works to save the styles of one project and load them in another one if 
 [https://github.com/florianneukirchen/qgis_adjust_style/issues](https://github.com/florianneukirchen/qgis_adjust_style/issues)
 
 ## Change Log
+### 2.2 (2026-03)
+- Support QGIS 4
 
 ### 2.1 (2025-07)
-- Support Qt6 / QGIS 4
+- Support Qt6 
 
 ### 2.0 (2024-09)
 - First stable release with the new dock in the layout designer window
