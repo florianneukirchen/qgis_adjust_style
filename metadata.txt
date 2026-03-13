@@ -6,7 +6,6 @@
 [general]
 name=Adjust Style 
 qgisMinimumVersion=3.30
-supportsQt6=True
 description=Quickly adjust the symbology (colors, stroke, font) for all layers.
 
 version=2.1
