@@ -9,7 +9,7 @@ qgisMinimumVersion=3.30
 qgisMaximumVersion=4.99
 description=Quickly adjust the symbology (colors, stroke, font) for all layers.
 
-version=2.2
+version=2.3
 
 author=Florian Neukirchen
 email=mail@riannek.de
@@ -27,7 +27,9 @@ repository=https://github.com/florianneukirchen/qgis_adjust_style
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=2.2
+changelog=2.3
+    - Remove old and unused plugin builder scripts that where reported as security vulerability
+    2.2
     - Support QGIS 4.x
     2.1
     - Support Qt6

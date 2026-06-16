@@ -93,6 +93,8 @@ It even works to save the styles of one project and load them in another one if 
 [https://github.com/florianneukirchen/qgis_adjust_style/issues](https://github.com/florianneukirchen/qgis_adjust_style/issues)
 
 ## Change Log
+### 2.3 (2026-06)
+- Remove old and unused plugin builder scripts that where reported as security vulerability
 ### 2.2 (2026-03)
 - Support QGIS 4
 
